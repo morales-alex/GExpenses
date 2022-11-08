@@ -1,3 +1,5 @@
+CREATE DATABASE GExpenses_3P1;
+
 USE GExpenses_3P1;
 
 CREATE TABLE Usuarios (
