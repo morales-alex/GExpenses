@@ -5,7 +5,7 @@ require '../modelo/usuariosMap.php';
 if (!empty($_POST["login"])) {
 
     session_start();
-    $username = $_POST["user_name"];
+    $username = $_POST["usuario"];
     $password = $_POST["password"];
 
     if ($username === '123' and $password === '123') {
