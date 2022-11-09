@@ -1,15 +1,20 @@
 <?php
 
+require '../modelo/usuariosMap.php';
+
 if (!empty($_POST["login"])) {
+
     session_start();
     $username = $_POST["user_name"];
     $password = $_POST["password"];
-    
-    if ($username === '123' AND $password === '123') {
-        
-        $_SESSION["errorMessage"] = "Credenciales Inválidos!";
-        header("Location: ./index.php");
+
+    if ($username === '123' and $password === '123') {
+
+        $_SESSION["mensajeError"] = null;
+        header("Location: ./index.php"); // LOGIN CORRECTO
     } else {
-        header("Location: ./login.php");
+
+        $_SESSION["mensajeError"] = "Credenciales Inválidos!";
+        header("Location: ./login.php"); // LOGIN INCORRECTO
     }
 }

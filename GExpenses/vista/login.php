@@ -11,16 +11,19 @@
 <body>
 
     <div>
-        <form action="login-action.php" method="post" id="frmLogin" onSubmit="return validate();">
+        <form action="login-action.php" method="post" id="frmLogin">
             <div class="login-form-container">
 
                 <div class="form-head">Login</div>
                 <?php
-                if (isset($_SESSION["errorMessage"])) {
+
+                session_start();
+
+                if (isset($_SESSION["mensajeError"])) {
                 ?>
-                    <div class="error-message"><?php echo $_SESSION["errorMessage"]; ?></div>
+                    <div class="error-message"><?php echo $_SESSION["mensajeError"]; ?></div>
                 <?php
-                    unset($_SESSION["errorMessage"]);
+                    unset($_SESSION["mensajeError"]);
                 }
                 ?>
                 <div class="field-column">

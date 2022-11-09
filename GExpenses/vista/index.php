@@ -7,8 +7,7 @@
     <title>Document</title>
 </head>
 <body>
+    <?php phpinfo(); ?>
     
-    funciono
-    !!!
 </body>
 </html>
