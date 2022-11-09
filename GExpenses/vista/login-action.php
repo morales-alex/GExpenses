@@ -20,12 +20,12 @@ if (!empty($_POST["login"])) {
 
 function compruebaUsuario($username, $password)
 {
-    require '../modelo/usuariosMap.php';
+
 
     require '../controlador/BbddConfig.php';
 
     try {
-        $sql = "SELECT TOP 1 u_username, u_password FROM Usuarios where u_username = '$username' AND u_password = '$password'";
+        $sql = "SELECT TOP 1 u_username, u_correo, u_password FROM Usuarios where u_username = '$username' OR u_correo = '$username' AND u_password = '$password'";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $datos = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -34,7 +34,7 @@ function compruebaUsuario($username, $password)
         echo 'Error: ' . $ex->getMessage();
     }
 
-    if ($username === $datos['u_username'] and $password === $datos['u_password']) {
+    if ($username === $datos['u_username'] or $username === $datos['u_correo'] and $password === $datos['u_password']) {
         return true;
     } else {
         return false;

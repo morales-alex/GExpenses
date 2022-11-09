@@ -39,7 +39,7 @@
                         <?php
 
                         session_start();
-
+                        
                         if (isset($_SESSION["mensajeError"])) {
                         ?>
                             <div class="error-message"><?php echo $_SESSION["mensajeError"]; ?></div>

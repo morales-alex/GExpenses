@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="./GExpenses/css/style.css">
 </head>
 <body>
 
@@ -19,7 +19,7 @@
                 <h1>Bienvenido a <span class="negrita">GExpenses</span></h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             </div>
-
+<!--
                 <div id="formulario">
                 <h2 class="center">Login</h2>
                 <form id="">
@@ -42,9 +42,9 @@
                         <a class="btn" href="#">Registrate aqui</a>
                     </div>
                 </div>
-            </div>            
+            </div>  -->          
 
-            <!--<div id="formulario">
+            <div id="formulario">
                 <h2 class="center">Registro</h2>
                 <form id="">
                     <div class="row-registro">
@@ -90,7 +90,7 @@
                         <a class="btn" href="#">Iniciar sesión</a>
                     </div>
                 </div>
-            </div>-->
+            </div>
 
             <!--
             <div>
