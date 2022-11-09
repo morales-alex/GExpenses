@@ -19,7 +19,7 @@ CREATE TABLE Usuarios (
 
 CREATE TABLE Actividades (
 	a_id		int,
-	a_nom		varchar(30),
+	a_nombre	varchar(30),
 	PRIMARY KEY(a_id)
 );
 
