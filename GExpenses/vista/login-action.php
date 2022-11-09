@@ -3,8 +3,8 @@
 if (!empty($_POST["login"])) {
 
     session_start();
-    $username = $_POST['user_name'];
-    $password = $_POST['password'];
+    $username = $_POST["usuario"];
+    $password = $_POST["password"];
 
     if (compruebaUsuario($username, $password)) {
 
