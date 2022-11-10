@@ -9,7 +9,7 @@ if (isset($_POST["login"])) {
     if (compruebaUsuario($username, $password)) {
 
         $_SESSION["mensajeError"] = null;
-        header("Location: ./index.php"); // LOGIN CORRECTO
+        header("Location: ./home.php"); // LOGIN CORRECTO
     } else {
 
         $_SESSION["mensajeError"] = "Credenciales Inválidos!";
@@ -23,8 +23,13 @@ function compruebaUsuario($username, $password) {
     require '../controlador/BbddConfig.php';
 
     try {
-        $sql = "SELECT u_username, u_correo, u_password FROM Usuarios where (u_username = '$username' OR u_correo = '$username') AND u_password = '$password'";
+        $sql = "SELECT u_username, u_correo, u_password FROM Usuarios where (u_username = :u_username OR u_correo = :u_correo) AND u_password = :u_password";
         $stmt = $pdo->prepare($sql);
+
+        $stmt->bindParam(':u_username', $username);
+        $stmt->bindParam(':u_correo', $username);
+        $stmt->bindParam(':u_password', $password);
+
         $stmt->execute();
         $datos = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -37,4 +42,8 @@ function compruebaUsuario($username, $password) {
     } else {
         return false;
     }
+
+    $pdo = null;
+
+
 }
