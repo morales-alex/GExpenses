@@ -53,7 +53,7 @@
                 <div id="no-registrado">
                     <div class="row">
                         <p>¿No tienes una cuenta?</p>
-                        <a class="btn" href="#">Registrate aqui</a>
+                        <a class="btn" href="registro.php">Registrate aqui</a>
                     </div>
                 </div>
             </div>
