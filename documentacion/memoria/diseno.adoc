@@ -1,5 +1,18 @@
 == Diseño
 
-La primera aproximación a la base de datos factible y que hemos implementado en la solución actual [10/11/2022] es la siguiente:
+*[.underline]#Estructura Base de Datos# _[10/11/2022]_*
+
+La primera aproximación a la base de datos factible y que hemos
+implementado en la solución actual es la siguiente:
 
 image::../BBDD_ER_GExpenses.png[Estructura BBDD]
+
+Hemos pensado en esta solución ya que Usuarios y Actividades son una
+relación *'n, n'* por lo que se debía crear una tabla intermedia, puedes
+crear un usuario sin crear una actividad y viceversa, y cuando haya una
+relación entre actividad y usuario podrás relacionar gastos con la clave
+del usuario que ha pagado *g_idUsu*.
+
+Como nomenclatura de las columnas de la base de datos hemos decidido
+usar minúsculas y la primera inicial del nombre de la tabla para que
+identificar de manera más fácil a qué columna nos estamos refiriendo.
