@@ -24,15 +24,15 @@ CREATE TABLE Actividades (
 );
 
 CREATE TABLE UsuariosActividades (
-	a_idUsu		int FOREIGN KEY REFERENCES Usuarios(u_id),
-	a_idAct		int FOREIGN KEY REFERENCES Actividades(a_id),
-	PRIMARY KEY(a_idUsu, a_idAct)
+	ua_idUsu		int FOREIGN KEY REFERENCES Usuarios(u_id),
+	ua_idAct		int FOREIGN KEY REFERENCES Actividades(a_id),
+	PRIMARY KEY(ua_idUsu, ua_idAct)
 );
 
 CREATE TABLE Gastos (
 	g_id		int IDENTITY(1,1),
-	g_idUsu		int FOREIGN KEY REFERENCES Usuarios(u_id), -- PERSONA QUE PAGA
-	g_idAct		int FOREIGN KEY REFERENCES Actividades(a_id), -- ACTIVIDAD RELACIONADA
+	g_idUsu		int FOREIGN KEY REFERENCES UsuariosActividades(ua_idUsu), -- PERSONA QUE PAGA
+	g_idAct		int FOREIGN KEY REFERENCES UsuariosActividades(ua_idAct), -- ACTIVIDAD RELACIONADA
 	g_precio	int,
 	g_concepto	varchar(50),
 	PRIMARY KEY(g_idUsu, g_idAct, g_id)
