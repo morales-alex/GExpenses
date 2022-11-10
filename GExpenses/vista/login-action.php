@@ -1,10 +1,10 @@
 <?php
 
-if (!empty($_POST["login"])) {
+if (isset($_POST["login"])) {
 
     session_start();
-    $username = $_POST["usuario"];
-    $password = $_POST["password"];
+    $username = htmlentities($_POST["usuario"]);
+    $password = htmlentities($_POST["password"]);
 
     if (compruebaUsuario($username, $password)) {
 
@@ -18,9 +18,7 @@ if (!empty($_POST["login"])) {
 }
 
 
-function compruebaUsuario($username, $password)
-{
-
+function compruebaUsuario($username, $password) {
 
     require '../controlador/BbddConfig.php';
 
