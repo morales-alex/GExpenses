@@ -3,7 +3,6 @@
 
 include::documentacion/memoria/introduccion.adoc[]
 include::documentacion/memoria/diseno.adoc[]
-include::documentacion/memoria/diseno.adoc[]
 include::documentacion/memoria/instalacion.adoc[]
 include::documentacion/memoria/manualUsuario.adoc[]
 include::documentacion/memoria/liniasFuturas.adoc[]

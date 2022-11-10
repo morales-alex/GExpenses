@@ -1,2 +1,5 @@
 == Diseño
 
+La primera aproximación a la base de datos factible y que hemos implementado en la solución actual [10/11/2022] es la siguiente:
+
+image::../BBDD_ER_GExpenses.png[Estructura BBDD]
