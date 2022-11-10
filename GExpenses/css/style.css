@@ -132,14 +132,11 @@ label {
 }
 
 .landing {
-    min-width: 400px;
-    padding: 20px;
-    display: flex;
     flex-direction: column;
-    align-content: center;
-    width: 60%;
     height: 100%;
+    display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .error-message {
@@ -148,4 +145,9 @@ label {
     width: fit-content;
     padding: 6px;
     border-radius: 25px;
+  }
+
+  .landing .row {
+    margin-bottom: 35px;
+    width: inherit !important;
   }
