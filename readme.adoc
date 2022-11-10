@@ -1,12 +1,12 @@
 = MEMORIA
 :toc:
 
-include::memoria/introduccion.adoc[]
-include::memoria/diseno.adoc[]
-include::memoria/diseno.adoc[]
-include::memoria/instalacion.adoc[]
-include::memoria/manualUsuario.adoc[]
-include::memoria/liniasFuturas.adoc[]
-include::memoria/conclusion.adoc[]
-include::memoria/glosario.adoc[]
-include::memoria/presentacion.adoc[]
+include::documentacion/memoria/introduccion.adoc[]
+include::documentacion/memoria/diseno.adoc[]
+include::documentacion/memoria/diseno.adoc[]
+include::documentacion/memoria/instalacion.adoc[]
+include::documentacion/memoria/manualUsuario.adoc[]
+include::documentacion/memoria/liniasFuturas.adoc[]
+include::documentacion/memoria/conclusion.adoc[]
+include::documentacion/memoria/glosario.adoc[]
+include::documentacion/memoria/presentacion.adoc[]
