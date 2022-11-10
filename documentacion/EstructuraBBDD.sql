@@ -38,9 +38,8 @@ CREATE TABLE Gastos (
 	PRIMARY KEY(g_idUsu, g_idAct, g_id)
 );
 
-INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('aalgarra', 'Alejandro', 'Algarra Delgado', 'algarra.delgado.alejandro@alumnat.copernic.cat', '123');
-INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('amorales', 'Alex', 'Morales Luna', 'morales.luna.alex@alumnat.copernic.cat', '123');
-INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('mfreixa', 'Max', 'Freixa Abcd', 'freixa.abcd.max@alumnat.copernic.cat', '123');
-
+INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('aalgarra', 'Alejandro', 'Algarra Delgado', 'algarra.delgado.alejandro@alumnat.copernic.cat', (convert(varchar(256),HASHBYTES('SHA2_256', '123'))));
+INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('amorales', 'Alex', 'Morales Luna', 'morales.luna.alex@alumnat.copernic.cat', (convert(varchar(256),HASHBYTES('SHA2_256', '123'))));
+INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('mfreixa', 'Max', 'Freixa Sureda', 'freixa.sureda.max@alumnat.copernic.cat', (convert(varchar(256),HASHBYTES('SHA2_256', '123'))));
 
 select * from usuarios;
