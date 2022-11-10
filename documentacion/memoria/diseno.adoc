@@ -1,3 +1,4 @@
+//Disseny: disseny de base de dades, mockup d’interfícies, etcètera.
 == Diseño
 
 *[.underline]#Estructura Base de Datos# _[10/11/2022]_*
@@ -16,3 +17,6 @@ del usuario que ha pagado *g_idUsu*.
 Como nomenclatura de las columnas de la base de datos hemos decidido
 usar minúsculas y la primera inicial del nombre de la tabla para que
 identificar de manera más fácil a qué columna nos estamos refiriendo.
+
+=== Mockup
+Después de hablar i hacer una lluvia de ideas de como podia ser la idea inicial de la web, siguendo con la _guia de estilos_ hemos creado el siguiente mockup: Para poder acceder al mockup haz clic https://marvelapp.com/start-user-test/aPaRQ6Hj7pl1JAHYoIt3[aquí]
