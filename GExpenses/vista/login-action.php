@@ -2,11 +2,8 @@
 
 if (isset($_POST["login"])) {
 
-    session_start();
-    $username = htmlentities($_POST["usuario"]);
-    $password = htmlentities($_POST["password"]);
 
-    if (compruebaUsuario($username, $password)) {
+    if (compruebaUsuario(htmlentities($_POST["usuario"]), htmlentities($_POST["password"]))) {
 
         $_SESSION["mensajeError"] = null;
         header("Location: ./home.php"); // LOGIN CORRECTO
