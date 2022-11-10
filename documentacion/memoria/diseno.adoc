@@ -6,7 +6,7 @@
 La primera aproximación a la base de datos factible y que hemos
 implementado en la solución actual es la siguiente:
 
-image::../BBDD_ER_GExpenses.png[Estructura BBDD]
+image::documentacion/BBDD_ER_GExpenses.png[Estructura BBDD]
 
 Hemos pensado en esta solución ya que Usuarios y Actividades son una
 relación *'n, n'* por lo que se debía crear una tabla intermedia, puedes
