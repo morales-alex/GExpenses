@@ -30,7 +30,7 @@ CREATE TABLE UsuariosActividades (
 );
 
 CREATE TABLE Gastos (
-	g_id		int,
+	g_id		int IDENTITY(1,1),
 	g_idUsu		int FOREIGN KEY REFERENCES Usuarios(u_id), -- PERSONA QUE PAGA
 	g_idAct		int FOREIGN KEY REFERENCES Actividades(a_id), -- ACTIVIDAD RELACIONADA
 	g_precio	int,
