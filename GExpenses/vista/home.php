@@ -11,27 +11,76 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-<<<<<<<< HEAD:GExpenses/vista/home.php
-    
-    <?php echo "Bienvenido al Home! :)"; ?>
-========
->>>>>>>> 8e11fcba424db38de9d2b44f90829b398c9e85af:GExpenses/vista/index.php
 
-    <div id="container">
-        <div id="caja-principal">
-            <div id="intro">
-                <h1>Bienvenido a <span class="negrita">GExpenses</span></h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
+<body>
+    <div id="main">
+        <div id="titulo-pagina">
             <div>
-                <div id="formulario" class="landing">
-                    <div class="row"><a class="btn-login" href="login.php">Iniciar sesión</a></div>
-                    <div class="row"><a class="btn-registro" href="registro.php">Registrate</a></div>
+                <h1>Actividades</h1>
+            </div>
+            <div class="ordenar">
+                <div class="boton-nueva-actividad"><a href="#">Añadir actividad +</a></div>
+                <label for="orden-actividad">Ordenar por: </label>
+                <select name="orden-actividad" id="orden-actividad">
+                    <option value="fecha-creacion">Fecha de creación</option>
+                    <option value="fecha-modificacion">Fecha de modificación</option>
+                </select>
+            </div>
+        </div>
+        <hr>
+        <div id="caja-actividades">
+            <div class="actividad">
+                <div class="caja-interior-actividad">
+                    <div class="caja-titulo-actividad">
+                        <h3>Titulo actividad</h3>
+                    </div>
+                    <div class="caja-boton-actividad">
+                        <a href="#">VER ACTIVIDAD</a>
+                    </div>
                 </div>
-                
+            </div>
+            <div class="actividad">
+                <div class="caja-interior-actividad">
+                    <div class="caja-titulo-actividad">
+                        <h3>Titulo actividad</h3>
+                    </div>
+                    <div class="caja-boton-actividad">
+                        <a href="#">VER ACTIVIDAD</a>
+                    </div>
+                </div>
+            </div>
+            <div class="actividad">
+                <div class="caja-interior-actividad">
+                    <div class="caja-titulo-actividad">
+                        <h3>Titulo actividad</h3>
+                    </div>
+                    <div class="caja-boton-actividad">
+                        <a href="#">VER ACTIVIDAD</a>
+                    </div>
+                </div>
+            </div>
+            <div class="actividad">
+                <div class="caja-interior-actividad">
+                    <div class="caja-titulo-actividad">
+                        <h3>Titulo actividad</h3>
+                    </div>
+                    <div class="caja-boton-actividad">
+                        <a href="#">VER ACTIVIDAD</a>
+                    </div>
+                </div>
+            </div>
+            <div class="actividad">
+                <div class="caja-interior-actividad">
+                    <div class="caja-titulo-actividad">
+                        <h3>Titulo actividad</h3>
+                    </div>
+                    <div class="caja-boton-actividad">
+                        <a href="#">VER ACTIVIDAD</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>
