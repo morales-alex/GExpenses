@@ -6,9 +6,13 @@ body {
     font-family: 'Montserrat', serif;
     background-color: #EEE;
     color: #171717;
+    display: flex;
 }
 
-a, a:visited, a:hover, a:active {
+a,
+a:visited,
+a:hover,
+a:active {
     color: inherit;
     text-decoration: none;
 }
@@ -269,3 +273,36 @@ label {
 .boton-nueva-actividad a:visited {
     color: #FFF;
 }
+
+/*======================  CSS DIALOG ACTIVITY FORM  ================================*/
+/*
+dialog {
+    position: absolute;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+}*/
+dialog{
+    border: none !important;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    padding: 1.6rem;
+    background-color: #EEEEEE;
+    border-radius: 10px;
+    backdrop-filter: blur(px);
+}
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+  }
+  /*
+  dialog::backdrop {
+    backdrop-filter: blur(1px);
+    background-color: #171717;
+}*/
