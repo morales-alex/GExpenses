@@ -1,3 +1,16 @@
+<?php
+
+if(session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
+    SESSION_START();
+}
+
+if (!isset($_SESSION['usuario'])) {
+    SESSION_DESTROY();
+    header('location: ./login.php');
+}
+
+?>
+
 <header>
     <nav>
         <div id="opcionesBox">
@@ -8,6 +21,6 @@
             <div class="opcion">Glosario</div>
         </div>
 
-        <a id="usuario"> <?php $_SESSION['username'] = 'PerePou1234'; echo $_SESSION['username'] ?> </a>
+        <a id="usuario"> <?php echo $_SESSION['usuario'] ?> </a>
     </nav>
 </header>

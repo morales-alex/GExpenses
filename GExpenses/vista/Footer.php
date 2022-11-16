@@ -1,3 +1,16 @@
+<?php
+
+if(session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
+    SESSION_START();
+}
+
+if (!isset($_SESSION['usuario'])) {
+    SESSION_DESTROY();
+    header('location: ./login.php');
+}
+
+?>
+
 <footer>
     <div class="footerBox">
         <div class="partIzq">

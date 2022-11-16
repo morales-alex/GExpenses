@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+if(session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
+    SESSION_START();
+}
 
 if (isset($_POST["login"])) {
 
@@ -8,12 +10,18 @@ if (isset($_POST["login"])) {
     if (compruebaUsuario(htmlentities($_POST["usuario"]), htmlentities($_POST["password"]))) {
 
         $_SESSION["mensajeError"] = null;
+
+        $_SESSION['usuario'] = $_POST["usuario"];
+
         header("Location: ./home.php"); // LOGIN CORRECTO
     } else {
 
         $_SESSION["mensajeError"] = "Credenciales Inválidos!";
         header("Location: ./login.php"); // LOGIN INCORRECTO
     }
+} else {
+    $_SESSION["mensajeError"] = "Credenciales Inválidos!";
+    header("Location: ./login.php"); // LOGIN INCORRECTO
 }
 
 

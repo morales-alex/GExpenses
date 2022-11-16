@@ -1,3 +1,16 @@
+<?php
+
+if(session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
+    SESSION_START();
+}
+
+if (!isset($_SESSION['usuario'])) {
+    SESSION_DESTROY();
+    header('location: ./login.php');
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +24,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
+<?php include_once './Header.php' ?>
 
 <body>
     <div id="main">
@@ -82,5 +97,7 @@
         </div>
     </div>
 </body>
+
+<?php include_once './Footer.php' ?>
 
 </html>
