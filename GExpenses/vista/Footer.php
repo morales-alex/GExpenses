@@ -1,7 +1,7 @@
 <footer>
     <div class="footerBox">
         <div class="partIzq">
-            <img id="logoFooter" src="../css/LOGO.png" alt="Logo pie de página">
+            <img id="logoFooter" src="../img/LOGO.png" alt="Logo pie de página">
             <span>COPYRIGHT © 2022</span>
         </div>
     </div>
