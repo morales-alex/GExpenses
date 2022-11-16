@@ -18,8 +18,10 @@ CREATE TABLE Usuarios (
 );
 
 CREATE TABLE Actividades (
-	a_id		int,
+	a_id		int IDENTITY(1,1),
 	a_nombre	varchar(30),
+	a_moneda	char(1),
+	a_descripcion varchar(130),
 	PRIMARY KEY(a_id)
 );
 
@@ -31,15 +33,17 @@ CREATE TABLE UsuariosActividades (
 
 CREATE TABLE Gastos (
 	g_id		int IDENTITY(1,1),
-	g_idUsu		int FOREIGN KEY REFERENCES UsuariosActividades(ua_idUsu), -- PERSONA QUE PAGA
-	g_idAct		int FOREIGN KEY REFERENCES UsuariosActividades(ua_idAct), -- ACTIVIDAD RELACIONADA
+	g_idUsu		int, -- PERSONA QUE PAGA
+	g_idAct		int, -- ACTIVIDAD RELACIONADA
 	g_precio	int,
 	g_concepto	varchar(50),
-	PRIMARY KEY(g_idUsu, g_idAct, g_id)
+	PRIMARY KEY(g_idUsu, g_idAct, g_id),
+	FOREIGN KEY (g_idUsu, g_idAct) REFERENCES UsuariosActividades (ua_idUsu, ua_idAct)
 );
 
-INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('aalgarra', 'Alejandro', 'Algarra Delgado', 'algarra.delgado.alejandro@alumnat.copernic.cat', (convert(varchar(256),HASHBYTES('SHA2_256', '123'))));
-INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('amorales', 'Alex', 'Morales Luna', 'morales.luna.alex@alumnat.copernic.cat', (convert(varchar(256),HASHBYTES('SHA2_256', '123'))));
-INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('mfreixa', 'Max', 'Freixa Sureda', 'freixa.sureda.max@alumnat.copernic.cat', (convert(varchar(256),HASHBYTES('SHA2_256', '123'))));
+INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('aalgarra', 'Alejandro', 'Algarra Delgado', 'algarra.delgado.alejandro@alumnat.copernic.cat', '123');
+INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('amorales', 'Alex', 'Morales Luna', 'morales.luna.alex@alumnat.copernic.cat', '123');
+INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('mfreixa', 'Max', 'Freixa Abcd', 'freixa.abcd.max@alumnat.copernic.cat', '123');
+
 
 select * from usuarios;
