@@ -81,6 +81,9 @@
             </div>
         </div>
     </div>
+    <?php
+    include 'addActivityForm.php';
+    ?>
 </body>
 
 </html>

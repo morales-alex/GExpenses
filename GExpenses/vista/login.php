@@ -1,3 +1,6 @@
+<?php
+include 'systemInfo.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,14 +41,8 @@
 
                         <?php
 
-                        session_start();
-                        
-                        if (isset($_SESSION["mensajeError"])) {
-                        ?>
-                            <div class="error-message"><?php echo $_SESSION["mensajeError"]; ?></div>
-                        <?php
-                            unset($_SESSION["mensajeError"]);
-                        }
+                        //from systemInfo.php
+                        systemInfo("mensajeError");
                         ?>
                     </div>
                 </form>
