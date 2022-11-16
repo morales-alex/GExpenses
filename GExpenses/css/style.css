@@ -4,12 +4,20 @@ body {
     width: 100%;
     margin: 0;
     font-family: 'Montserrat', serif;
+    background-color: #EEE;
+    color: #171717;
+}
+
+a, a:visited, a:hover, a:active {
+    color: inherit;
+    text-decoration: none;
 }
 
 h1 {
     font-size: 40px;
     line-height: 40px;
-    font-weight: 500;
+    font-weight: 600;
+    margin: 0;
 }
 
 h2 {
@@ -145,9 +153,119 @@ label {
     width: fit-content;
     padding: 6px;
     border-radius: 25px;
-  }
+}
 
-  .landing .row {
+.landing .row {
     margin-bottom: 35px;
     width: inherit !important;
-  }
+}
+
+
+
+/*======================  CSS HOME  ================================*/
+
+#titulo-pagina {
+    display: flex;
+    justify-content: space-between;
+    margin: 25px 0;
+}
+
+#main {
+    padding: 0 90px;
+}
+
+.ordenar {
+    display: flex;
+    align-items: center;
+}
+
+#orden-actividad {
+    margin-left: 10px;
+}
+
+#caja-actividades {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.actividad {
+    width: 25%;
+    box-sizing: border-box;
+}
+
+/*#caja-actividades > div:nth-child(even) {
+    background: #23a;
+}
+
+#caja-actividades > div:nth-child(odd) {
+    background: #49b;
+}*/
+
+.caja-boton-actividad {
+    height: 40px;
+    background-color: #FFF;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.caja-interior-actividad {
+    margin: 15px;
+    border-radius: 10px;
+}
+
+.caja-boton-actividad {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.caja-titulo-actividad h3 {
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.caja-titulo-actividad {
+    min-height: 110px;
+    background-color: #d3d3ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.caja-boton-actividad a:link {
+    text-decoration: none;
+    color: #171717;
+    font-weight: 600;
+}
+
+.boton-nueva-actividad {
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-right: 15px;
+    background-color: #4E729A;
+}
+
+.boton-nueva-actividad:hover {
+    opacity: 0.9;
+}
+
+.boton-nueva-actividad a:link {
+    text-decoration: none;
+    color: #FFF;
+    font-weight: 600;
+}
+
+.boton-nueva-actividad a:visited {
+    color: #FFF;
+}
