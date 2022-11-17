@@ -175,6 +175,8 @@ label {
 
 #main {
     padding: 0 90px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .ordenar {
@@ -292,11 +294,12 @@ label {
 
 nav {
     display: flex;
-    
     height: 40px;
     justify-content: space-between;
-    border-color: solid red;  
-}
+    padding: 10px 90px;
+    background-color: #fff;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 0px 10px 0px rgba(0, 0, 0, 0.16);
+  }
 
 #opcionesBox {
     display: flex;
