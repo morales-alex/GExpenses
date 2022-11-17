@@ -329,6 +329,7 @@ nav {
 
 #usuario {
     background-color: #4E729A;
+    color: white;
     padding: 10px;
     display: flex;
     align-items: center;
