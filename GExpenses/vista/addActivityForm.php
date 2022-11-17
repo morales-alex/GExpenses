@@ -10,7 +10,11 @@
         <input type="text" name="moneda" placeholder="€,$.." required>
         <label for="descripcion">Descripción:</label>
         <textarea for="descripcion" name="descripcion" placeholder="Definicion de la actividad..."></textarea>
+        <div class="dialog-footer">
+            <input type="button" class="boton-aceptar" value="Cerrar" id="cancelDialogForm"></input>
+            <input type="submit" name="enviar" value="Enviar" class="boton-aceptar">
 
+        </div>
     </form>
     <?php
     if (isset($_SESSION["mensajeError"])) {
@@ -20,9 +24,4 @@
         unset($_SESSION["mensajeError"]);
     }
     ?>
-    <div class="dialog-footer">
-        <input type="button" class="boton-aceptar" value="Cerrar" id="cancelDialogForm"></input>
-        <input type="submit" name="enviar" value="Enviar" class="boton-aceptar" id="addActivityForm">
-
-    </div>
 </dialog>
