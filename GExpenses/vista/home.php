@@ -28,13 +28,58 @@ if (!isset($_SESSION['usuario'])) {
 <?php include_once './Header.php' ?>
 
 <body>
+
+
+
+
+
+
+
+
+
+
+
+<dialog id=addActivityDialog class="dialogForm centered" close>
+    <div class="dialog-content">
+        <div class="modal-header">
+            <h4 class="titleDialog">Añadir actividad</h4>
+        </div>
+        <div class="dialog-content">
+            <form method="dialog" id="addActivityForm">
+
+                <label for="nombre" aria-placeholder="Viaje a Ibiza">Nombre:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="moneda">Moneda:</label>
+                <input type="text" id="moneda" name="moneda" required>
+
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" placeholder="Descripción de la actividad"></textarea>
+
+                <button type="submit" form="addActivity" value="Add" name="add">Añadir</button>
+                <button id='cancelDialogForm'>Cancelar</button>
+            </form>
+        </div>
+    </div>
+</dialog>
+
+
+
+
+
+
+
+
+
+
+
     <div id="main">
         <div id="titulo-pagina">
             <div>
                 <h1>Actividades</h1>
             </div>
             <div class="ordenar">
-                <div class="boton-nueva-actividad"><a href="#">Añadir actividad +</a></div>
+                <div class="boton-nueva-actividad" id='addActivity'>Añadir actividad +</div>
                 <label for="orden-actividad">Ordenar por: </label>
                 <select name="orden-actividad" id="orden-actividad">
                     <option value="fecha-creacion">Fecha de creación</option>
@@ -96,11 +141,10 @@ if (!isset($_SESSION['usuario'])) {
             </div>
         </div>
     </div>
-    <?php
-    include 'addActivityForm.php';
-    ?>
 </body>
 
 <?php include_once './Footer.php' ?>
+
+<script src="../script/index.js"></script>
 
 </html>

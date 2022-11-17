@@ -6,7 +6,6 @@ body {
     font-family: 'Montserrat', serif;
     background-color: #EEE;
     color: #171717;
-    display: flex;
 }
 
 a,
@@ -258,19 +257,24 @@ label {
     font-weight: 600;
     margin-right: 15px;
     background-color: #4E729A;
+    
+
+    text-decoration: none;
+    color: #FFF;
+    font-weight: 600;
 }
 
 .boton-nueva-actividad:hover {
     opacity: 0.9;
 }
 
-.boton-nueva-actividad a:link {
+.boton-nueva-actividad a {
     text-decoration: none;
     color: #FFF;
     font-weight: 600;
 }
 
-.boton-nueva-actividad a:visited {
+.boton-nueva-actividad {
     color: #FFF;
 }
 
