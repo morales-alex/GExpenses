@@ -1,23 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
 
-<dialog id=addActivityDialog class="dialogForm centered" open>
-    <div class="dialog-content">
-        <div class="modal-header">
-            <h4 class="titleDialog">Añadir actividad</h4>
-        </div>
-        <div class="dialog-content">
-            <form method="dialog" id="addActivity">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 
-                <label for="nombre" aria-placeholder="Viaje a Ibiza">Nombre:</label>
-                <input type="text" id="name" name="name" required>
+<body>
+    <dialog id=addActivityDialog class="dialogForm centered" open>
+        <h5>Añadir actividad</h5>
+        <form method="post" action="actividad-action.php" id="addActivity">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" required>
+            <label for="moneda">Moneda:</label>
+            <input type="text" name="moneda" required>
+            <label for="descripcion">Descripción:</label>
+            <textarea for="descripcion" name="descripcion"></textarea>
+            <input type="submit" name="enviar" value="Enviar">
+        </form>
+        <?php
 
-                <label for="moneda">Moneda:</label>
-                <input type="text" id="moneda" name="moneda" required>
+        session_start();
 
-                <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" placeholder="Descripción de la actividad"></textarea>
-    
-                <button type="submit" form="addActivity" value="Add" name="add">Añadir</button>
-            </form>
-        </div>
-    </div>
-</dialog>
+        if (isset($_SESSION["mensajeError"])) {
+        ?>
+            <div class="error-message"><?php echo $_SESSION["mensajeError"]; ?></div>
+        <?php
+            unset($_SESSION["mensajeError"]);
+        }
+        ?>
+    </dialog>
+</body>
+
+</html>
