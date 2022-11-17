@@ -6,7 +6,6 @@ body {
     font-family: 'Montserrat', serif;
     background-color: #EEE;
     color: #171717;
-    display: flex;
 }
 
 a,
@@ -185,7 +184,12 @@ label {
 
 #orden-actividad {
     margin-left: 10px;
-}
+    padding: 8px 10px;
+    background-color: #fff;
+    border: 1px solid #F7F7F7;
+    border-radius: 10px;
+    font-size: 14px;
+  }
 
 #caja-actividades {
     display: flex;
