@@ -42,7 +42,7 @@ h4 {
 }
 
 
-#formulario input {
+#formulario input, #addActivity input {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
@@ -263,12 +263,21 @@ label {
     margin-right: 15px;
     background-color: #4E729A;
 }
+.boton-aceptar {
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-right: 15px;
+    background-color: #4E729A;
+    color: #FFF;
+    border: none;
+}
 
 .boton-nueva-actividad:hover {
     opacity: 0.9;
 }
 
-.boton-nueva-actividad a:link {
+.boton-nueva-actividad a:link,.boton-nueva-actividad input  {
     text-decoration: none;
     color: #FFF;
     font-weight: 600;
@@ -412,23 +421,35 @@ dialog {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     text-align: center;
 }*/
-dialog{
+#addActivityDialog{
+    display: flex;
     border: none !important;
     box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    padding: 1.6rem;
-    background-color: #EEEEEE;
-    border-radius: 10px;
-    backdrop-filter: blur(px);
+    display: inline-flex;
+    position: absolute;
+    flex-direction: column;
+    top: 15%;
+
 }
-.centered {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    /* bring your own prefixes */
-    transform: translate(-50%, -50%);
-  }
-  /*
+  
   dialog::backdrop {
-    backdrop-filter: blur(1px);
+    backdrop-filter: blur(100000px);
     background-color: #171717;
-}*/
+}
+#addActivity textArea{
+    resize: none;
+    height: 100px;
+    width: 400px;
+}
+.dialog-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.dialog-footer{
+    padding-top: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
