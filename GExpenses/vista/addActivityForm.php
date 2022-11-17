@@ -15,7 +15,7 @@
 
                 <label for="descripcion">Descripción:</label>
                 <textarea id="descripcion" name="descripcion" placeholder="Descripción de la actividad"></textarea>
-
+    
                 <button type="submit" form="addActivity" value="Add" name="add">Añadir</button>
             </form>
         </div>
