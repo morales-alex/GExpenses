@@ -9,9 +9,9 @@
 </head>
 
 <body>
-    <dialog id=addActivityDialog class="dialogForm centered" open>
+    <dialog id=addActivityDialog class="dialogForm centered">
         <div id="dialog-activityForm" class="dialog-header">
-            <h5>Añadir actividad</h5>
+            <h4>Añadir actividad</h4>
             <span>x</span>
         </div>
         <form method="post" action="actividad-action.php" id="addActivity">
