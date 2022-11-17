@@ -262,6 +262,20 @@ label {
     font-weight: 600;
     margin-right: 15px;
     background-color: #4E729A;
+    
+
+    text-decoration: none;
+    color: #FFF;
+    font-weight: 600;
+}
+.boton-aceptar {
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-right: 15px;
+    background-color: #4E729A;
+    color: #FFF;
+    border: none;
 }
 .boton-aceptar {
     padding: 8px 12px;
@@ -277,13 +291,13 @@ label {
     opacity: 0.9;
 }
 
-.boton-nueva-actividad a:link,.boton-nueva-actividad input  {
+.boton-nueva-actividad a,.boton-nueva-actividad input  {
     text-decoration: none;
     color: #FFF;
     font-weight: 600;
 }
 
-.boton-nueva-actividad a:visited {
+.boton-nueva-actividad {
     color: #FFF;
 }
 
@@ -422,19 +436,15 @@ dialog {
     text-align: center;
 }*/
 #addActivityDialog{
-    display: flex;
     border: none !important;
     box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    display: inline-flex;
     position: absolute;
     flex-direction: column;
-    top: 15%;
 
 }
   
   dialog::backdrop {
-    backdrop-filter: blur(100000px);
-    background-color: #171717;
+    backdrop-filter: blur(1px);
 }
 #addActivity textArea{
     resize: none;

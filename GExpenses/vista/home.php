@@ -28,13 +28,31 @@ if (!isset($_SESSION['usuario'])) {
 <?php include_once './Header.php' ?>
 
 <body>
+
+
+
+
+
+
+
+<?php include_once './addActivityForm.php' ?>
+
+
+
+
+
+
+
+
+
+
     <div id="main">
         <div id="titulo-pagina">
             <div>
                 <h1>Actividades</h1>
             </div>
             <div class="ordenar">
-                <div class="boton-nueva-actividad"><a href="#">Añadir actividad +</a></div>
+                <div class="boton-nueva-actividad" id='addActivityButton'>Añadir actividad +</div>
                 <label for="orden-actividad">Ordenar por: </label>
                 <select name="orden-actividad" id="orden-actividad">
                     <option value="fecha-creacion">Fecha de creación</option>
@@ -96,11 +114,10 @@ if (!isset($_SESSION['usuario'])) {
             </div>
         </div>
     </div>
-    <?php
-    include 'addActivityForm.php';
-    ?>
 </body>
 
 <?php include_once './Footer.php' ?>
+
+<script src="../script/index.js"></script>
 
 </html>
