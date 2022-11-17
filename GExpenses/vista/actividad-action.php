@@ -4,44 +4,69 @@ session_start();
 
 if (isset($_POST["enviar"])) {
 
+    $moneda = $_POST["moneda"];
+
     $dades = [
-        [htmlentities($_POST["nombre"]), htmlentities($_POST["moneda"]), htmlentities($_POST["descripcion"])]
+        [htmlentities($_POST["nombre"]), comprobarMoneda($moneda), htmlentities($_POST["descripcion"])]
     ];
 
-    require '../controlador/BbddConfig.php';
+    if (comprobarMoneda($moneda) !== 'Error') {
 
-    $sql = "INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion) VALUES (:a_nombre, :a_moneda, :a_descripcion)";
-    $stmt = $pdo->prepare($sql);
+        require '../controlador/BbddConfig.php';
 
-    $stmt->bindParam(':a_nombre', $nomActivitat);
-    $stmt->bindParam(':a_moneda', $monedaActivitat);
-    $stmt->bindParam(':a_descripcion', $descripcioActivitat);
+        $sql = "INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion) VALUES (:a_nombre, :a_moneda, :a_descripcion)";
+        $stmt = $pdo->prepare($sql);
 
-    try {
+        $stmt->bindParam(':a_nombre', $nomActivitat);
+        $stmt->bindParam(':a_moneda', $monedaActivitat);
+        $stmt->bindParam(':a_descripcion', $descripcioActivitat);
 
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->beginTransaction();
+        try {
 
-        foreach ($dades as $reg) {
-            $nomActivitat = $reg[0];
-            $monedaActivitat = $reg[1];
-            $descripcioActivitat = $reg[2];
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->beginTransaction();
 
-            $stmt->execute();
+            foreach ($dades as $reg) {
+                $nomActivitat = $reg[0];
+                $monedaActivitat = $reg[1];
+                $descripcioActivitat = $reg[2];
+
+                $stmt->execute();
+            }
+            $pdo->commit();
+
+            $_SESSION["mensajeError"] = "Actividad añadida correctamente.";
+            $referer = $_SERVER['HTTP_REFERER']; // Redirige a la página donde se ecuentra
+            header("Location: $referer");
+        } catch (PDOException $ex) {
+            $pdo->rollBack();
+            $_SESSION["mensajeError"] = "Actividad no añadida, revisa los campos.";
+            $referer = $_SERVER['HTTP_REFERER']; // Redirige a la página donde se ecuentra
+            header("Location: $referer");
+            echo 'Error ' . $ex->getMessage();
+        } finally {
+            $pdo = null;
         }
-        $pdo->commit();
+    } else {
+        $_SESSION["mensajeError"] = "Tipo de moneda no valida";
+        $referer = $_SERVER['HTTP_REFERER'];
+        header("Location: $referer");
+    }
+}
 
-        $_SESSION["mensajeError"] = "Actividad añadida correctamente.";
-        $referer = $_SERVER['HTTP_REFERER']; // Redirige a la página donde se ecuentra
-        header("Location: $referer");
-        
-    } catch (PDOException $ex) {
-        $pdo->rollBack();
-        $_SESSION["mensajeError"] = "Actividad no añadida, revisa los campos.";
-        $referer = $_SERVER['HTTP_REFERER']; // Redirige a la página donde se ecuentra
-        header("Location: $referer");
-        echo 'Error ' . $ex->getMessage();
-    } finally {
-        $pdo = null;
+function comprobarMoneda($moneda) {
+
+    var_dump($moneda);
+
+    switch ($moneda) {
+        case '€':
+            return $moneda;
+            break;
+        case '$':
+            return $moneda;
+            break;
+        default:
+            return 'Error';
+            break;
     }
 }
