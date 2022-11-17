@@ -32,14 +32,15 @@ if (isset($_POST["enviar"])) {
         $pdo->commit();
 
         $_SESSION["mensajeError"] = "Actividad añadida correctamente.";
-        header("Location: ./addActivityForm.php"); // Inserción de datos correcta
-
+        $referer = $_SERVER['HTTP_REFERER']; // Redirige a la página donde se ecuentra
+        header("Location: $referer");
+        
     } catch (PDOException $ex) {
         $pdo->rollBack();
         $_SESSION["mensajeError"] = "Actividad no añadida, revisa los campos.";
-        header("Location: ./addActivityForm.php"); // Inserción de datos incorrecta
+        $referer = $_SERVER['HTTP_REFERER']; // Redirige a la página donde se ecuentra
+        header("Location: $referer");
         echo 'Error ' . $ex->getMessage();
-
     } finally {
         $pdo = null;
     }
