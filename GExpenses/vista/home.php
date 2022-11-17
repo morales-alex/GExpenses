@@ -1,6 +1,6 @@
 <?php
 
-if(session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
+if (session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
     SESSION_START();
 }
 
@@ -35,7 +35,7 @@ if (!isset($_SESSION['usuario'])) {
 
 
 
-<?php include_once './addActivityForm.php' ?>
+    <?php include_once './addActivityForm.php' ?>
 
 
 
@@ -62,56 +62,27 @@ if (!isset($_SESSION['usuario'])) {
         </div>
         <hr>
         <div id="caja-actividades">
-            <div class="actividad">
-                <div class="caja-interior-actividad">
-                    <div class="caja-titulo-actividad">
-                        <h3>Titulo actividad</h3>
-                    </div>
-                    <div class="caja-boton-actividad">
-                        <a href="#">VER ACTIVIDAD</a>
-                    </div>
-                </div>
-            </div>
-            <div class="actividad">
-                <div class="caja-interior-actividad">
-                    <div class="caja-titulo-actividad">
-                        <h3>Titulo actividad</h3>
-                    </div>
-                    <div class="caja-boton-actividad">
-                        <a href="#">VER ACTIVIDAD</a>
-                    </div>
-                </div>
-            </div>
-            <div class="actividad">
-                <div class="caja-interior-actividad">
-                    <div class="caja-titulo-actividad">
-                        <h3>Titulo actividad</h3>
-                    </div>
-                    <div class="caja-boton-actividad">
-                        <a href="#">VER ACTIVIDAD</a>
+            <?php
+            require '../controlador/BbddConfig.php';
+            // fetchAll() con PDO::FETCH_ASSOC
+            $stmt = $pdo->prepare("SELECT * FROM Actividades");
+            $stmt->execute();
+            $actividades = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($actividades as $actividad) {
+            ?>
+                <div class="actividad">
+                    <div class="caja-interior-actividad">
+                        <div class="caja-titulo-actividad">
+                            <h3><?= $actividad['a_nombre'] ?></h3>
+                        </div>
+                        <div class="caja-boton-actividad">
+                            <a href="#">VER ACTIVIDAD</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="actividad">
-                <div class="caja-interior-actividad">
-                    <div class="caja-titulo-actividad">
-                        <h3>Titulo actividad</h3>
-                    </div>
-                    <div class="caja-boton-actividad">
-                        <a href="#">VER ACTIVIDAD</a>
-                    </div>
-                </div>
-            </div>
-            <div class="actividad">
-                <div class="caja-interior-actividad">
-                    <div class="caja-titulo-actividad">
-                        <h3>Titulo actividad</h3>
-                    </div>
-                    <div class="caja-boton-actividad">
-                        <a href="#">VER ACTIVIDAD</a>
-                    </div>
-                </div>
-            </div>
+            <?php
+            }
+            ?>
         </div>
     </div>
 </body>
