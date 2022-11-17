@@ -4,15 +4,9 @@ session_start();
 
 if (isset($_POST["enviar"])) {
 
-    var_dump($_POST["enviar"]);
-    var_dump($_POST["nombre"]);
-    var_dump($_POST["moneda"]);
-    var_dump($_POST["descripcion"]);
-
     $dades = [
-        [$_POST["nombre"], $_POST["moneda"], $_POST["descripcion"]]
+        [htmlentities($_POST["nombre"]), htmlentities($_POST["moneda"]), htmlentities($_POST["descripcion"])]
     ];
-
 
     require '../controlador/BbddConfig.php';
 
@@ -36,9 +30,16 @@ if (isset($_POST["enviar"])) {
             $stmt->execute();
         }
         $pdo->commit();
+
+        $_SESSION["mensajeError"] = "Actividad añadida correctamente.";
+        header("Location: ./addActivityForm.php"); // Inserción de datos correcta
+
     } catch (PDOException $ex) {
         $pdo->rollBack();
+        $_SESSION["mensajeError"] = "Actividad no añadida, revisa los campos.";
+        header("Location: ./addActivityForm.php"); // Inserción de datos incorrecta
         echo 'Error ' . $ex->getMessage();
+
     } finally {
         $pdo = null;
     }
