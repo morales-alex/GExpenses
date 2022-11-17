@@ -365,11 +365,8 @@ footer {
     width: 100%;
     justify-content: space-evenly;
     background-color: gray;
-
     height: auto;
     align-items: center;
-
-    position: fixed;
     bottom: 0px;
     margin-right: auto;
     margin-left: auto;
@@ -403,10 +400,6 @@ footer {
     height: 100%;
     margin-left: 10px;
     color: #F7F7F7;
-}
-
-.partIzq span {
-
 }
 
 #logoFooter {
