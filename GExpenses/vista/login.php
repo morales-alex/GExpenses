@@ -1,3 +1,6 @@
+<?php
+include 'systemInfo.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,16 +40,10 @@
                         <input type="submit" class="btn-login" name="login" value="Iniciar sesión">
 
                         <?php
-
-                        session_start();
                         print_r($_SESSION);
-                        
-                        if (isset($_SESSION["mensajeError"])) {
-                        ?>
-                            <div class="error-message"><?php echo $_SESSION["mensajeError"]; ?></div>
-                        <?php
-                            unset($_SESSION["mensajeError"]);
-                        }
+
+                        //from systemInfo.php
+                        systemInfo("mensajeError");
                         ?>
                     </div>
                 </form>

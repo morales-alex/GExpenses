@@ -96,6 +96,9 @@ if (!isset($_SESSION['usuario'])) {
             </div>
         </div>
     </div>
+    <?php
+    include 'addActivityForm.php';
+    ?>
 </body>
 
 <?php include_once './Footer.php' ?>

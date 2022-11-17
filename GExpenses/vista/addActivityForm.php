@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <dialog id=addActivity open>
+    <dialog id=addActivityDialog class="dialogForm centered" open>
         <h5>Añadir actividad</h5>
         <form method="post" action="actividad-action.php" id="addActivity">
             <label for="nombre">Nombre:</label>
