@@ -1,9 +1,11 @@
-const addActivityButton = document.getElementById('addActivity');
+const addActivityButton = document.getElementById('addActivityButton');
 
 const dialog = document.getElementById('addActivityDialog');
-
 const aceptar = document.getElementById('addActivityForm');
+
 const cancelar = document.getElementById('cancelDialogForm');
+const cancelarX = document.getElementById('cancelarX');
+
 
 addActivityButton.addEventListener("click", function(e) {
     e.preventDefault();
@@ -13,12 +15,20 @@ addActivityButton.addEventListener("click", function(e) {
     dialog.showModal();
 });
 
+
+
+
+
 cancelar.addEventListener("click", function(e) {
     e.preventDefault();
 
     dialog.close('Dialogo cerrado');
 });
+cancelarX.addEventListener("click", function(e) {
+    e.preventDefault();
 
+    dialog.close('Dialogo cerrado');
+});
 
 aceptar.addEventListener("click", function(e) {
     e.preventDefault();
