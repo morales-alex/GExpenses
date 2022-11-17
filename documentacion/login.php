@@ -20,7 +20,7 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             </div>
 <!--
-                <div id="formulario">
+            <div id="formulario">
                 <h2 class="center">Login</h2>
                 <form id="">
                     <div class="row">

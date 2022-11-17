@@ -1,25 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
 
-<dialog id=addActivityDialog class="dialogForm centered" open>
-    <div class="dialog-content">
-        <div class="modal-header">
-            <h4 class="titleDialog">Añadir actividad</h4>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <dialog id=addActivityDialog class="dialogForm centered" open>
+        <div id="dialog-activityForm" class="dialog-header">
+            <h5>Añadir actividad</h5>
+            <span>x</span>
         </div>
-        <div class="dialog-content">
-            <form method="dialog" id="addActivity">
+        <form method="post" action="actividad-action.php" id="addActivity">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" required>
+            <label for="moneda" >Moneda:</label>
+            <input type="text" name="moneda" placeholder="€,$.."required>
+            <label for="descripcion">Descripción:</label>
+            <textarea for="descripcion" name="descripcion" placeholder="Definicion de la actividad..."></textarea>
+            
+        </form>
+        <?php
+        if (isset($_SESSION["mensajeError"])) {
+        ?>
+            <div class="error-message"><?php echo $_SESSION["mensajeError"]; ?></div>
+        <?php
+            unset($_SESSION["mensajeError"]);
+        }
+        ?>
+    <div class="dialog-footer">
+        <input type="button" class="boton-aceptar" value="Cerrar"></input>
+        <input type="submit" name="enviar" value="Enviar" class="boton-aceptar">
+        
+      </div>
+    </dialog>
+</body>
 
-                <label for="nombre" aria-placeholder="Viaje a Ibiza">Nombre:</label>
-                <input type="text" id="name" name="name" required>
-
-                <label for="moneda">Moneda:</label>
-                <input type="text" id="moneda" name="moneda" required>
-
-                <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" placeholder="Descripción de la actividad"></textarea>
-
-                <button type="submit" form="addActivity" value="Add" name="add">Añadir</button>
-                
-                <button type="submit" form="addActivity" value="Add" name="add">Cancelar</button>
-            </form>
-        </div>
-    </div>
-</dialog>
+</html>
