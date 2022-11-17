@@ -40,7 +40,8 @@ include 'systemInfo.php';
                         <input type="submit" class="btn-login" name="login" value="Iniciar sesión">
 
                         <?php
-                        print_r($_SESSION);
+
+                        var_dump($_SESSION['mensajeError']);
 
                         //from systemInfo.php
                         systemInfo("mensajeError");

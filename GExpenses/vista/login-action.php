@@ -9,7 +9,7 @@ if (isset($_POST["login"])) {
     
     $passwordEncriptada = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    if (compruebaUsuario(htmlentities($_POST["usuario"]), htmlentities($_POST['password']))) {
+    if (compruebaUsuario(htmlentities($_POST["usuario"]), htmlentities($passwordEncriptada))) {
 
         $_SESSION["mensajeError"] = null;
         $_SESSION['usuario'] = $_POST["usuario"];
@@ -49,8 +49,8 @@ function compruebaUsuario($username, $password)
 
     $_SESSION['passwordbbdd'] = $password;
 
-    if (($username === $datos['u_username'] or $username === $datos['u_correo'])
-        and $password === $datos['u_password']
+    if (($username === $datos['u_username'] or $username === $datos['u_correo']) AND password_verify($password, $datos['u_password'])
+        // and $password === $datos['u_password']
     ) {
         return true;
     } else {
