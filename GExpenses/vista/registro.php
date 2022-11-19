@@ -69,5 +69,5 @@
         </div>
     </div>
 </body>
-<script src="../registro.js"></script> 
+<script src="../script/registro.js"></script> 
 </html>
