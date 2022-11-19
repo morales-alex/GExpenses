@@ -29,22 +29,7 @@ if (!isset($_SESSION['usuario'])) {
 
 <body>
 
-
-
-
-
-
-
     <?php include_once './addActivityForm.php' ?>
-
-
-
-
-
-
-
-
-
 
     <div id="main">
         <div id="titulo-pagina">
@@ -63,17 +48,25 @@ if (!isset($_SESSION['usuario'])) {
         <hr>
         <div id="caja-actividades">
             <?php
+
             require '../controlador/BbddConfig.php';
-            // fetchAll() con PDO::FETCH_ASSOC
-            $stmt = $pdo->prepare("SELECT * FROM Actividades");
+
+            $stmt = $pdo->prepare("SELECT * FROM Actividades ORDER BY a_fecCreacion DESC");
             $stmt->execute();
-            $actividades = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            foreach ($actividades as $actividad) {
+            $actividadesFecCreacion = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $stmt = $pdo->prepare("SELECT * FROM Actividades ORDER BY a_fecUltMod DESC;");
+            $stmt->execute();
+            $actividadesFecUltMod = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $pdo = null;
+
+            foreach ($actividadesFecCreacion as $actividad) {
             ?>
                 <div class="actividad">
                     <div class="caja-interior-actividad">
                         <div class="caja-titulo-actividad">
-                            <h3><?= $actividad['a_nombre'] ?></h3>
+                            <h3><?php echo $actividad['a_nombre'] ?></h3>
                         </div>
                         <div class="caja-boton-actividad">
                             <a href="#">VER ACTIVIDAD</a>

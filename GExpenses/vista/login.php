@@ -37,10 +37,8 @@
                         <input type="submit" class="btn-login" name="login" value="Iniciar sesión">
 
                         <?php
-
-
+                        
                         session_start();
-                        print_r($_SESSION);
                         
                         if (isset($_SESSION["mensajeError"])) {
                         ?>

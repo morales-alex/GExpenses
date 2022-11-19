@@ -30,22 +30,24 @@ cancelarX.addEventListener("click", function(e) {
     dialog.close('Dialogo cerrado');
 });
 
-aceptar.addEventListener("click", function(e) {
+
+const cerrar = document.querySelector('html');
+
+cerrar.addEventListener('click', function(e) {
     e.preventDefault();
 
-    console.log('datos formulario');
+    console.log(e.target);
 });
 
-
-
-
-
-
-
-// const cerrar = document.querySelector('html');
-
-// cerrar.addEventListener('click', function(e) {
+// aceptar.addEventListener("click", function(e) {
 //     e.preventDefault();
 
-//     console.log(e.target);
+//     console.log('datos formulario');
 // });
+
+
+
+
+
+
+
