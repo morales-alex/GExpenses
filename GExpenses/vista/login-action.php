@@ -7,7 +7,8 @@ if (session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INIC
 
 if (isset($_POST["login"])) {
     
-    $passwordEncriptada = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    // AÑADIR EN EL REGISTRO.PHP
+    //$passwordEncriptada = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     if (compruebaUsuario(htmlentities($_POST["usuario"]), htmlentities($_POST['password']))) {
 
@@ -31,26 +32,22 @@ function compruebaUsuario($username, $password)
     require '../controlador/BbddConfig.php';
 
     try {
-        $sql = "SELECT u_username, u_correo, u_password FROM Usuarios where (u_username = :u_username OR u_correo = :u_correo) AND u_password = :u_password";
+        $sql = "SELECT u_username, u_correo, u_password FROM Usuarios where (u_username = :u_username OR u_correo = :u_correo)";
         $stmt = $pdo->prepare($sql);
 
         $stmt->bindParam(':u_username', $username);
         $stmt->bindParam(':u_correo', $username);
-        $stmt->bindParam(':u_password', $password);
+        //$stmt->bindParam(':u_password', $password);
 
         $stmt->execute();
         $datos = $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $ex) {
         echo 'Error: ' . $ex->getMessage();
+
     }
 
-    $_SESSION['usuarioUser'] = $username;
-
-
-    $_SESSION['passwordbbdd'] = $password;
-
-    if (($username === $datos['u_username'] or $username === $datos['u_correo']) //AND password_verify($password, $datos['u_password'])
-         and $password === $datos['u_password']
+    if (($username === $datos['u_username'] or $username === $datos['u_correo']) AND password_verify($password, $datos['u_password'])
+        // and $password === $datos['u_password']
     ) {
         return true;
     } else {
