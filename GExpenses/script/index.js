@@ -30,11 +30,8 @@ cancelarX.addEventListener("click", function(e) {
     dialog.close('Dialogo cerrado');
 });
 
-
-const cerrar = document.querySelector('html');
-
-cerrar.addEventListener('click', function(e) {
-    e.preventDefault();
+cancelar.addEventListener("click", function (e) {
+  e.preventDefault();
 
     console.log(e.target);
 });
