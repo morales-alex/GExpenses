@@ -78,12 +78,12 @@ const nombreInput = document.querySelector("#nombre");
 const usuarioInput = document.querySelector("#usuario");
 const formuario = document.querySelector("#formulario");
 
-passwordInput.addEventListener('keyup', validarPassword);
-confirmarPasswordInput.addEventListener('keyup', confirmarPassword);
-emailInput.addEventListener('keyup', validarEmail);
-apellidosInput.addEventListener('keyup', validarApellidos);
-nombreInput.addEventListener('keyup', validarNombre);
-usuarioInput.addEventListener('keyup', validarUsuario);
+passwordInput.addEventListener('focusout', validarPassword);
+confirmarPasswordInput.addEventListener('focusout', confirmarPassword);
+emailInput.addEventListener('focusout', validarEmail);
+apellidosInput.addEventListener('focusout', validarApellidos);
+nombreInput.addEventListener('focusout', validarNombre);
+usuarioInput.addEventListener('focusout', validarUsuario);
 //formuario.addEventListener('submit', validarCampos);
 
 formuario.addEventListener('submit', function(e) {
