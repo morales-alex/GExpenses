@@ -2,48 +2,38 @@
 
 session_start();
 
-if (isset($_POST["enviar"])) {
+if (isset($_POST)) {
 
-    $moneda = $_POST["moneda"];
 
-    $dades = [
-        [htmlentities($_POST["nombre"]), comprobarMoneda($moneda), htmlentities($_POST["descripcion"])]
-    ];
+    $dades = [htmlentities($_POST["nombre"]), comprobarMoneda($_POST["moneda"]), htmlentities($_POST["descripcion"])];
 
-    if (comprobarMoneda($moneda) !== 'Error') {
+    if ($dades[1] !== 'Error') {
 
         require '../controlador/BbddConfig.php';
 
-        $sql = "INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion) VALUES (:a_nombre, :a_moneda, :a_descripcion)";
-        $stmt = $pdo->prepare($sql);
-
-        $stmt->bindParam(':a_nombre', $nomActivitat);
-        $stmt->bindParam(':a_moneda', $monedaActivitat);
-        $stmt->bindParam(':a_descripcion', $descripcioActivitat);
-
         try {
+
+            $sql = "INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) 
+                        VALUES (:a_nombre, :a_moneda, :a_descripcion, sysdate(), sysdate())";
+            $stmt = $pdo->prepare($sql);
+
+            $stmt->bindParam(':a_nombre', $dades[0]);
+            $stmt->bindParam(':a_moneda', $dades[1]);
+            $stmt->bindParam(':a_descripcion', $dades[2]);
 
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $pdo->beginTransaction();
 
-            foreach ($dades as $reg) {
-                $nomActivitat = $reg[0];
-                $monedaActivitat = $reg[1];
-                $descripcioActivitat = $reg[2];
+            $stmt->execute();
 
-                $stmt->execute();
-            }
             $pdo->commit();
 
-            $_SESSION["mensajeError"] = "Actividad añadida correctamente.";
             $referer = $_SERVER['HTTP_REFERER']; // Redirige a la página donde se ecuentra
             header("Location: $referer");
         } catch (PDOException $ex) {
             $pdo->rollBack();
-            $_SESSION["mensajeError"] = "Actividad no añadida, revisa los campos.";
             $referer = $_SERVER['HTTP_REFERER']; // Redirige a la página donde se ecuentra
             header("Location: $referer");
-            echo 'Error ' . $ex->getMessage();
         } finally {
             $pdo = null;
         }
@@ -54,16 +44,14 @@ if (isset($_POST["enviar"])) {
     }
 }
 
-function comprobarMoneda($moneda) {
-
-    var_dump($moneda);
-
+function comprobarMoneda($moneda)
+{
     switch ($moneda) {
         case '€':
-            return $moneda;
+            return 'EUR';
             break;
         case '$':
-            return $moneda;
+            return 'USD';
             break;
         default:
             return 'Error';

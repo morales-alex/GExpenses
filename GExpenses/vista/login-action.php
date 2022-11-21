@@ -37,7 +37,6 @@ function compruebaUsuario($username, $password)
 
         $stmt->bindParam(':u_username', $username);
         $stmt->bindParam(':u_correo', $username);
-        //$stmt->bindParam(':u_password', $password);
 
         $stmt->execute();
         $datos = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -47,7 +46,6 @@ function compruebaUsuario($username, $password)
     }
 
     if (($username === $datos['u_username'] or $username === $datos['u_correo']) AND password_verify($password, $datos['u_password'])
-        // and $password === $datos['u_password']
     ) {
         return true;
     } else {

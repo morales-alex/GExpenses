@@ -444,6 +444,7 @@ dialog {
   dialog::backdrop {
     backdrop-filter: blur(1px);
 }
+
 #addActivity textArea{
     resize: none;
     height: 100px;
@@ -461,3 +462,27 @@ dialog {
     justify-content: flex-end;
 }
 
+label#moneda {
+    display: inline-flex;
+    margin-bottom: 19px;
+}
+
+select#moneda {
+    width: 50px;
+}
+
+input#cancelDialogForm {
+    background-color: red;
+}
+
+.error-messageForm {
+    display: none;
+    color: #c40000;
+    background-color: #ffd3d3;
+    width: fit-content;
+    border-radius: 25px;
+}
+
+p#nombreError.error-messageForm {
+    margin-top: -10px;
+}

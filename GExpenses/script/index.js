@@ -1,50 +1,97 @@
-const addActivityButton = document.getElementById('addActivityButton');
+function compruebaDatosForm() {
+  let envio = true;
 
-const dialog = document.getElementById('addActivityDialog');
-const aceptar = document.getElementById('addActivityForm');
+  const valorNombre = nombreActividad.value;
+  const valorMoneda = monedaActividad.value;
+  const valorDescripcion = descripcionActividad.value;
 
-const cancelar = document.getElementById('cancelDialogForm');
-const cancelarX = document.getElementById('cancelarX');
+  if (valorNombre.length > 30) {
+    nombreError.innerText = "EL CAMPO DEBE TENER MENOS DE 30 CARÁCTERES";
+    nombreError.style.display = "block";
+    envio = false;
+  } else if (valorNombre.length === 0) {
+    nombreError.innerText = "EL NOMBRE NO PUEDE ESTAR VACÍO";
+    nombreError.style.display = "block";
+    envio = false;
+  } else {
+    nombreError.style.display = "none";
+  }
 
+  if (valorMoneda !== "€" && valorMoneda !== "$") {
+    envio = false;
+  }
 
-addActivityButton.addEventListener("click", function(e) {
-    e.preventDefault();
+  if (valorDescripcion.length > 130) {
+    descripcionError.style.display = "block";
+    envio = false;
+  } else {
+    descripcionError.style.display = "none";
+  }
 
-    const dialog = document.getElementById('addActivityDialog');
+  return envio ? true : false;
+}
 
-    dialog.showModal();
-});
+const abrirFormulario = document.querySelector("#addActivityButton");
 
+const dialog = document.querySelector("#addActivityDialog");
 
+const formulario = document.querySelector("#addActivity");
+const aceptar = document.querySelector("#boton-aceptar");
+const cancelar = document.querySelector("#cancelDialogForm");
+const cancelarX = document.querySelector("#cancelarX");
 
+const nombreActividad = document.querySelector("#nombreValue");
+const monedaActividad = document.querySelector("#monedaValue");
+const descripcionActividad = document.querySelector("#descripcionValue");
 
+const descripcionError = document.querySelector("#descripcionError");
+const nombreError = document.querySelector("#nombreError");
 
-cancelar.addEventListener("click", function(e) {
-    e.preventDefault();
+abrirFormulario.addEventListener("click", function (e) {
+  e.preventDefault();
 
-    dialog.close('Dialogo cerrado');
-});
-cancelarX.addEventListener("click", function(e) {
-    e.preventDefault();
+  nombreActividad.value = "";
+  monedaActividad.value = "€";
+  descripcionActividad.value = "";
 
-    dialog.close('Dialogo cerrado');
+  nombreError.style.display = "none";
+  descripcionError.style.display = "none";
+
+  dialog.showModal();
 });
 
 cancelar.addEventListener("click", function (e) {
   e.preventDefault();
 
-    console.log(e.target);
+  nombreActividad.value = "";
+  monedaActividad.value = "€";
+  descripcionActividad.value = "";
+
+  nombreError.style.display = "none";
+  descripcionError.style.display = "none";
+
+  dialog.close("Dialogo cerrado");
 });
 
-// aceptar.addEventListener("click", function(e) {
-//     e.preventDefault();
+cancelarX.addEventListener("click", function (e) {
+  e.preventDefault();
 
-//     console.log('datos formulario');
-// });
+  nombreActividad.value = "";
+  monedaActividad.value = "€";
+  descripcionActividad.value = "";
 
+  nombreError.style.display = "none";
+  descripcionError.style.display = "none";
 
+  dialog.close("Dialogo cerrado");
+});
 
+aceptar.addEventListener("click", function (e) {
+  e.preventDefault();
 
-
-
-
+  if (compruebaDatosForm()) {
+    nombreError.style.display = "none";
+    descripcionError.style.display = "none";
+    formulario.submit();
+  }
+});
