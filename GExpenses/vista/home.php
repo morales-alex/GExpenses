@@ -10,7 +10,6 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,11 +37,13 @@ if (!isset($_SESSION['usuario'])) {
             </div>
             <div class="ordenar">
                 <div class="boton-nueva-actividad" id='addActivityButton'>Añadir actividad +</div>
-                <label for="orden-actividad">Ordenar por: </label>
-                <select name="orden-actividad" id="orden-actividad">
-                    <option value="fecha-creacion">Fecha de creación</option>
-                    <option value="fecha-modificacion">Fecha de modificación</option>
-                </select>
+                <form method="post" action="home.php">
+                    <select name="ordenActividad">
+                        <option value="fechaCreacion">Fecha de creación</option>
+                        <option value="fechaModificacion">Fecha de modificacion</option>
+                    </select>
+                    <button type="submit" name="enviar" value="enviar">OK</button>
+                </form>
             </div>
         </div>
         <hr>
@@ -51,22 +52,33 @@ if (!isset($_SESSION['usuario'])) {
 
             require '../controlador/BbddConfig.php';
 
-            $stmt = $pdo->prepare("SELECT * FROM Actividades ORDER BY a_fecCreacion DESC");
-            $stmt->execute();
-            $actividadesFecCreacion = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (!empty($_POST["ordenActividad"])) {
+                $seleccion = $_POST["ordenActividad"];
+            } else {
+                $seleccion = 'fechaModificacion';
+            }
 
-            $stmt = $pdo->prepare("SELECT * FROM Actividades ORDER BY a_fecUltMod DESC;");
-            $stmt->execute();
-            $actividadesFecUltMod = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($seleccion == 'fechaCreacion') {
+                $stmt = $pdo->prepare("SELECT * FROM Actividades ORDER BY a_fecCreacion DESC");
+                $stmt->execute();
+                $consultaOrdenada = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } else {
+                $stmt = $pdo->prepare("SELECT * FROM Actividades ORDER BY a_fecUltMod DESC;");
+                $stmt->execute();
+                $consultaOrdenada = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+
 
             $pdo = null;
 
-            foreach ($actividadesFecCreacion as $actividad) {
+            foreach ($consultaOrdenada as $actividad) {
             ?>
                 <div class="actividad">
                     <div class="caja-interior-actividad">
                         <div class="caja-titulo-actividad">
                             <h3><?php echo $actividad['a_nombre'] ?></h3>
+                            <p>F. crea: <?php echo $actividad['a_fecCreacion'] ?></p>
+                            <p>F. modif: <?php echo $actividad['a_fecUltMod'] ?></p>
                         </div>
                         <div class="caja-boton-actividad">
                             <a href="#">VER ACTIVIDAD</a>
