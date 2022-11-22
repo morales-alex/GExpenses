@@ -9,9 +9,9 @@ if (!isset($_SESSION['usuario'])) {
     header('location: ./login.php');
 }
 
-echo $_GET["id"];
+//echo $_GET["id"];
 
-$Actividad = getActividad($_GET["id"]);
+//$Actividad = getActividad($_GET["id"]);
 
 ?>
 <!DOCTYPE html>
@@ -32,17 +32,81 @@ $Actividad = getActividad($_GET["id"]);
 
 <body>
 
-    <div id="main">
-        <div id="titulo-pagina">
-            <div>
-                <h1>Actividades</h1>
+    <div id="contenidoActividad">
+
+
+
+        <div id="actividadMain">
+
+            <h1 id="tituloActividad">Viaje al congo</h1>
+
+
+            <div id="gastoWrapper">
+
+                <div id="gasto">
+                    <p id="nombreGasto">Buceo Guiado</p>
+                    <p>Pagado por:</p>
+                    <p>Alfonso Fernández</p>
+
+                    <p id="precioGasto">390.20€</p>
+                </div>
+
+                <div id="gasto">
+                    <p id="nombreGasto">Buceo Guiado</p>
+                    <p>Pagado por:</p>
+                    <p>Alfonso Fernández</p>
+
+                    <p id="gasto">390.20€</p>
+                </div>
+
+                <div id="gasto">
+                    <p id="nombreGasto">Buceo Guiado</p>
+                    <p>Pagado por:</p>
+                    <p>Alfonso Fernández</p>
+
+                    <p id="precioGasto">390.20€</p>
+                </div>
+
+                <div id="gasto">
+                    <p id="nombreGasto">Buceo Guiado</p>
+                    <p>Pagado por:</p>
+                    <p>Alfonso Fernández</p>
+
+                    <p id="precioGasto">390.20€</p>
+                </div>
+
+                <div id="gasto">
+                    <p id="nombreGasto">Buceo Guiado</p>
+                    <p>Pagado por:</p>
+                    <p>Alfonso Fernández</p>
+
+                    <p id="precioGasto">390.20€</p>
+                </div>
+
+
             </div>
+
+
         </div>
-        
-        <div id="caja-actividades">
-            
+
+        <div id="linea"></div>
+
+        <div id="participantes">
+            <div id="tituloParticipantes">
+                <h2>Participantes</h2>
+                <a href="" id="addParticipantes">+</a>
+            </div>
+
+            <p id="participante">Alfonso99 [ correo@correo.com ]</p>
+            <p id="participante">Alfonso99 [ correo@correo.com ]</p>
+            <p id="participante">Alfonso99 [ correo@correo.com ]</p>
+            <p id="participante">Alfonso99 [ correo@correo.com ]</p>
         </div>
+
+
+
     </div>
+
 </body>
 
 <?php include_once './Footer.php' ?>
@@ -54,8 +118,8 @@ $Actividad = getActividad($_GET["id"]);
 
 <?php
 
-function getActividad() {
-
+function getActividad()
+{
 }
 
 ?>
