@@ -73,7 +73,7 @@ if (!isset($_SESSION['usuario'])) {
 
             foreach ($consultaOrdenada as $actividad) {
             ?>
-                <div class="actividad">
+                <div class="actividad" id="<?php echo $actividad['a_id'] ?>">
                     <div class="caja-interior-actividad">
                         <div class="caja-titulo-actividad">
                             <h3><?php echo $actividad['a_nombre'] ?></h3>
@@ -81,7 +81,7 @@ if (!isset($_SESSION['usuario'])) {
                             <p>F. modif: <?php echo $actividad['a_fecUltMod'] ?></p>
                         </div>
                         <div class="caja-boton-actividad">
-                            <a href="#">VER ACTIVIDAD</a>
+                            <a href="./Actividad.php">VER ACTIVIDAD</a>
                         </div>
                     </div>
                 </div>
@@ -94,6 +94,7 @@ if (!isset($_SESSION['usuario'])) {
 
 <?php include_once './Footer.php' ?>
 
-<script src="../script/index.js"></script>
+<script src="../script/crearFormulario.js"></script>
+<script src="../script/actividad.js"></script>
 
 </html>
