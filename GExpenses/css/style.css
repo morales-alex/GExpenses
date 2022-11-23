@@ -250,6 +250,7 @@ label {
     justify-content: center;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    flex-direction: column;
 }
 
 .caja-boton-actividad a:link {
@@ -485,4 +486,8 @@ input#cancelDialogForm {
 
 p#nombreError.error-messageForm {
     margin-top: -10px;
+}
+
+.mostrar {
+    display: block;
 }
