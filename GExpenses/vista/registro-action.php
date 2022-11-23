@@ -2,10 +2,10 @@
 
 session_start();
 
+require '../controlador/BbddConfig.php';
+if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]), $pdo)) {
 
-if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]))) {
-
-    require '../controlador/BbddConfig.php';
+    
 
     $password_hasheado = htmlentities($_POST["password"]);
 
@@ -40,13 +40,12 @@ if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]))) {
     }
 } else {
     var_dump($_POST);
-    echo(!compruebaEmail(htmlentities($_POST["email"])));
+    echo(!compruebaEmail(htmlentities($_POST["email"]),$pdo));
     $_SESSION["mensajeError"] = "No funciono";
 }
 
-function compruebaEmail($correo) {
+function compruebaEmail($correo, $pdo) {
 
-    require '../controlador/BbddConfig.php';
 
     try {
         $sql = "SELECT u_correo FROM Usuarios where u_correo = :u_correo";
