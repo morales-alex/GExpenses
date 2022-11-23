@@ -19,44 +19,61 @@
                 <h1>Bienvenido a <span class="negrita">GExpenses</span></h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             </div>
-            <div id="formulario">
+            <div>
                 <h2 class="center">Registro</h2>
-                <form id="">
+                <form method="post" id="formulario" action="registro-action.php">
                     <div class="row-registro">
                         <div class="col">
                             <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre" placeholder="Escriba su nombre">
+                            <input type="text" id="nombre" name="nombre" placeholder="Escriba su nombre">
+                            <p class="error-messageForm">No has introducido un nombre valido</p>
                         </div>
                         <div class="col">
                             <label for="apellidos">Apellidos</label>
-                            <input type="text" id="apellidos" placeholder="Escriba sus apellidos">
+                            <input type="text" id="apellidos" name="apellidos" placeholder="Escriba sus apellidos">
+                            <p class="error-messageForm">No has introducido apellidos validos</p>
                         </div>
                     </div>
                     <div class="row-registro">
                         <div class="col">
                             <label for="usuario">Usuario</label>
-                            <input type="text" id="usuario" placeholder="Escriba su nombre de usuario">
+                            <input type="text" id="usuario" name="usuario" placeholder="Escriba su nombre de usuario">
+                            <p class="error-messageForm">No has introducido un usuario valido</p>
                         </div>
                         <div class="col">
                             <label for="email">Correo electrónico</label>
-                            <input type="email" id="email" placeholder="Escriba su correo eletrónico">
+                            <input type="email" id="email" name="email" placeholder="Escriba su correo eletrónico">
+                            <p class="error-messageForm">No has introducido un correo eletrónico valido</p>
                         </div>
                     </div>
                     <div class="row-registro">
                         <div class="col">
                             <label for="password">Contraseña</label>
-                            <input type="password" id="password" placeholder="Escriba su contraseña">
+                            <input type="password" id="password" name="password" placeholder="Escriba su contraseña">
+                            <p class="error-messageForm">No has introducido una contraseña valida</p>
                         </div>
                         <div class="col">
                             <label for="password-confirm">Repetir contraseña</label>
-                            <input type="password" id="password-confirm" placeholder="Confirme su contraseña">
+                            <input type="password" id="password-confirm" name="password-confirm" placeholder="Confirme su contraseña">
+                            <p class="error-messageForm">Las contraseñas no coinciden</p>
                         </div>
                     </div>
 
 
                     <div class="row">
-                        <button class="btn-login" type="submit">Iniciar sessión</button>
+                        <button class="btn-login" type="submit">Registrarse</button>
                     </div>
+                    <?php
+                        
+                        session_start();
+                        
+                        if (isset($_SESSION["mensajeError"])) {
+                        ?>
+                            <div class="error-message"><?php echo $_SESSION["mensajeError"]; ?></div>
+                        <?php
+                            unset($_SESSION["mensajeError"]);
+                        }
+                        ?>
                 </form>
 
                 <div id="no-registrado">
