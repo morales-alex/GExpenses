@@ -165,7 +165,7 @@ label {
 
 
 
-/*======================  CSS HOME  ================================*/
+/*======================  HOME  ================================*/
 
 #titulo-pagina {
     display: flex;
@@ -304,8 +304,7 @@ label {
     color: #FFF;
 }
 
-  
-/* HEADER */
+/*======================  HEADER  ================================*/
 
 nav {
     display: flex;
@@ -321,7 +320,6 @@ nav {
 }
 
 #logo {
-    background-color: #4E729A;
     width: 177px;
     display: flex;
     align-items: center;
@@ -490,4 +488,73 @@ p#nombreError.error-messageForm {
 
 .mostrar {
     display: block;
+}
+
+/*======================  PÁGINA ACTIVIDAD  ================================*/
+
+div#contenidoActividad {
+
+    height: 80%;
+    display: flex;
+}
+
+/*----- ACTIVIDAD -----*/
+
+
+div#actividadMain {
+    height: 100%;
+    width: 65%;
+}
+
+h1#tituloActividad {
+
+    text-align: center;
+    padding-top: 20px;
+
+}
+
+div#gastoWrapper {
+    display: flex;
+    justify-content: space-evenly;
+    height: 100%;
+    margin-top: 33px;
+    flex-wrap: wrap;
+}
+
+div#gasto {
+    width: 20%;
+    height: fit-content;
+    background-color: darkgoldenrod;
+    padding: 1px;
+    border-radius: 10px;
+}
+
+/*----- LINEA -----*/
+div#linea {
+    border: 1px solid black;
+    height: 90%;
+    margin-top: 2%;
+}
+
+/*----- PARTICIPANTES -----*/
+div#participantes {
+    width: 35%;
+}
+
+div#tituloParticipantes {
+    display: flex;
+    margin: 0 190px;
+}
+
+a#addParticipantes {
+    background-color: chartreuse;
+    font-size: 40px;
+    margin: auto 0 auto auto;
+}
+
+p#participante {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: aquamarine;
+    width: fit-content;
 }
