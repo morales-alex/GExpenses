@@ -1,7 +1,7 @@
 const actividad = document.querySelector('.caja-boton-actividad');
 
 
-
+/*
 actividad.addEventListener("click", function (e) {
     e.preventDefault();
 
@@ -11,3 +11,9 @@ actividad.addEventListener("click", function (e) {
   });
 
 
+  function addParticipante () {
+
+  console.log("test");
+
+  }
+*/

@@ -32,6 +32,8 @@ if (!isset($_SESSION['usuario'])) {
 
 <body>
 
+    <?php include_once './addParticipanteForm.php' ?>
+
     <div id="contenidoActividad">
 
 
@@ -43,44 +45,36 @@ if (!isset($_SESSION['usuario'])) {
 
             <div id="gastoWrapper">
 
-                <div id="gasto">
-                    <p id="nombreGasto">Buceo Guiado</p>
-                    <p>Pagado por:</p>
-                    <p>Alfonso Fernández</p>
-
-                    <p id="precioGasto">390.20€</p>
+                <div id="tituloGasto">
+                    <h3 id="tituloCampo">NOMBRE:</h3>
+                    <h3 id="tituloCampo">PAGÓ:</h3>
+                    <h3 id="tituloCampo">PRECIO:</h3>
                 </div>
 
                 <div id="gasto">
-                    <p id="nombreGasto">Buceo Guiado</p>
-                    <p>Pagado por:</p>
-                    <p>Alfonso Fernández</p>
-
-                    <p id="gasto">390.20€</p>
+                    <div id="campoGasto">Buceo Guiado</div>
+                    <div id="campoGasto">Alfonso Fernández</div>
+                    <div id="campoGasto">390.20€</div>
                 </div>
-
                 <div id="gasto">
-                    <p id="nombreGasto">Buceo Guiado</p>
-                    <p>Pagado por:</p>
-                    <p>Alfonso Fernández</p>
-
-                    <p id="precioGasto">390.20€</p>
+                    <div id="campoGasto">Buceo Guiado</div>
+                    <div id="campoGasto">Alfonso Fernández</div>
+                    <div id="campoGasto">390.20€</div>
                 </div>
-
                 <div id="gasto">
-                    <p id="nombreGasto">Buceo Guiado</p>
-                    <p>Pagado por:</p>
-                    <p>Alfonso Fernández</p>
-
-                    <p id="precioGasto">390.20€</p>
+                    <div id="campoGasto">Buceo Guiado</div>
+                    <div id="campoGasto">Alfonso Fernández</div>
+                    <div id="campoGasto">390.20€</div>
                 </div>
-
                 <div id="gasto">
-                    <p id="nombreGasto">Buceo Guiado</p>
-                    <p>Pagado por:</p>
-                    <p>Alfonso Fernández</p>
-
-                    <p id="precioGasto">390.20€</p>
+                    <div id="campoGasto">Buceo Guiado</div>
+                    <div id="campoGasto">Alfonso Fernández</div>
+                    <div id="campoGasto">390.20€</div>
+                </div>
+                <div id="gasto">
+                    <div id="campoGasto">Buceo Guiado</div>
+                    <div id="campoGasto">Alfonso Fernández</div>
+                    <div id="campoGasto">390.20€</div>
                 </div>
 
 
@@ -94,10 +88,11 @@ if (!isset($_SESSION['usuario'])) {
         <div id="participantes">
             <div id="tituloParticipantes">
                 <h2>Participantes</h2>
-                <a href="" id="addParticipantes">+</a>
+                <input id="addParticipantes" type = "button" /*onclick = "addParticipante()"*/ value="Añadir">
+                <!-- <a href="" id="addParticipantes">+</a> -->
             </div>
 
-            <p id="participante">Alfonso99 [ correo@correo.com ]</p>
+            <p id="participante">Alfonso99TEESTSTSTS [ correo@correo.com ]</p>
             <p id="participante">Alfonso99 [ correo@correo.com ]</p>
             <p id="participante">Alfonso99 [ correo@correo.com ]</p>
             <p id="participante">Alfonso99 [ correo@correo.com ]</p>
@@ -111,15 +106,7 @@ if (!isset($_SESSION['usuario'])) {
 
 <?php include_once './Footer.php' ?>
 
+<script src="../script/crearParticipantes.js"></script>
 <script src="../script/actividad.js"></script>
 
 </html>
-
-
-<?php
-
-function getActividad()
-{
-}
-
-?>
