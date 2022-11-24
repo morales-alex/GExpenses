@@ -4,7 +4,7 @@
 
 USE GExpenses_3P1;
 
-CREATE TABLE Usuarios (
+CREATE TABLE IF NOT EXISTS Usuarios ( 
 	u_id		int AUTO_INCREMENT, -- IDENTITY(1,1) = AUTO_INCREMENT, EMPIEZA EN 1 Y SUBE DE 1 EN 1
 	u_username	varchar(30) UNIQUE,
 	u_nombre	varchar(60),
@@ -12,9 +12,9 @@ CREATE TABLE Usuarios (
 	u_correo	varchar(60) UNIQUE,
 	u_password	varchar(255) NOT NULL,
 	PRIMARY KEY(u_id)
-);
+) ENGINE=INNODB;
 
-CREATE TABLE Actividades (
+CREATE TABLE IF NOT EXISTS Actividades (
 	a_id		int AUTO_INCREMENT,
 	a_nombre	varchar(30) NOT NULL,
 	a_moneda	char(1) NOT NULL,
@@ -22,17 +22,27 @@ CREATE TABLE Actividades (
     a_fecCreacion date,
     a_fecUltMod date,
 	PRIMARY KEY(a_id)
-);
+) ENGINE=INNODB;
 
-CREATE TABLE UsuariosActividades (
+CREATE TABLE IF NOT EXISTS UsuariosActividades (
 	ua_idUsu		int,
 	ua_idAct		int,
 	PRIMARY KEY(ua_idUsu, ua_idAct),
     FOREIGN KEY (ua_idUsu) REFERENCES Usuarios (u_id),
     FOREIGN KEY (ua_idAct) REFERENCES Actividades (a_id)
-);
+) ENGINE=INNODB;
 
-CREATE TABLE Gastos (
+CREATE TABLE IF NOT EXISTS Invitaciones (
+	i_id INT AUTO_INCREMENT,
+    i_idUsu INT,
+    i_idAct INT,
+    i_correoUsuarioInvitado VARCHAR(60),
+	PRIMARY KEY (i_id),
+	FOREIGN KEY (i_idUsu, i_idAct) REFERENCES UsuariosActividades (ua_idUsu, ua_idAct)
+) ENGINE=INNODB;
+
+
+CREATE TABLE IF NOT EXISTS Gastos (
 	g_id		int AUTO_INCREMENT,
 	g_idUsu		int, -- PERSONA QUE PAGA
 	g_idAct		int, -- ACTIVIDAD RELACIONADA
@@ -40,7 +50,7 @@ CREATE TABLE Gastos (
 	g_concepto	varchar(50),
 	PRIMARY KEY (g_id),
 	FOREIGN KEY (g_idUsu, g_idAct) REFERENCES UsuariosActividades (ua_idUsu, ua_idAct)
-);
+) ENGINE=INNODB;
 
 
 INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('aalgarra', 'Alejandro', 'Algarra Delgado', 'algarra.delgado.alejandro@alumnat.copernic.cat', '$2y$10$o7.Xhj4uByDtF2gX0JRbouQcFSMV4TdghkS1QzmVcE/8KFliifFKK');

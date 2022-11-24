@@ -1,4 +1,4 @@
-CREATE DATABASE GExpenses_3P1;
+-- CREATE DATABASE GExpenses_3P1;
 
 -- drop table gastos;drop table UsuariosActividades;drop table Usuarios;drop table Actividades;
 
@@ -32,6 +32,16 @@ CREATE TABLE IF NOT EXISTS UsuariosActividades (
     FOREIGN KEY (ua_idAct) REFERENCES Actividades (a_id)
 ) ENGINE=INNODB;
 
+CREATE TABLE IF NOT EXISTS Invitaciones (
+	i_id INT AUTO_INCREMENT,
+    i_idUsu INT,
+    i_idAct INT,
+    i_correoUsuarioInvitado VARCHAR(60),
+	PRIMARY KEY (i_id),
+	FOREIGN KEY (i_idUsu, i_idAct) REFERENCES UsuariosActividades (ua_idUsu, ua_idAct)
+) ENGINE=INNODB;
+
+
 CREATE TABLE IF NOT EXISTS Gastos (
 	g_id		int AUTO_INCREMENT,
 	g_idUsu		int, -- PERSONA QUE PAGA
@@ -50,3 +60,5 @@ INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) v
 INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('test', '€', 'Test Test TEst', '2022/11/01', '2022/11/18');
 INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('test2', '€', 'Test Test TEst', '2022/11/05', '2022/11/13');
 INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('test3', '€', 'Test Test TEst', '2022/11/08', '2022/11/15');
+
+select * from usuarios;
