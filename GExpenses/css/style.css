@@ -601,7 +601,7 @@ div#correoInvWrapper {
     margin: 10px 30px 10px auto;
 }
 
-div#correo {
+div.correo {
     margin: auto 20px auto 10px;
 }
 
