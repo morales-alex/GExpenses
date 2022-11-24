@@ -14,6 +14,8 @@ if (isset($_POST["login"])) {
 
         $_SESSION["mensajeError"] = null;
         $_SESSION['usuario'] = $_POST["usuario"];
+        //$_SESSION['usuario']['username'] = $_POST["usuario"];
+        //$_SESSION['usuario']['id'] =  //selectIDUsuario();
         header("Location: ./home.php"); // LOGIN CORRECTO
 
     } else {

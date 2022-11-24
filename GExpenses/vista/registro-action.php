@@ -43,4 +43,4 @@ if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]), $pdo)) {
     header("Location: ./registro.php"); // INSERCION DE DATOS INCORRECTO
 }
 
-include 'compruebaEmail.php';
+require 'compruebaEmail.php';
