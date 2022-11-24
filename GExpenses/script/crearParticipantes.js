@@ -11,12 +11,8 @@ function compruebaDatosForm() {
 
   const valorNombre = nombreActividad.value;
 
-  if (valorNombre.length > 30) {
-    nombreError.innerText = "EL FORMATO DEL CORREO NO ES VÁLIDO";
-    nombreError.style.display = "block";
-    envio = false;
-  } else if (valorNombre.length === 0) {
-    nombreError.innerText = "EL NOMBRE NO PUEDE ESTAR VACÍO";
+  if (correos.length === 0) {
+    nombreError.innerText = "DEBES AÑADIR ALGÚN CORREO PARA ENVIAR EL FORMULARIO";
     nombreError.style.display = "block";
     envio = false;
   } else {
@@ -39,10 +35,15 @@ function addCorreoParticipante() {
     const correoWrapper = document.createElement("div");
     correoWrapper.setAttribute("id", "correoInvWrapper");
 
-    const nombreCorreo = document.createElement("div");
+    const nombreCorreo = document.createElement("input");
     nombreCorreo.setAttribute("id", "correo");
+    nombreCorreo.setAttribute("type", "hidden");
+    nombreCorreo.setAttribute("name", "correos[]");
+    nombreCorreo.setAttribute("value", nombreActividad.value);
 
-    nombreCorreo.innerText = nombreActividad.value;
+    const divValueCorreo = document.createElement("div");
+    divValueCorreo.innerText = nombreActividad.value;
+    divValueCorreo.setAttribute("class", "correo");
 
     const deleteCorreo = document.createElement("input");
     deleteCorreo.setAttribute("type", "button");
@@ -50,6 +51,7 @@ function addCorreoParticipante() {
     deleteCorreo.setAttribute("value", "Eliminar");
 
     correoWrapper.appendChild(nombreCorreo);
+    correoWrapper.appendChild(divValueCorreo);
     correoWrapper.appendChild(deleteCorreo);
 
     box.appendChild(correoWrapper);
@@ -64,7 +66,7 @@ const abrirFormulario = document.querySelector("#addParticipantes");
 
 const dialog = document.querySelector("#addParticipanteDialog");
 
-const formulario = document.querySelector("#addParticipantes");
+const formulario = document.querySelector(".formAddParticipantes");
 
 const addParticipante = document.querySelector("#addCorreo");
 
@@ -91,7 +93,12 @@ abrirFormulario.addEventListener("click", function (e) {
 addParticipante.addEventListener("click", function (e) {
   e.preventDefault();
 
-  addCorreoParticipante();
+  if (correos.length > 7) {
+    nombreError.innerText = "NO PUEDES AÑADIR MÁS CORREOS";
+    nombreError.style.display = "block";
+  } else {
+    addCorreoParticipante();
+  }
 });
 
 deleteParticipante.addEventListener("click", function (e) {

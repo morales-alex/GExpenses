@@ -3,11 +3,11 @@
         <h5>Invitar Usuarios a la Actividad</h5>
         <span id='cancelarX'>x</span>
     </div>
-    <form method="post" action="AÑADIR_ARCHIVO_AQUI.php" id="addActivity">
+    <form method="post" action="./test.php" id="addActivity" class="formAddParticipantes">
 
         <label for="nombre">Correo Electrónico:</label>
         <div id="addParticipante">
-            <input type="text" name="nombre" id="nombreValue" required>
+            <input type="text" id="nombreValue">
             <input type="button" value="Añadir" id="addCorreo">
         </div>
 
