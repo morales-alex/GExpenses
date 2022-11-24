@@ -81,7 +81,7 @@ if (!isset($_SESSION['usuario'])) {
                             <p>F. modif: <?php echo $actividad['a_fecUltMod'] ?></p>
                         </div>
                         <div class="caja-boton-actividad">
-                            <a href="./Actividad.php">VER ACTIVIDAD</a>
+                            <a href="./Actividad.php?a_id=<?php echo $actividad['a_id']?>">VER ACTIVIDAD</a>
                         </div>
                     </div>
                 </div>

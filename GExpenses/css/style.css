@@ -506,17 +506,15 @@ h1#tituloActividad {
 
 div#tituloGasto {
     display: flex;
-    margin-left: 10px;
-    margin-right: 10px;
-}
+    margin: 0 20px;
+  }
 
 div#gasto {
     display: flex;
-    border: 1px solid cornflowerblue;
-    margin-bottom: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
+    border-bottom: 1px solid cornflowerblue;
+    padding: 15px;
+    margin: 0px 15px;
+  }
 
 
 h3#tituloCampo {
