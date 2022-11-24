@@ -91,6 +91,10 @@ label {
     font-weight: 600;
 }
 
+.btn-login:hover {
+    opacity: 0.9;
+}
+
 .btn-registro {
     font-family: 'Montserrat';
     width: 100%;
@@ -477,6 +481,7 @@ input#cancelDialogForm {
 
 p#nombreError.error-messageForm {
     margin-top: -10px;
+    padding: 6px;
 }
 
 .mostrar {

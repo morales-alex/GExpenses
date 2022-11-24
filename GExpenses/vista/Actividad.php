@@ -23,7 +23,7 @@ require '../controlador/BbddConfig.php';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Actividad</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -56,13 +56,13 @@ require '../controlador/BbddConfig.php';
                 <?php
 
                 try {
-                    $sql = "SELECT * FROM Gastos WHERE g_idAct = :g_idAct";
+                    $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct WHERE g_idAct = :g_idAct";
                     $stmt = $pdo->prepare($sql);
 
                     $stmt->bindParam(':g_idAct', $codigoActividad);
 
                     $stmt->execute();
-                    $datos = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 } catch (PDOException $ex) {
                     echo 'Error: ' . $ex->getMessage();
                 }
@@ -71,9 +71,9 @@ require '../controlador/BbddConfig.php';
                 ?>
 
                         <div id="gasto">
-                            <div id="campoGasto"><?php echo $datos['g_concepto'] ?></div>
-                            <div id="campoGasto">F. crea: <?php echo $datos['g_precio'] ?></div>
-                            <div id="campoGasto">F. modif: <?php echo $datos['g_precio'] ?></div>
+                            <div id="campoGasto"><?php echo $gasto['g_concepto'] ?></div>
+                            <div id="campoGasto"><?php echo $gasto['u_username'] ?></div>
+                            <div id="campoGasto"><?php echo $gasto['g_precio'].$gasto['a_moneda'] ?></div>
                         </div>
 
                 <?php
@@ -107,14 +107,14 @@ require '../controlador/BbddConfig.php';
                 $stmt->bindParam(':ua_idAct', $codigoActividad);
 
                 $stmt->execute();
-                $datos = $stmt->fetch(PDO::FETCH_ASSOC);
+                $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } catch (PDOException $ex) {
                 echo 'Error: ' . $ex->getMessage();
             }
 
             foreach ($datos as $participantes) {
             ?>
-                <p id="participante"><?php echo $datos['u_username'] ?></p>
+                <p id="participante"><?php echo $participantes['u_username'] ?></p>
 
             <?php
             }
