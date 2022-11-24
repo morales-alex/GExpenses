@@ -88,13 +88,24 @@ if (!isset($_SESSION['usuario'])) {
         <div id="participantes">
             <div id="tituloParticipantes">
                 <h2>Participantes</h2>
-                <input id="addParticipantes" type = "button" value="Añadir">
+                <input id="addParticipantes" type="button" value="Añadir">
             </div>
 
             <p id="participante">Alfonso99TEESTSTSTS [ correo@correo.com ]</p>
             <p id="participante">Alfonso99 [ correo@correo.com ]</p>
             <p id="participante">Alfonso99 [ correo@correo.com ]</p>
             <p id="participante">Alfonso99 [ correo@correo.com ]</p>
+
+            <?php
+
+            if (isset($_SESSION["errorCorreos"])) {
+            ?>
+                <div class="error-message"><?php echo $_SESSION["errorCorreos"]."dssda"; ?></div>
+            <?php
+                unset($_SESSION["errorCorreos"]);
+            }
+            ?>
+
         </div>
 
 
