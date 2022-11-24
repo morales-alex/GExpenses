@@ -3,7 +3,7 @@
         <h5>Invitar Usuarios a la Actividad</h5>
         <span id='cancelarX'>x</span>
     </div>
-    <form method="post" action="./test.php" id="addActivity" class="formAddParticipantes">
+    <form method="post" action="./../controlador/filtrarCorreos.php" id="addActivity" class="formAddParticipantes">
 
         <label for="nombre">Correo Electrónico:</label>
         <div id="addParticipante">

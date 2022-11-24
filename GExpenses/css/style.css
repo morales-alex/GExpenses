@@ -50,6 +50,7 @@ h4 {
     border-radius: 25px;
     border: 1px solid black;
     margin-top: 8px;
+    margin-left: auto;
 }
 
 .center {
@@ -271,6 +272,7 @@ label {
     color: #FFF;
     font-weight: 600;
 }
+
 .boton-aceptar {
     padding: 8px 12px;
     border-radius: 10px;
@@ -320,7 +322,7 @@ nav {
 }
 
 
-#usuario {
+a#usuario {
     background-color: #4E729A;
     color: white;
     padding: 10px;

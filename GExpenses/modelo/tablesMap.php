@@ -104,6 +104,35 @@ class UsuariosActividades
     }
 }
 
+class Invitaciones{
+    private int $i_id;
+    private int $i_idUsu;
+    private int $i_idAct;
+    private String $i_correoUsuarioInvitado;
+    public function __construct($i_id, $i_idUsu, $i_idAct, $i_correoUsuarioInvitado){
+        $this->i_id = $i_id;
+        $this->i_idUsu = $i_idUsu;
+        $this->i_idAct = $i_idAct;
+        $this->i_correoUsuarioInvitado = $i_correoUsuarioInvitado;
+    }
+    public function getI_id(){
+        return $this->i_id;
+    }
+    
+    public function getI_idUsu(){
+        return $this->i_idUsu;
+    }
+    
+    public function getI_idAct(){
+        return $this->i_idAct;
+    }
+    
+    public function geti_correoUsuarioInvitado(){
+        return $this->i_correoUsuarioInvitado;
+    }
+    
+}
+
 class Gastos {
 
     private int $g_id;

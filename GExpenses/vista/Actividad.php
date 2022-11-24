@@ -10,6 +10,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 $codigoActividad = $_GET["a_id"];
+$_SESSION["a_id"] = $_GET["a_id"];
 require '../controlador/BbddConfig.php';
 
 
@@ -117,6 +118,17 @@ require '../controlador/BbddConfig.php';
             <?php
             }
             $pdo = null;
+            ?>
+
+
+            <?php
+
+            if (isset($_SESSION["errorCorreos"])) {
+            ?>
+                <div class="error-message"><?php echo $_SESSION["errorCorreos"]."dssda"; ?></div>
+            <?php
+                unset($_SESSION["errorCorreos"]);
+            }
             ?>
 
         </div>
