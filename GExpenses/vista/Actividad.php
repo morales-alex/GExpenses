@@ -10,6 +10,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 $codigoActividad = $_GET["a_id"];
+$_SESSION["a_id"] = $_GET["a_id"];
 require '../controlador/BbddConfig.php';
 
 ?>

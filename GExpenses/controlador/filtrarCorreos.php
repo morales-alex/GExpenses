@@ -21,15 +21,17 @@ foreach ($_POST["correos"] as $correo) {
     }
 }
 
+SESSION_START();
 
 if (sizeof($correosNoValidos) != 0) {
-    SESSION_START();
+
     $_SESSION["errorCorreos"] = "Los siguientes Emails no se han enviado:<br>";
 
     foreach ($correosNoValidos as $correoInvalido) {
-        $_SESSION["errorCorreos"] = $_SESSION["errorCorreos"].$correosNoValidos."<br>";
+        $_SESSION["errorCorreos"] = $_SESSION["errorCorreos"].$correoInvalido."<br>";
     }
 }
 
+$destino = '../vista/Actividad.php?a_id='.$_SESSION["a_id"];
 
-header('location: ../vista/Actividad.php');
+header('location: '.$destino);
