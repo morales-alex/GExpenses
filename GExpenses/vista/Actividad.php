@@ -13,6 +13,8 @@ $codigoActividad = $_GET["a_id"];
 $_SESSION["a_id"] = $_GET["a_id"];
 require '../controlador/BbddConfig.php';
 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,10 +97,31 @@ require '../controlador/BbddConfig.php';
                 <input id="addParticipantes" type="button" value="Añadir">
             </div>
 
-            <p id="participante">Alfonso99TEESTSTSTS [ correo@correo.com ]</p>
-            <p id="participante">Alfonso99 [ correo@correo.com ]</p>
-            <p id="participante">Alfonso99 [ correo@correo.com ]</p>
-            <p id="participante">Alfonso99 [ correo@correo.com ]</p>
+            <?php
+
+            try {
+                //$sql = "SELECT ua_idUsu FROM UsuariosActividades WHERE ua_idAct = :ua_idAct";
+                $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
+
+                $stmt = $pdo->prepare($sql);
+
+                $stmt->bindParam(':ua_idAct', $codigoActividad);
+
+                $stmt->execute();
+                $datos = $stmt->fetch(PDO::FETCH_ASSOC);
+            } catch (PDOException $ex) {
+                echo 'Error: ' . $ex->getMessage();
+            }
+
+            foreach ($datos as $participantes) {
+            ?>
+                <p id="participante"><?php echo $datos['u_username'] ?></p>
+
+            <?php
+            }
+            $pdo = null;
+            ?>
+
 
             <?php
 
