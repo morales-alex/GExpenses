@@ -280,17 +280,8 @@ label {
     color: #FFF;
     border: none;
 }
-.boton-aceptar {
-    padding: 8px 12px;
-    border-radius: 10px;
-    font-weight: 600;
-    margin-right: 15px;
-    background-color: #4E729A;
-    color: #FFF;
-    border: none;
-}
 
-.boton-nueva-actividad:hover, input#addParticipantes:hover {
+.boton-nueva-actividad:hover, input#addParticipantes:hover, input:hover {
     opacity: 0.9;
 }
 
@@ -586,12 +577,66 @@ dialog#addParticipanteDialog {
     border: 0px;
     min-width: 500px;
     min-height: 500px;
+    height: auto;
 }
 
-/* div#dialogFooterParticipante {
+.dialog-footer{
+    padding-top: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+div#dialogFooterParticipante {
     padding-top: 5px;
     display: flex;
     position: absolute;
     bottom: 0;
     width: 95%;
-} */
+}
+
+div#correoInvWrapper {
+    display: flex;
+    width: auto;
+    margin: 10px 30px 10px auto;
+}
+
+div#correo {
+    margin: auto 20px auto 10px;
+}
+
+input#deleteCorreo {
+    width: auto;
+    margin: auto 0px auto auto;
+    background-color: red;
+    color: white;
+    border: 0px;
+}
+
+input#deleteCorreo:hover {
+    opacity: 0.75;
+}
+
+span#cancelarX:hover {
+    opacity: 0.4;
+}
+
+#cancelarX {
+    height: fit-content;
+}
+
+div#dialog-activityForm {
+    font-size: 25px;
+}
+
+div#addParticipante {
+    display: flex;
+}
+
+input#addCorreo {
+    width: 25%;
+    margin-left: 20px;
+    background-color: #4E729A;
+    border: 0px;
+    color: white;
+}

@@ -2,10 +2,10 @@
 
 session_start();
 
+require '../controlador/BbddConfig.php';
+if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]), $pdo)) {
 
-if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]))) {
-
-    require '../controlador/BbddConfig.php';
+    
 
     $password_hasheado = htmlentities($_POST["password"]);
 
@@ -43,9 +43,8 @@ if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]))) {
     header("Location: ./registro.php"); // INSERCION DE DATOS INCORRECTO
 }
 
-function compruebaEmail($correo) {
+function compruebaEmail($correo, $pdo) {
 
-    require '../controlador/BbddConfig.php';
 
     try {
         $sql = "SELECT u_correo FROM Usuarios where u_correo = :u_correo";

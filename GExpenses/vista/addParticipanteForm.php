@@ -1,21 +1,30 @@
 <dialog id='addParticipanteDialog' class="dialogForm centered" close>
     <div id="dialog-activityForm" class="dialog-header">
-        <h5>Añadir actividad</h5>
+        <h5>Invitar Usuarios a la Actividad</h5>
         <span id='cancelarX'>x</span>
     </div>
-    <form method="post" action="actividad-action.php" id="addActivity">
+    <form method="post" action="AÑADIR_ARCHIVO_AQUI.php" id="addActivity">
+
         <label for="nombre">Correo Electrónico:</label>
-        <input type="text" name="nombre" id="nombreValue" required>
-        
-        <p id='nombreError' class='error-messageForm'>EL CAMPO DEBE TENER MENOS DE 30 CARÁCTERES</p>
+        <div id="addParticipante">
+            <input type="text" name="nombre" id="nombreValue" required>
+            <input type="button" value="Añadir" id="addCorreo">
+        </div>
+
+
+
+        <p id='nombreError' class='error-messageForm'>El formato de correo no es correcto...</p>
         <label for="descripcion">Invitaciones:</label>
 
-        <p id='descripcionError' class='error-messageForm'>LA DESCRIPCIÓN DEBE TENER MENOS DE 130 CARÁCTERES</p>
+        <div id="correoInvitaciones">
 
-        <div class="dialog-footer">
-            <input type="button" class="boton-aceptar" value="Cerrar" id="cancelDialogForm"></input>
-            <input type="submit" name="enviar" value="Enviar" id="boton-aceptar" class="boton-aceptar">
+            <div id="dialogFooterParticipante">
+                <input type="button" class="boton-aceptar" value="Cerrar" id="cancelDialogForm"></input>
+                <input type="submit" name="enviar" value="Enviar" id="boton-aceptar" class="boton-aceptar">
+            </div>
+
         </div>
+    
     </form>
     <?php
     if (isset($_SESSION["mensajeError"])) {

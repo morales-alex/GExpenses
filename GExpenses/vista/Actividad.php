@@ -88,8 +88,7 @@ if (!isset($_SESSION['usuario'])) {
         <div id="participantes">
             <div id="tituloParticipantes">
                 <h2>Participantes</h2>
-                <input id="addParticipantes" type = "button" /*onclick = "addParticipante()"*/ value="Añadir">
-                <!-- <a href="" id="addParticipantes">+</a> -->
+                <input id="addParticipantes" type = "button" value="Añadir">
             </div>
 
             <p id="participante">Alfonso99TEESTSTSTS [ correo@correo.com ]</p>
