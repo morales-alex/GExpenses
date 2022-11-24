@@ -28,20 +28,19 @@ if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]))) {
         $stmt->execute();
 
         $pdo->commit();
-//        $_SESSION["mensajeError"] = "Usuario registrado correctamente!";
-//        header("Location: ./login.php"); // INSERCION DE DATOS INCORRECTA
+        $_SESSION["mensajeError"] = "Usuario registrado correctamente!";
+        header("Location: ./login.php"); // INSERCION DE DATOS INCORRECTA
 
     } catch (PDOException $ex) {
         $pdo->rollBack();
-        $_SESSION["mensajeError"] = "Error: Este correo electrónico ya está registrado";
+        $_SESSION["mensajeError"] = 'Error: ' . $ex->getMessage();
         header("Location: ./registro.php"); // INSERCION DE DATOS INCORRECTO
     } finally {
         $pdo = null;
     }
 } else {
-    var_dump($_POST);
-    echo(!compruebaEmail(htmlentities($_POST["email"])));
-    $_SESSION["mensajeError"] = "No funciono";
+    $_SESSION["mensajeError"] = "Error: Este correo electrónico ya está registrado";
+    header("Location: ./registro.php"); // INSERCION DE DATOS INCORRECTO
 }
 
 function compruebaEmail($correo) {
@@ -57,7 +56,8 @@ function compruebaEmail($correo) {
         $stmt->execute();
         $datos = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if($datos == false) {
+
+        if ($datos == false) {
             return false;
         } else {
             return true;
