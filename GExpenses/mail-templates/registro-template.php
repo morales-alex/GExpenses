@@ -47,10 +47,11 @@ try {
                 <div id="mensaje">
     
                     <h1>¡Hola!</h1>
-                    <p style="font-size:14px;padding-bottom:10px;margin:0">¡Estamos felices de verte en GExpenses!</p>
-                    <p style="font-size:14px;padding-bottom:10px;margin:0">Desde este momento puedes inicar sesión y empezar a compartir gastos con tus amigos.</p>
+                    <p style="font-size:14px;padding-bottom:10px;margin:0">¡Te han invitado a <strong>GExpenses!</strong></p>
+                    <p style="font-size:14px;padding-bottom:10px;margin:0">La mejor aplicación que calcula los gastos de tus planes favoritos por ti!</p>
+                    <p style="font-size:14px;padding-bottom:10px;margin:0">Haz click al siguiente enlace para iniciar el proceso de registro y empezar a repartir gastos con tus amigos.</p>
                     <div class="caja-boton">
-                        <a href="#">Iniciar sesión</a>
+                        <a href="#">Registrarse</a>
                     </div>
     
                 </div>
@@ -65,7 +66,6 @@ try {
             </div>
         </div>
     </body>
-    
     </html>';
     $mail->Body = $mailContent;
 

@@ -9,9 +9,8 @@ if (!isset($_SESSION['usuario'])) {
     header('location: ./login.php');
 }
 
-//echo $_GET["id"];
-
-//$Actividad = getActividad($_GET["id"]);
+$codigoActividad = $_GET["a_id"];
+require '../controlador/BbddConfig.php';
 
 ?>
 <!DOCTYPE html>
@@ -51,31 +50,33 @@ if (!isset($_SESSION['usuario'])) {
                     <h3 id="tituloCampo">PRECIO:</h3>
                 </div>
 
-                <div id="gasto">
-                    <div id="campoGasto">Buceo Guiado</div>
-                    <div id="campoGasto">Alfonso Fernández</div>
-                    <div id="campoGasto">390.20€</div>
-                </div>
-                <div id="gasto">
-                    <div id="campoGasto">Buceo Guiado</div>
-                    <div id="campoGasto">Alfonso Fernández</div>
-                    <div id="campoGasto">390.20€</div>
-                </div>
-                <div id="gasto">
-                    <div id="campoGasto">Buceo Guiado</div>
-                    <div id="campoGasto">Alfonso Fernández</div>
-                    <div id="campoGasto">390.20€</div>
-                </div>
-                <div id="gasto">
-                    <div id="campoGasto">Buceo Guiado</div>
-                    <div id="campoGasto">Alfonso Fernández</div>
-                    <div id="campoGasto">390.20€</div>
-                </div>
-                <div id="gasto">
-                    <div id="campoGasto">Buceo Guiado</div>
-                    <div id="campoGasto">Alfonso Fernández</div>
-                    <div id="campoGasto">390.20€</div>
-                </div>
+                <?php
+
+                try {
+                    $sql = "SELECT * FROM Gastos WHERE g_idAct = :g_idAct";
+                    $stmt = $pdo->prepare($sql);
+
+                    $stmt->bindParam(':g_idAct', $codigoActividad);
+
+                    $stmt->execute();
+                    $datos = $stmt->fetch(PDO::FETCH_ASSOC);
+                } catch (PDOException $ex) {
+                    echo 'Error: ' . $ex->getMessage();
+                }
+
+                foreach ($datos as $gasto) {
+                ?>
+
+                    <div id="gasto">
+                        <div id="campoGasto"><?php echo $datos['g_concepto'] ?></div>
+                        <div id="campoGasto">F. crea: <?php echo $datos['g_precio'] ?></div>
+                        <div id="campoGasto">F. modif: <?php echo $datos['g_precio'] ?></div>
+                    </div>
+
+                <?php
+                }
+                $pdo = null;
+                ?>
 
 
             </div>

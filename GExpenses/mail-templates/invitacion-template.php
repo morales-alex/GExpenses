@@ -22,7 +22,7 @@ try {
     // $mail->addCC('cc1@example.com', 'Elena');
     // $mail->addBCC('bcc1@example.com', 'Alex');
 
-    $mail->Subject = '¡Te han invitacdo a GExpenses!';
+    $mail->Subject = '¡Te han invitacdo a unirte a una Actividad!';
     $mail->isHTML(true);
     $mailContent = '<!DOCTYPE html>
     <html lang="en">
@@ -47,11 +47,10 @@ try {
                 <div id="mensaje">
     
                     <h1>¡Hola!</h1>
-                    <p style="font-size:14px;padding-bottom:10px;margin:0">¡Te han invitado a <strong>GExpenses!</strong></p>
-                    <p style="font-size:14px;padding-bottom:10px;margin:0">La mejor aplicación que calcula los gastos de tus planes favoritos por ti!</p>
-                    <p style="font-size:14px;padding-bottom:10px;margin:0">Haz click al siguiente enlace para iniciar el proceso de registro y empezar a repartir gastos con tus amigos.</p>
+                    <p style="font-size:14px;padding-bottom:10px;margin:0">¡Te han invitado a unirte a una Actividad!</p>
+                    <p style="font-size:14px;padding-bottom:10px;margin:0">Haz click al siguiente enlace para unirte a esta actividad y empezar a repartir gastos con tus amigos.</p>
                     <div class="caja-boton">
-                        <a href="#">Registrarse</a>
+                        <a href="#">Ver invitación</a>
                     </div>
     
                 </div>
