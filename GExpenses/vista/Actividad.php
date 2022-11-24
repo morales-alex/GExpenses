@@ -64,18 +64,20 @@ require '../controlador/BbddConfig.php';
                 } catch (PDOException $ex) {
                     echo 'Error: ' . $ex->getMessage();
                 }
-
-                foreach ($datos as $gasto) {
+                if ($datos) {
+                    foreach ($datos as $gasto) {
                 ?>
 
-                    <div id="gasto">
-                        <div id="campoGasto"><?php echo $datos['g_concepto'] ?></div>
-                        <div id="campoGasto">F. crea: <?php echo $datos['g_precio'] ?></div>
-                        <div id="campoGasto">F. modif: <?php echo $datos['g_precio'] ?></div>
-                    </div>
+                        <div id="gasto">
+                            <div id="campoGasto"><?php echo $datos['g_concepto'] ?></div>
+                            <div id="campoGasto">F. crea: <?php echo $datos['g_precio'] ?></div>
+                            <div id="campoGasto">F. modif: <?php echo $datos['g_precio'] ?></div>
+                        </div>
 
                 <?php
+                    }
                 }
+
                 $pdo = null;
                 ?>
 
@@ -102,7 +104,7 @@ require '../controlador/BbddConfig.php';
 
             if (isset($_SESSION["errorCorreos"])) {
             ?>
-                <div class="error-message"><?php echo $_SESSION["errorCorreos"]."dssda"; ?></div>
+                <div class="error-message"><?php echo $_SESSION["errorCorreos"]; ?></div>
             <?php
                 unset($_SESSION["errorCorreos"]);
             }
