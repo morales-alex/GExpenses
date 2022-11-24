@@ -80,7 +80,6 @@ require '../controlador/BbddConfig.php';
                     }
                 }
 
-                $pdo = null;
                 ?>
 
 
