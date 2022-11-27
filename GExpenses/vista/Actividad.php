@@ -1,5 +1,7 @@
 <?php
 
+require '../modelo/tablesMap.php';
+
 if (session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
     SESSION_START();
 }
@@ -9,11 +11,31 @@ if (!isset($_SESSION['usuario'])) {
     header('location: ./login.php');
 }
 
-$codigoActividad = $_GET["a_id"];
-$_SESSION["a_id"] = $_GET["a_id"];
 require '../controlador/BbddConfig.php';
 
+try {
+    $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct WHERE g_idAct = :g_idAct";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':g_idAct', $_GET["a_id"]);
 
+    $stmt->execute();
+    $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $ex) {
+    echo 'Error: ' . $ex->getMessage();
+}
+
+
+try {
+                
+    $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':ua_idAct', $_GET["a_id"]);
+
+    $stmt->execute();
+    $participantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $ex) {
+    echo 'Error: ' . $ex->getMessage();
+}
 
 ?>
 <!DOCTYPE html>
@@ -42,7 +64,7 @@ require '../controlador/BbddConfig.php';
 
         <div id="actividadMain">
 
-            <h1 id="tituloActividad">Viaje al congo</h1>
+            <h1 id="tituloActividad"> <?php echo $datos[0]['a_nombre'] ?></h1>
 
 
             <div id="gastoWrapper">
@@ -55,17 +77,7 @@ require '../controlador/BbddConfig.php';
 
                 <?php
 
-                try {
-                    $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct WHERE g_idAct = :g_idAct";
-                    $stmt = $pdo->prepare($sql);
-
-                    $stmt->bindParam(':g_idAct', $codigoActividad);
-
-                    $stmt->execute();
-                    $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                } catch (PDOException $ex) {
-                    echo 'Error: ' . $ex->getMessage();
-                }
+                
                 if ($datos) {
                     foreach ($datos as $gasto) {
                 ?>
@@ -98,23 +110,9 @@ require '../controlador/BbddConfig.php';
 
             <?php
 
-            try {
-                //$sql = "SELECT ua_idUsu FROM UsuariosActividades WHERE ua_idAct = :ua_idAct";
-                $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
-
-                $stmt = $pdo->prepare($sql);
-
-                $stmt->bindParam(':ua_idAct', $codigoActividad);
-
-                $stmt->execute();
-                $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            } catch (PDOException $ex) {
-                echo 'Error: ' . $ex->getMessage();
-            }
-
-            foreach ($datos as $participantes) {
+            foreach ($participantes as $participante) {
             ?>
-                <p id="participante"><?php echo $participantes['u_username'] ?></p>
+                <p id="participante"><?php echo $participante['u_username'] ?></p>
 
             <?php
             }
@@ -126,7 +124,7 @@ require '../controlador/BbddConfig.php';
 
             if (isset($_SESSION["errorCorreos"])) {
             ?>
-                <div class="error-message"><?php echo $_SESSION["errorCorreos"]; ?></div>
+                <div class="error-message-correos"><?php echo $_SESSION["errorCorreos"]; ?></div>
             <?php
                 unset($_SESSION["errorCorreos"]);
             }
@@ -143,6 +141,6 @@ require '../controlador/BbddConfig.php';
 <?php include_once './Footer.php' ?>
 
 <script src="../script/crearParticipantes.js"></script>
-<script src="../script/actividad.js"></script>
+
 
 </html>

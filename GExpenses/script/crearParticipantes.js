@@ -36,14 +36,11 @@ function addCorreoParticipante() {
     correoWrapper.setAttribute("id", "correoInvWrapper");
 
     const nombreCorreo = document.createElement("input");
-    nombreCorreo.setAttribute("id", "correo");
-    nombreCorreo.setAttribute("type", "hidden");
+    nombreCorreo.setAttribute("class", "correo");
+    nombreCorreo.setAttribute("type", "text");
     nombreCorreo.setAttribute("name", "correos[]");
     nombreCorreo.setAttribute("value", nombreActividad.value);
-
-    const divValueCorreo = document.createElement("div");
-    divValueCorreo.innerText = nombreActividad.value;
-    divValueCorreo.setAttribute("class", "correo");
+    nombreCorreo.setAttribute("readonly", "");
 
     const deleteCorreo = document.createElement("input");
     deleteCorreo.setAttribute("type", "button");
@@ -51,7 +48,6 @@ function addCorreoParticipante() {
     deleteCorreo.setAttribute("value", "Eliminar");
 
     correoWrapper.appendChild(nombreCorreo);
-    correoWrapper.appendChild(divValueCorreo);
     correoWrapper.appendChild(deleteCorreo);
 
     box.appendChild(correoWrapper);

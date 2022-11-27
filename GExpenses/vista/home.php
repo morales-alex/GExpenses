@@ -1,5 +1,7 @@
 <?php
 
+require '../modelo/tablesMap.php';
+
 if (session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
     SESSION_START();
 }

@@ -301,6 +301,16 @@ label {
     color: #FFF;
 }
 
+.error-message-correos {
+    color: #c40000;
+    background-color: #ffd3d3;
+    width: fit-content;
+    border-radius: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 16px;
+}
+
 /*======================  HEADER  ================================*/
 
 nav {
@@ -486,6 +496,7 @@ p#nombreError.error-messageForm {
 
 .mostrar {
     display: block;
+    padding: 6px;
 }
 
 /*======================  PÁGINA ACTIVIDAD  ================================*/
@@ -606,8 +617,11 @@ div#correoInvWrapper {
     margin: 10px 30px 10px auto;
 }
 
-div.correo {
+#addActivity input.correo {
+    font-family: 'Montserrat', serif;
+    font-size: 20px;
     margin: auto 20px auto 10px;
+    border: 0px;
 }
 
 input#deleteCorreo {
