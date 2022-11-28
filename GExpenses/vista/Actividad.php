@@ -14,7 +14,7 @@ if (!isset($_SESSION['usuario'])) {
 require '../controlador/BbddConfig.php';
 
 try {
-    $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct WHERE g_idAct = :g_idAct";
+    $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct WHERE g_idAct = :g_idAct order by g_fecCrea desc";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':g_idAct', $_GET["a_id"]);
 
@@ -51,7 +51,7 @@ try {
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -82,9 +82,10 @@ try {
             <div id="gastoWrapper">
 
                 <div id="tituloGasto">
-                    <h3 id="tituloCampo">NOMBRE:</h3>
+                    <h3 id="tituloCampoConcepto">CONCEPTO:</h3>
                     <h3 id="tituloCampo">PAGÓ:</h3>
-                    <h3 id="tituloCampo">PRECIO:</h3>
+                    <h3 id="tituloCampo">Fecha:</h3>
+                    <h3 id="tituloCampoPrecio">PRECIO:</h3>
                 </div>
 
                 <?php
@@ -95,9 +96,10 @@ try {
                 ?>
 
                         <div id="gasto">
-                            <div id="campoGasto"><?php echo $gasto['g_concepto'] ?></div>
-                            <div id="campoGasto"><?php echo $gasto['u_username'] ?></div>
-                            <div id="campoGasto"><?php echo $gasto['g_precio'] . $gasto['a_moneda'] ?></div>
+                            <div class="campoGastoIzq"><?php echo $gasto['g_concepto'] ?></div>
+                            <div class="campoGastoCent"><?php echo $gasto['u_username'] ?></div>
+                            <div class="campoGastoCent"><?php echo $gasto['g_fecCrea'] ?></div>
+                            <div class="campoGastoDer"><?php echo $gasto['g_precio'] . $gasto['a_moneda'] ?></div>
                         </div>
 
                 <?php
