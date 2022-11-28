@@ -1,1 +1,10 @@
 == Presentación
+
+Con una flota de programadores a su espalda. GExpenses ha abierto sus puertas este año para todas los grupos de personas que quieran dividir sus gastos de manera fácil y sencilla.
+
+Entre otras funcionalidades ofrecemos:
+
+ * Creación de actividades en las que se podrán añadir varios gastos.
+ * Añadir/Quitar a tus amigos de una actividad.
+ * Invitar a todos tus amigos en las actividades que participaréis.
+ * Crear invitaciones por correo electrónico para poder agilizar todo el proceso.

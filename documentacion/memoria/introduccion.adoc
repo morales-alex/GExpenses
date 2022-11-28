@@ -12,4 +12,3 @@ Te vas de viaje con tus amigos y después de todo el viaje, teneis que _dividir 
 ====
 *GExpenses* nace con el objetivo de facilitar la division de gastos de una actividad entre los participantes de la misma.
 ====
-

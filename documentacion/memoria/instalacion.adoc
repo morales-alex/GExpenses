@@ -1,1 +1,13 @@
 == Instalación
+
+Para descargarte la aplicación debes seguir los siguientes pasos:
+
+ * Clonar el proyecto de gitlab en el siguiente enlace: 
+
+ - https://git.copernic.cat/algarra.delgado.alejandro/GExpenses_3p1
+
+ * Una vez clonado haremos uso de vagrant para tener la estructura de la base de datos, por lo que deberemos descargarnos:
+ - VirtualBox [ Preferiblemente la versión LTS más actualizada ]
+ - Vagrant.
+
+Después debes de situarte en la carpeta de vagrant en la carpeta de GExpenses y ejecutar el comando *vagrant up*. Esto ejecutará el script de vagrant y dejará toda la estructura de la base de datos configurada. Ya solo necesitaremos meternos al index.php y iniciar sesión o registrarnos y empezar a usar la aplicación.

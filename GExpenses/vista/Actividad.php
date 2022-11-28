@@ -26,13 +26,25 @@ try {
 
 
 try {
-                
+
     $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':ua_idAct', $_GET["a_id"]);
 
     $stmt->execute();
     $participantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $ex) {
+    echo 'Error: ' . $ex->getMessage();
+}
+
+try {
+
+    $sql = "SELECT sum(g_precio) as total FROM Gastos INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct  WHERE g_idAct = :ua_idAct";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':ua_idAct', $_GET["a_id"]);
+
+    $stmt->execute();
+    $gastoTotal = $stmt->fetch(PDO::FETCH_ASSOC);
 } catch (PDOException $ex) {
     echo 'Error: ' . $ex->getMessage();
 }
@@ -77,7 +89,7 @@ try {
 
                 <?php
 
-                
+
                 if ($datos) {
                     foreach ($datos as $gasto) {
                 ?>
@@ -85,7 +97,7 @@ try {
                         <div id="gasto">
                             <div id="campoGasto"><?php echo $gasto['g_concepto'] ?></div>
                             <div id="campoGasto"><?php echo $gasto['u_username'] ?></div>
-                            <div id="campoGasto"><?php echo $gasto['g_precio'].$gasto['a_moneda'] ?></div>
+                            <div id="campoGasto"><?php echo $gasto['g_precio'] . $gasto['a_moneda'] ?></div>
                         </div>
 
                 <?php
@@ -94,7 +106,10 @@ try {
 
                 ?>
 
-
+                <div id="totalActividad">
+                    <div id="tituloTotal">TOTAL:</div>
+                    <div id="campoTotal"><?php echo $gastoTotal['total'] . $gasto['a_moneda'] ?></div>
+                </div>
             </div>
 
 
