@@ -1,25 +1,24 @@
 <?php
-require './BbddConfig.php';
-require "../Vista/compruebaEmail.php";
+require_once './BbddConfig.php';
+require_once "../vista/compruebaEmail.php";
 
 $correosNoValidos = [];
-
 
 foreach ($_POST["correos"] as $correo) {
 
     if (filter_var($correo, FILTER_VALIDATE_EMAIL)) { //validar formato correo
 
         if (compruebaEmail($correo, $pdo)) {
-            //emai SI exsiste
-            //enviar invitacion actividad
+            require_once '../mail-templates/invitacion-template.php';
         } else {
-            //email NO exisiste
-            //enviar 
+            require_once '../mail-templates/registro-template.php'; 
         }
     } else {
         array_push($correosNoValidos, $correo);
     }
 }
+
+unset($_POST["correos"]); 
 
 SESSION_START();
 

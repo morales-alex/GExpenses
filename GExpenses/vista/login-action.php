@@ -1,5 +1,7 @@
 <?php
 
+require '../modelo/tablesMap.php';
+
 if (session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
     SESSION_START();
 }
@@ -13,9 +15,6 @@ if (isset($_POST["login"])) {
     if (compruebaUsuario(htmlentities($_POST["usuario"]), htmlentities($_POST['password']))) {
 
         $_SESSION["mensajeError"] = null;
-        $_SESSION['usuario'] = $_POST["usuario"];
-        //$_SESSION['usuario']['username'] = $_POST["usuario"];
-        //$_SESSION['usuario']['id'] =  //selectIDUsuario();
         header("Location: ./home.php"); // LOGIN CORRECTO
 
     } else {
@@ -34,7 +33,7 @@ function compruebaUsuario($username, $password)
     require '../controlador/BbddConfig.php';
 
     try {
-        $sql = "SELECT u_username, u_correo, u_password FROM Usuarios where (u_username = :u_username OR u_correo = :u_correo)";
+        $sql = "SELECT u_id, u_username, u_correo, u_password, u_nombre, u_apellidos FROM Usuarios where (u_username = :u_username OR u_correo = :u_correo)";
         $stmt = $pdo->prepare($sql);
 
         $stmt->bindParam(':u_username', $username);
@@ -49,6 +48,9 @@ function compruebaUsuario($username, $password)
 
     if (($username === $datos['u_username'] or $username === $datos['u_correo']) AND password_verify($password, $datos['u_password'])
     ) {
+
+        $_SESSION['usuario'] = new usuarios($datos['u_id'], $datos['u_username'], $datos['u_nombre'], $datos['u_apellidos'], $datos['u_correo']);
+
         return true;
     } else {
         return false;
