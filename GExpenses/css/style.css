@@ -659,3 +659,20 @@ input#addCorreo {
     border: 0px;
     color: white;
 }
+
+div#totalActividad {
+    display: flex;
+    height: 70px;
+}
+
+div#tituloTotal {
+    width: auto;
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: 500;
+}
+
+div#campoTotal {
+    width: auto;
+    margin: auto 30px auto auto;
+}

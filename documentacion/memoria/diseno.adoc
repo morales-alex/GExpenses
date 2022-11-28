@@ -1,5 +1,5 @@
 //Disseny: disseny de base de dades, mockup d’interfícies, etcètera.
-== Diseño
+=== Diseño
 
 *[.underline]#Estructura Base de Datos# _[10/11/2022]_*
 
@@ -14,7 +14,11 @@ crear un usuario sin crear una actividad y viceversa, y cuando haya una
 relación entre actividad y usuario podrás relacionar gastos con la clave
 del usuario que ha pagado *g_idUsu*.
 
-Como nomenclatura de las columnas de la base de datos hemos decidido
+También hemos creado una tabla *gastos* que serán las líneas de actividades, cada gasto de la actividad se guardará ahí señalando al usuario que ha pagado ese gasto de la actividad.
+
+Por otro lado hemos creado una tabla para las *invitaciones.* Donde se almacenará toda la información necesaria para la inserción de un nuevos usuario por correo. Como por ejemplo la fecha de envío de la invitación, para a posteriori ver si ha caducado y no valga ese enlace para unirse a la actividad.
+
+Como *nomenclatura* de las columnas de la base de datos hemos decidido
 usar minúsculas y la primera inicial del nombre de la tabla para que
 identificar de manera más fácil a qué columna nos estamos refiriendo.
 
@@ -22,7 +26,8 @@ identificar de manera más fácil a qué columna nos estamos refiriendo.
 Después de hablar i hacer una lluvia de ideas de como podia ser la idea inicial de la web, siguendo con la _guia de estilos_ hemos creado el siguiente mockup: Para poder acceder al mockup haz clic https://marvelapp.com/start-user-test/aPaRQ6Hj7pl1JAHYoIt3[aquí]
 
 === Implementación html/css
-Siguiendo la guia de estilos y el Mockup, hemos desarrolado la página de login con flex.
+Siguiendo la guia de estilos y el Mockup, hemos desarrolado las páginas con flex.
  Con las propiedades "flex" hemos situado en el centro de la pantalla el formulario de inicio de sesión.
  De esta forma conseguimos que la pantalla de login no se vea vacia y el usuario centre su atencion
  directamente en el formulario.
+Y por consiguiente en las siguientes pantallas hemos seguido usando flex para que la adhición de nuevos elementos se realice de una manera más sencilla.

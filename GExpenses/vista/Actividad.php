@@ -31,6 +31,7 @@ try {
 
 // Consulta PARTICIPANTES
 try {
+                
     $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':ua_idAct', $_GET["a_id"]);
@@ -119,9 +120,9 @@ $pdo = null;
                     foreach ($gastos as $gasto) {
                 ?>
                         <div id="gasto">
-                            <div id="campoGasto"><?php echo $gastos['g_concepto'] ?></div>
-                            <div id="campoGasto">F. crea: <?php echo $gastos['g_precio'] ?></div>
-                            <div id="campoGasto">F. modif: <?php echo $gastos['g_precio'] ?></div>
+                            <div id="campoGasto"><?php echo $gasto['g_concepto'] ?></div>
+                            <div id="campoGasto"><?php echo $gasto['u_username'] ?></div>
+                            <div id="campoGasto"><?php echo $gasto['g_precio'] . $gasto['a_moneda'] ?></div>
                         </div>
 
                     <?php
@@ -135,6 +136,11 @@ $pdo = null;
                 }
 
                 ?>
+
+                <div id="totalActividad">
+                    <div id="tituloTotal">TOTAL:</div>
+                    <div id="campoTotal"><?php echo $gastoTotal['total'] . $gasto['a_moneda'] ?></div>
+                </div>
             </div>
 
 
