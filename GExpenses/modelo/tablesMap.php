@@ -10,14 +10,14 @@ class usuarios
     private String $u_correo;
     private String $u_password;
 
-    public function __construct($u_id, $u_username, $u_nombre, $u_apellidos, $u_correo, $u_password)
+    public function __construct($u_id, $u_username, $u_nombre, $u_apellidos, $u_correo, /*$u_password*/)
     {
         $this->u_id = $u_id;
         $this->u_username = $u_username;
         $this->u_nombre = $u_nombre;
         $this->u_apellidos = $u_apellidos;
         $this->u_correo = $u_correo;
-        $this->u_password = $u_password;
+        //$this->u_password = $u_password;
     }
 
     public function getU_id()
@@ -104,36 +104,42 @@ class UsuariosActividades
     }
 }
 
-class Invitaciones{
+class Invitaciones
+{
     private int $i_id;
     private int $i_idUsu;
     private int $i_idAct;
     private String $i_correoUsuarioInvitado;
-    public function __construct($i_id, $i_idUsu, $i_idAct, $i_correoUsuarioInvitado){
+    public function __construct($i_id, $i_idUsu, $i_idAct, $i_correoUsuarioInvitado)
+    {
         $this->i_id = $i_id;
         $this->i_idUsu = $i_idUsu;
         $this->i_idAct = $i_idAct;
         $this->i_correoUsuarioInvitado = $i_correoUsuarioInvitado;
     }
-    public function getI_id(){
+    public function getI_id()
+    {
         return $this->i_id;
     }
-    
-    public function getI_idUsu(){
+
+    public function getI_idUsu()
+    {
         return $this->i_idUsu;
     }
-    
-    public function getI_idAct(){
+
+    public function getI_idAct()
+    {
         return $this->i_idAct;
     }
-    
-    public function geti_correoUsuarioInvitado(){
+
+    public function geti_correoUsuarioInvitado()
+    {
         return $this->i_correoUsuarioInvitado;
     }
-    
 }
 
-class Gastos {
+class Gastos
+{
 
     private int $g_id;
     private int $g_idUsu;
@@ -174,5 +180,4 @@ class Gastos {
     {
         return $this->g_concepto;
     }
-
 }

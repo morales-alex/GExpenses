@@ -21,6 +21,6 @@ if (!isset($_SESSION['usuario'])) {
             <div class="opcion">Glosario</div>
         </div>
 
-        <a id="usuario"> <?php echo $_SESSION['usuario'] ?> </a>
+        <a id="usuario"> <?php echo  $_SESSION["usuario"]->getU_username() ?> </a>
     </nav>
 </header>

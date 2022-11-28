@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Registro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -15,10 +16,22 @@
 
     <div id="container">
         <div id="caja-principal">
+
+
             <div id="intro">
                 <h1>Bienvenido a <span class="negrita">GExpenses</span></h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Con una flota de programadores a su espalda. GExpenses ha abierto sus puertas este año para todas los grupos de personas que quieran dividir sus gastos de manera fácil y sencilla.</p>
+                <span>Entre otras funcionalidades ofrecemos:</span>
+                <ul>
+                    <li>Creación de actividades en las que se podrán añadir varios gastos.</li>
+                    <li>Añadir/Quitar a tus amigos de una actividad.</li>
+                    <li>Invitar a todos tus amigos en las actividades que participaréis.</li>
+                    <li>Crear invitaciones por correo electrónico para poder agilizar todo el proceso.</li>
+                </ul>
+
             </div>
+
+
             <div>
                 <h2 class="center">Registro</h2>
                 <form method="post" id="formulario" action="registro-action.php">
@@ -64,16 +77,16 @@
                         <button class="btn-login" type="submit">Registrarse</button>
                     </div>
                     <?php
-                        
-                        session_start();
-                        
-                        if (isset($_SESSION["mensajeError"])) {
-                        ?>
-                            <div class="error-message"><?php echo $_SESSION["mensajeError"]; ?></div>
-                        <?php
-                            unset($_SESSION["mensajeError"]);
-                        }
-                        ?>
+
+                    
+
+                    if (isset($_SESSION["mensajeError"])) {
+                    ?>
+                        <div class="error-message"><?php echo $_SESSION["mensajeError"]; ?></div>
+                    <?php
+                        unset($_SESSION["mensajeError"]);
+                    }
+                    ?>
                 </form>
 
                 <div id="no-registrado">
@@ -86,5 +99,6 @@
         </div>
     </div>
 </body>
-<script src="../script/registro.js"></script> 
+<script src="../script/registro.js"></script>
+
 </html>
