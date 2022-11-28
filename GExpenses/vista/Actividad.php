@@ -1,5 +1,4 @@
 <?php
-
 require '../modelo/tablesMap.php';
 
 if (session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
@@ -24,14 +23,13 @@ try {
 
     $stmt->execute();
     $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 } catch (PDOException $ex) {
     echo 'Error: ' . $ex->getMessage();
 }
 
 // Consulta PARTICIPANTES
 try {
-                
+
     $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':ua_idAct', $_GET["a_id"]);
@@ -55,19 +53,6 @@ try {
     echo 'Error: ' . $ex->getMessage();
 }
 
-
-// Consulta GASTOS
-try {
-    $sql = "SELECT * FROM Gastos WHERE g_idAct = :g_idAct";
-    $stmt = $pdo->prepare($sql);
-
-    $stmt->bindParam(':g_idAct', $codigoActividad);
-
-    $stmt->execute();
-    $gastos = $stmt->fetch(PDO::FETCH_ASSOC);
-} catch (PDOException $ex) {
-    echo 'Error: ' . $ex->getMessage();
-}
 $pdo = null;
 
 ?>
@@ -84,7 +69,6 @@ $pdo = null;
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <?php include_once './Header.php' ?>
 
 <body>
@@ -92,9 +76,6 @@ $pdo = null;
     <?php include_once './addParticipanteForm.php' ?>
 
     <div id="contenidoActividad">
-
-
-
         <div id="actividadMain">
 
             <h1 id="tituloActividad">
@@ -106,7 +87,6 @@ $pdo = null;
                 }
                 ?></h1>
 
-
             <div id="gastoWrapper">
 
                 <div id="tituloGasto">
@@ -116,8 +96,8 @@ $pdo = null;
                 </div>
 
                 <?php
-                if ($gastos) {
-                    foreach ($gastos as $gasto) {
+                if ($datos) {
+                    foreach ($datos as $gasto) {
                 ?>
                         <div id="gasto">
                             <div id="campoGasto"><?php echo $gasto['g_concepto'] ?></div>
@@ -135,19 +115,19 @@ $pdo = null;
                 <?php
                 }
 
+
+                if ($gastoTotal = null) { ?>
+                    <div id="totalActividad">
+                        <div id="tituloTotal">TOTAL:</div>
+                        <div id="campoTotal"><?php echo $gastoTotal['total'] . $gasto['a_moneda'] ?></div>
+                    </div>
+                <?php
+                }
                 ?>
-
-                <div id="totalActividad">
-                    <div id="tituloTotal">TOTAL:</div>
-                    <div id="campoTotal"><?php echo $gastoTotal['total'] . $gasto['a_moneda'] ?></div>
-                </div>
             </div>
-
-
         </div>
 
         <div id="linea"></div>
-
         <div id="participantes">
             <div id="tituloParticipantes">
                 <h2>Participantes</h2>
@@ -156,10 +136,11 @@ $pdo = null;
 
             <?php
 
-            if ($datos) {
-                foreach ($datos as $participantes) {
+            if ($participantes) {
+
+                foreach ($participantes as $participante) {
             ?>
-                    <p id="participante"><?php echo $participantes['u_username'] ?></p>
+                    <p id="participante"><?php echo $participante['u_username'] ?></p>
 
                 <?php
                 }
@@ -184,11 +165,7 @@ $pdo = null;
             ?>
 
         </div>
-
-
-
     </div>
-
 </body>
 
 <?php include_once './Footer.php' ?>
