@@ -1,7 +1,7 @@
 <?php
 // https://mailtrap.io/blog/phpmailer/#SMTP-configuration
 
-require '../vendor/autoload.php';
+require '../../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -72,11 +72,4 @@ try {
     $mail->send();
 } catch (Exception $ex) {
     echo $ex->message;
-}
-
-if ($mail->send()) {
-    echo 'Message has been sent';
-} else {
-    echo 'Message could not be sent.';
-    echo 'Mailer Error: ' . $mail->ErrorInfo;
 }

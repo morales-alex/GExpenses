@@ -1,0 +1,2 @@
+CREATE USER 'admin' IDENTIFIED BY 'mamadol';
+GRANT ALL PRIVILEGES ON GExpenses_3P1.* TO 'admin';
