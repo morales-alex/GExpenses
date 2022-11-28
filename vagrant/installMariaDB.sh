@@ -9,4 +9,7 @@ mariadb --version
 echo 'Activación por si acaso...'
 sudo systemctl start mariadb
 sudo systemctl enable mariadb
-sudo mariadb < /vagrant/EstructuraBBDD.sql
+echo 'script creacion estructura BBDD'
+sudo mariadb < /vagrant/estructuraBBDD.sql
+echo 'script creacion usuario admin'
+sudo mariadb < /vagrant/createUser.sql
