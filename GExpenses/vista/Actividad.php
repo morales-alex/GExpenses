@@ -11,8 +11,12 @@ if (!isset($_SESSION['usuario'])) {
     header('location: ./login.php');
 }
 
+$codigoActividad = $_GET["a_id"];
+$_SESSION["a_id"] = $_GET["a_id"];
 require '../controlador/BbddConfig.php';
 
+
+// Consulta GASTOS
 try {
     $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct WHERE g_idAct = :g_idAct";
     $stmt = $pdo->prepare($sql);
@@ -20,13 +24,13 @@ try {
 
     $stmt->execute();
     $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 } catch (PDOException $ex) {
     echo 'Error: ' . $ex->getMessage();
 }
 
-
+// Consulta PARTICIPANTES
 try {
-                
     $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':ua_idAct', $_GET["a_id"]);
@@ -36,6 +40,34 @@ try {
 } catch (PDOException $ex) {
     echo 'Error: ' . $ex->getMessage();
 }
+
+// Consulta ACTIVIDADES
+try {
+
+    $sql = "SELECT a_nombre FROM Actividades WHERE a_id = :a_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':a_id', $_GET["a_id"]);
+
+    $stmt->execute();
+    $actividad = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $ex) {
+    echo 'Error: ' . $ex->getMessage();
+}
+
+
+// Consulta GASTOS
+try {
+    $sql = "SELECT * FROM Gastos WHERE g_idAct = :g_idAct";
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->bindParam(':g_idAct', $codigoActividad);
+
+    $stmt->execute();
+    $gastos = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $ex) {
+    echo 'Error: ' . $ex->getMessage();
+}
+$pdo = null;
 
 ?>
 <!DOCTYPE html>
@@ -64,7 +96,14 @@ try {
 
         <div id="actividadMain">
 
-            <h1 id="tituloActividad"> <?php echo $datos[0]['a_nombre'] ?></h1>
+            <h1 id="tituloActividad">
+                <?php
+                if (count($actividad) > 0) {
+                    echo $actividad[0]['a_nombre'];
+                } else {
+                    echo 'Sin título';
+                }
+                ?></h1>
 
 
             <div id="gastoWrapper">
@@ -76,25 +115,26 @@ try {
                 </div>
 
                 <?php
-
-                
-                if ($datos) {
-                    foreach ($datos as $gasto) {
+                if ($gastos) {
+                    foreach ($gastos as $gasto) {
                 ?>
-
                         <div id="gasto">
-                            <div id="campoGasto"><?php echo $gasto['g_concepto'] ?></div>
-                            <div id="campoGasto"><?php echo $gasto['u_username'] ?></div>
-                            <div id="campoGasto"><?php echo $gasto['g_precio'].$gasto['a_moneda'] ?></div>
+                            <div id="campoGasto"><?php echo $gastos['g_concepto'] ?></div>
+                            <div id="campoGasto">F. crea: <?php echo $gastos['g_precio'] ?></div>
+                            <div id="campoGasto">F. modif: <?php echo $gastos['g_precio'] ?></div>
                         </div>
 
-                <?php
+                    <?php
                     }
+                } else {
+                    ?>
+                    <div>
+                        <p>Aún no se han añadido gastos</p>
+                    </div>
+                <?php
                 }
 
                 ?>
-
-
             </div>
 
 
@@ -110,13 +150,20 @@ try {
 
             <?php
 
-            foreach ($participantes as $participante) {
+            if ($datos) {
+                foreach ($datos as $participantes) {
             ?>
-                <p id="participante"><?php echo $participante['u_username'] ?></p>
+                    <p id="participante"><?php echo $participantes['u_username'] ?></p>
 
+                <?php
+                }
+            } else {
+                ?>
+                <div>
+                    <p>Aún no se han añadido participantes</p>
+                </div>
             <?php
             }
-            $pdo = null;
             ?>
 
 
@@ -124,7 +171,7 @@ try {
 
             if (isset($_SESSION["errorCorreos"])) {
             ?>
-                <div class="error-message-correos"><?php echo $_SESSION["errorCorreos"]; ?></div>
+                <div class="error-message"><?php echo $_SESSION["errorCorreos"] . "dssda"; ?></div>
             <?php
                 unset($_SESSION["errorCorreos"]);
             }
@@ -141,6 +188,6 @@ try {
 <?php include_once './Footer.php' ?>
 
 <script src="../script/crearParticipantes.js"></script>
-
+<script src="../script/actividad.js"></script>
 
 </html>
