@@ -1,7 +1,7 @@
 <?php
 // https://mailtrap.io/blog/phpmailer/#SMTP-configuration
 
-require '../vendor/autoload.php';
+require "../../vendor/autoload.php";
 
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -15,12 +15,8 @@ try {
     $mail->Username = '1f8bed0fca18c4';
     $mail->Password = 'e54eb581efe56d';
 
-    //$mail = new PHPMailer();
     $mail->setFrom('auto@freixa.cat', 'proves');
-    // $mail->addReplyTo('info@mailtrap.io', 'Mailtrap');
-    $mail->addAddress('freixa.sureda.max@alumnat.copernic.cat', 'Max');
-    // $mail->addCC('cc1@example.com', 'Elena');
-    // $mail->addBCC('bcc1@example.com', 'Alex');
+    $mail->addAddress($correo, 'Max');
 
     $mail->Subject = '¡Te han invitacdo a unirte a una Actividad!';
     $mail->isHTML(true);
@@ -72,11 +68,4 @@ try {
     $mail->send();
 } catch (Exception $ex) {
     echo $ex->message;
-}
-
-if ($mail->send()) {
-    echo 'Message has been sent';
-} else {
-    echo 'Message could not be sent.';
-    echo 'Mailer Error: ' . $mail->ErrorInfo;
 }
