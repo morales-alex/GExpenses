@@ -68,8 +68,9 @@ try {
     </body>
     </html>';
     $mail->Body = $mailContent;
-
-    $mail->send();
+    if($mail->send()){
+        $mailEnviat=true;
+    }
 } catch (Exception $ex) {
     echo $ex->message;
 }

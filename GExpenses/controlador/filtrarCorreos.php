@@ -3,7 +3,7 @@ require_once './BbddConfig.php';
 require_once "../vista/compruebaEmail.php";
 
 $correosNoValidos = [];
-
+$mailEnviat = false;
 foreach ($_POST["correos"] as $correo) {
 
     if (filter_var($correo, FILTER_VALIDATE_EMAIL)) { //validar formato correo
@@ -13,6 +13,9 @@ foreach ($_POST["correos"] as $correo) {
         } else {
             require_once '../mail-templates/registro-template.php'; 
         }
+    if($mailEnviat == true){
+        require_once 'invitacion-action.php';
+    }
     } else {
         array_push($correosNoValidos, $correo);
     }
@@ -31,6 +34,6 @@ if (sizeof($correosNoValidos) != 0) {
     }
 }
 
-$destino = '../vista/Actividad.php?a_id='.$_SESSION["a_id"];
+$destino = '../vista/Actividad.php?a_id='.$_SESSION["usuario"]->getU_id();
 
 header('location: '.$destino);

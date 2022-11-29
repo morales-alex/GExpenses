@@ -7,7 +7,7 @@
 
         <label for="nombre">Correo Electrónico:</label>
         <div id="addParticipante">
-            <input type="text" id="nombreValue">
+            <input type="email" id="nombreValue">
             <input type="button" value="Añadir" id="addCorreo">
         </div>
 
