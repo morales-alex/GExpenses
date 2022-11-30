@@ -14,6 +14,7 @@ try {
     $mail->Port = 2525;
     $mail->Username = '1f8bed0fca18c4';
     $mail->Password = 'e54eb581efe56d';
+    $mail->CharSet = 'UTF-8';
 
     $mail->setFrom('auto@freixa.cat', 'proves');
     $mail->addAddress($correo, 'Max');

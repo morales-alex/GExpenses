@@ -1,6 +1,5 @@
 <?php
-require '../controlador/BbddConfig.php';
-require '../modelo/tablesMap.php';
+require '../controlador/BbddConfig.php'; 
 //$dadesInvitacion=[[]];
 session_start();
 try{

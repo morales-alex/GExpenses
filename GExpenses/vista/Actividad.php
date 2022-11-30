@@ -3,10 +3,6 @@
 require '../modelo/tablesMap.php';
 require '../controlador/BbddConfig.php';
 
-$bytes = random_bytes(20);
-var_dump(bin2hex($bytes));
-
-
 if (isset($_GET["a_id"])) {
     $codigoActividad = $_GET["a_id"];
     $_SESSION['actividad_id'] = $codigoActividad;
@@ -25,7 +21,6 @@ if (!isset($_SESSION['usuario'])) {
 if (isset($_GET['invitacion'])) {
 
     $token = $_GET['invitacion'];
-    $correoUsuario = $_SESSION["usuario"]->getU_correo();
 
     // Consulta TOKEN existe
     try {
@@ -320,7 +315,7 @@ $pdo = null;
                 <!--<input id="addParticipantes" type="button" value="Añadir">
                 //<img class="addUserIcon" src="../img/add-user-icon.png" alt="Icono Add user">-->
 
-                <input class="addUserIcon" type="image" alt="Icono Add user" src="../img/add-user-icon.png">
+                <input id="addParticipantes" class="addUserIcon" type="image" alt="Icono Add user" src="../img/add-user-icon.png">
             </div>
 
             <?php
