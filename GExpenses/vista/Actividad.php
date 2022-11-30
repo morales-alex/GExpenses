@@ -1,5 +1,13 @@
 <?php
 require '../modelo/tablesMap.php';
+require '../controlador/BbddConfig.php';
+
+
+if(isset($_GET["a_id"])) {
+    $codigoActividad = $_GET["a_id"];
+};
+
+//$_SESSION["a_id"] = $_GET["a_id"];
 
 if (session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
     SESSION_START();
@@ -10,16 +18,45 @@ if (!isset($_SESSION['usuario'])) {
     header('location: ./login.php');
 }
 
-$codigoActividad = $_GET["a_id"];
-$_SESSION["a_id"] = $_GET["a_id"];
-require '../controlador/BbddConfig.php';
+if (isset($_GET['invitacion'])) {
 
+    //$invitacion = $_GET['invitacion'];
+    $usuario = $_SESSION["usuario"]->getU_id();
+
+    try {
+
+        $sql = "INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) 
+                    VALUES (:ua_idUsu, :ua_idAct)";
+        $stmt = $pdo->prepare($sql);
+
+        $stmt->bindParam(':ua_idUsu', $usuario);
+        $stmt->bindParam(':ua_idAct', $codigoActividad);
+
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->beginTransaction();
+
+        $stmt->execute();
+
+        $pdo->commit();
+
+        header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id='. $codigoActividad);
+        die;
+    } catch (PDOException $ex) {
+        $pdo->rollBack();
+        header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id='. $codigoActividad);
+        die;
+    }
+
+    unset($_GET["invitacion"]);
+} else {
+    echo "Vengo sin invitación";
+};
 
 // Consulta GASTOS
 try {
     $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct WHERE g_idAct = :g_idAct";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':g_idAct', $_GET["a_id"]);
+    $stmt->bindParam(':g_idAct', $codigoActividad);
 
     $stmt->execute();
     $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -29,10 +66,9 @@ try {
 
 // Consulta PARTICIPANTES
 try {
-
     $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':ua_idAct', $_GET["a_id"]);
+    $stmt->bindParam(':ua_idAct', $codigoActividad);
 
     $stmt->execute();
     $participantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -42,10 +78,9 @@ try {
 
 // Consulta ACTIVIDADES
 try {
-
     $sql = "SELECT a_nombre FROM Actividades WHERE a_id = :a_id";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':a_id', $_GET["a_id"]);
+    $stmt->bindParam(':a_id', $codigoActividad);
 
     $stmt->execute();
     $actividad = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -53,9 +88,46 @@ try {
     echo 'Error: ' . $ex->getMessage();
 }
 
+// Invitacion de registro o actividad
+$correosNoValidos = [];
+
+if (isset($_POST['correos'])) {
+
+    require_once "compruebaEmail.php";
+
+    foreach ($_POST["correos"] as $correo) {
+
+        if (filter_var($correo, FILTER_VALIDATE_EMAIL)) { //validar formato correo
+
+            if (compruebaEmail($correo, $pdo)) {
+                require_once '../mail-templates/invitacion-template.php';
+            } else {
+                require_once '../mail-templates/registro-template.php';
+            }
+        } else {
+            array_push($correosNoValidos, $correo);
+        }
+    }
+
+    unset($_POST["correos"]);
+
+    if (sizeof($correosNoValidos) != 0) {
+
+        $_SESSION["errorCorreos"] = "Los siguientes Emails no se han enviado:<br>";
+
+        foreach ($correosNoValidos as $correoInvalido) {
+            $_SESSION["errorCorreos"] = $_SESSION["errorCorreos"] . $correoInvalido . "<br>";
+        }
+    }
+}
+
 $pdo = null;
 
+//$destino = '../vista/Actividad.php?a_id='.$_SESSION["a_id"];
+
+//header('location: '.$destino);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -73,7 +145,43 @@ $pdo = null;
 
 <body>
 
-    <?php include_once './addParticipanteForm.php' ?>
+    <dialog id='addParticipanteDialog' class="dialogForm centered" close>
+        <div id="dialog-activityForm" class="dialog-header">
+            <h5>Invitar Usuarios a la Actividad</h5>
+            <span id='cancelarX'>x</span>
+        </div>
+        <form method="post" action="" id="addActivity" class="formAddParticipantes">
+
+            <label for="nombre">Correo Electrónico:</label>
+            <div id="addParticipante">
+                <input type="text" id="nombreValue">
+                <input type="button" value="Añadir" id="addCorreo">
+            </div>
+
+
+
+            <p id='nombreError' class='error-messageForm'>El formato de correo no es correcto...</p>
+            <label for="descripcion">Invitaciones:</label>
+
+            <div id="correoInvitaciones">
+
+                <div id="dialogFooterParticipante">
+                    <input type="button" class="boton-aceptar" value="Cerrar" id="cancelDialogForm"></input>
+                    <input type="submit" name="enviar" value="Enviar" id="boton-aceptar" class="boton-aceptar">
+                </div>
+
+            </div>
+
+        </form>
+        <?php
+        if (isset($_SESSION["mensajeError"])) {
+        ?>
+            <div class="error-message"><?php echo $_SESSION["mensajeError"]; ?></div>
+        <?php
+            unset($_SESSION["mensajeError"]);
+        }
+        ?>
+    </dialog>
 
     <div id="contenidoActividad">
         <div id="actividadMain">

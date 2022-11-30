@@ -46,7 +46,7 @@ try {
                     <p style="font-size:14px;padding-bottom:10px;margin:0">¡Te han invitado a unirte a una Actividad!</p>
                     <p style="font-size:14px;padding-bottom:10px;margin:0">Haz click al siguiente enlace para unirte a esta actividad y empezar a repartir gastos con tus amigos.</p>
                     <div class="caja-boton">
-                        <a href="#">Ver invitación</a>
+                        <a href="http://localhost/Copernic/abp/GExpenses_3p1/GExpenses/vista/Actividad.php?a_id='.$codigoActividad.'&invitacion=true">Unirme ahora!</a>
                     </div>
     
                 </div>

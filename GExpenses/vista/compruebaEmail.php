@@ -1,6 +1,7 @@
 <?php
 function compruebaEmail($correo, $pdo) {
 
+    require '../controlador/BbddConfig.php';
 
 try {
     $sql = "SELECT u_correo FROM Usuarios where u_correo = :u_correo";
