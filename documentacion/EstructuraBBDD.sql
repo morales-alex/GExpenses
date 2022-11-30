@@ -54,17 +54,31 @@ CREATE TABLE IF NOT EXISTS Gastos (
 	FOREIGN KEY (g_idUsu, g_idAct) REFERENCES UsuariosActividades (ua_idUsu, ua_idAct)
 ) ENGINE=INNODB;
 
-
+INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('admin', 'Pere', 'Pou G', 'Pou.Pere.G@alumnat.copernic.cat', '$2y$10$o7.Xhj4uByDtF2gX0JRbouQcFSMV4TdghkS1QzmVcE/8KFliifFKK');
 INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('aalgarra', 'Alejandro', 'Algarra Delgado', 'algarra.delgado.alejandro@alumnat.copernic.cat', '$2y$10$o7.Xhj4uByDtF2gX0JRbouQcFSMV4TdghkS1QzmVcE/8KFliifFKK');
 INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('amorales', 'Alex', 'Morales Luna', 'morales.luna.alex@alumnat.copernic.cat', '$2y$10$o7.Xhj4uByDtF2gX0JRbouQcFSMV4TdghkS1QzmVcE/8KFliifFKK');
 INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('mfreixa', 'Max', 'Freixa Abcd', 'freixa.abcd.max@alumnat.copernic.cat', '$2y$10$o7.Xhj4uByDtF2gX0JRbouQcFSMV4TdghkS1QzmVcE/8KFliifFKK');
 
-INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('test', '€', 'Test Test TEst', '2022/11/01', '2022/11/18');
-INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('test2', '€', 'Test Test TEst', '2022/11/05', '2022/11/13');
-INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('test3', '€', 'Test Test TEst', '2022/11/08', '2022/11/15');
+INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('Viaje a las bahamas', 'EUR', 'Esto es una prueba de la descripcion de la actividad', '2022/11/01', '2022/11/18');
+INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('Visita al palau de la música', 'EUR', 'Test Test TEst', '2022/11/05', '2022/11/13');
+INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('Gincana por el monte', 'USD', 'Test Test TEst', '2022/11/08', '2022/11/15');
 
 INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) VALUES (1, 1);
 
 INSERT INTO Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) VALUES (1, 1, 100, 'Gasto de prueba', '2022/11/15');
 
+INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) values (1, 1);
+INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) values (2, 1);
+INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) values (3, 1);
+INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) values (4, 1);
+
+INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) values (1, 2);
+INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) values (1, 3);
+
+insert into gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 55.90, 'Bocadillos de jamón con tomate', sysdate());
+insert into gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 300.56, 'Buceo con tiburones', sysdate());
+
+select * from gastos;
+select * from usuariosActividades;
+select * from actividades;
 select * from usuarios;

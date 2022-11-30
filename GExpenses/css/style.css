@@ -572,6 +572,19 @@ div.campoGastoDer {
     margin-bottom: right;
 }
 
+p.sinDatos {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 40px;
+}
+
+input.addUserIcon {
+    height: 55px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 /*----- LINEA -----*/
 div#linea {
     background-color: black;

@@ -9,9 +9,9 @@ var_dump(bin2hex($bytes));
 
 if (isset($_GET["a_id"])) {
     $codigoActividad = $_GET["a_id"];
+    $_SESSION['actividad_id'] = $codigoActividad;
 };
 
-//$_SESSION["a_id"] = $_GET["a_id"];
 
 if (session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
     SESSION_START();
@@ -70,9 +70,11 @@ if (isset($_GET['invitacion'])) {
         }
         unset($_GET["invitacion"]);
     }
+
+    unset($_GET["invitacion"]);
 }
 
-// Consulta GASTOS
+// CONSULTA GASTOS
 try {
     $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct WHERE g_idAct = :g_idAct order by g_fecCrea";
     $stmt = $pdo->prepare($sql);
@@ -84,7 +86,7 @@ try {
     echo 'Error: ' . $ex->getMessage();
 }
 
-
+// CONSULTA PARTICIPANTES ACTIVIDAD
 try {
     $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
     $stmt = $pdo->prepare($sql);
@@ -96,6 +98,7 @@ try {
     echo 'Error: ' . $ex->getMessage();
 }
 
+// CONSULTA SUMA TOTAL GASTOS
 try {
     $sql = "SELECT sum(g_precio) as total FROM Gastos INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct  WHERE g_idAct = :ua_idAct";
     $stmt = $pdo->prepare($sql);
@@ -152,6 +155,11 @@ if (isset($_POST['correos'])) {
             } else {
                 require_once '../mail-templates/registro-template.php';
             }
+            if($mailEnviat){
+                require '../controlador/invitacion-action.php';
+            }else{
+                array_push($correosNoValidos, $correo);
+            }
         } else {
             array_push($correosNoValidos, $correo);
         }
@@ -169,7 +177,7 @@ if (isset($_POST['correos'])) {
     }
 }
 
-// Consulta ACTIVIDADES
+// CONSULTA NOMBRE ACTIVIDAD
 try {
 
     $sql = "SELECT a_nombre FROM Actividades WHERE a_id = :a_id";
@@ -177,7 +185,7 @@ try {
     $stmt->bindParam(':a_id', $_GET["a_id"]);
 
     $stmt->execute();
-    $actividad = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $actividad = $stmt->fetch(PDO::FETCH_ASSOC);
 } catch (PDOException $ex) {
     echo 'Error: ' . $ex->getMessage();
 }
@@ -253,11 +261,9 @@ $pdo = null;
 
             <h1 id="tituloActividad">
 
-                var
-
                 <?php
                 if (count($actividad) > 0) {
-                    echo $actividad[0]['a_nombre'];
+                    echo $actividad['a_nombre'];
                 } else {
                     echo 'Sin título';
                 }
@@ -291,20 +297,19 @@ $pdo = null;
                 } else {
                     ?>
                     <div>
-                        <p>Aún no se han añadido gastos</p>
+                        <p class ='sinDatos'>Aún no se han añadido gastos</p>
                     </div>
                 <?php
                 }
 
-
-                if ($gastoTotal = null) { ?>
+                if ($gastoTotal['total'] !== null) {
+                ?>
                     <div id="totalActividad">
                         <div id="tituloTotal">TOTAL:</div>
                         <div id="campoTotal"><?php echo $gastoTotal['total'] . $gasto['a_moneda'] ?></div>
                     </div>
-                <?php
-                }
-                ?>
+                <?php } ?>
+
             </div>
         </div>
         <div id="linea"></div>
@@ -312,7 +317,10 @@ $pdo = null;
         <div id="participantes">
             <div id="tituloParticipantes">
                 <h2>Participantes</h2>
-                <input id="addParticipantes" type="button" value="Añadir">
+                <!--<input id="addParticipantes" type="button" value="Añadir">
+                //<img class="addUserIcon" src="../img/add-user-icon.png" alt="Icono Add user">-->
+
+                <input class="addUserIcon" type="image" alt="Icono Add user" src="../img/add-user-icon.png">
             </div>
 
             <?php

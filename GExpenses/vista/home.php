@@ -1,6 +1,7 @@
 <?php
 
 require '../modelo/tablesMap.php';
+require '../controlador/BbddConfig.php';
 
 if (session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
     SESSION_START();
@@ -10,6 +11,36 @@ if (!isset($_SESSION['usuario'])) {
     SESSION_DESTROY();
     header('location: ./login.php');
 }
+
+
+if (!empty($_POST["ordenActividad"])) {
+    $seleccion = $_POST["ordenActividad"];
+} else {
+    $seleccion = 'fechaModificacion';
+}
+
+$idUsuario = $_SESSION["usuario"]->getU_id();
+
+if ($seleccion == 'fechaCreacion') {
+
+    $stmt = $pdo->prepare("SELECT * FROM ACTIVIDADES as a INNER JOIN UsuariosActividades as ua ON ua.ua_idAct = a.a_id WHERE ua_idUsu = :u_usernameID ORDER BY a_fecCreacion DESC;");
+
+    $stmt->bindParam(':u_usernameID', $idUsuario);
+
+    $stmt->execute();
+    $consultaOrdenada = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $stmt = $pdo->prepare("SELECT * FROM ACTIVIDADES as a INNER JOIN UsuariosActividades as ua ON ua.ua_idAct = a.a_id WHERE ua_idUsu = :u_usernameID ORDER BY a_fecUltMod DESC;");
+
+    $stmt->bindParam(':u_usernameID', $idUsuario);
+
+    $stmt->execute();
+    $consultaOrdenada = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+$pdo = null;
+
 
 ?>
 <!DOCTYPE html>
@@ -41,8 +72,19 @@ if (!isset($_SESSION['usuario'])) {
                 <div class="boton-nueva-actividad" id='addActivityButton'>Añadir actividad +</div>
                 <form method="post" action="home.php">
                     <select name="ordenActividad">
-                        <option value="fechaCreacion">Fecha de creación</option>
-                        <option value="fechaModificacion">Fecha de modificacion</option>
+                        <?php
+                        if ($seleccion === 'fechaCreacion') {
+                        ?>
+                            <option value="fechaCreacion" selected>Fecha de creación</option>
+                            <option value="fechaModificacion">Fecha de modificacion</option>
+                        <?php
+                        } else {
+                        ?>
+                            <option value="fechaCreacion">Fecha de creación</option>
+                            <option value="fechaModificacion" selected>Fecha de modificacion</option>
+                        <?php
+                        }
+                        ?>
                     </select>
                     <button type="submit" name="enviar" value="enviar">OK</button>
                 </form>
@@ -52,26 +94,6 @@ if (!isset($_SESSION['usuario'])) {
         <div id="caja-actividades">
             <?php
 
-            require '../controlador/BbddConfig.php';
-
-            if (!empty($_POST["ordenActividad"])) {
-                $seleccion = $_POST["ordenActividad"];
-            } else {
-                $seleccion = 'fechaModificacion';
-            }
-
-            if ($seleccion == 'fechaCreacion') {
-                $stmt = $pdo->prepare("SELECT * FROM Actividades ORDER BY a_fecCreacion DESC");
-                $stmt->execute();
-                $consultaOrdenada = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            } else {
-                $stmt = $pdo->prepare("SELECT * FROM Actividades ORDER BY a_fecUltMod DESC;");
-                $stmt->execute();
-                $consultaOrdenada = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            }
-
-
-            $pdo = null;
 
             foreach ($consultaOrdenada as $actividad) {
             ?>
@@ -83,7 +105,7 @@ if (!isset($_SESSION['usuario'])) {
                             <p>F. modif: <?php echo $actividad['a_fecUltMod'] ?></p>
                         </div>
                         <div class="caja-boton-actividad">
-                            <a href="./Actividad.php?a_id=<?php echo $actividad['a_id']?>">VER ACTIVIDAD</a>
+                            <a href="./Actividad.php?a_id=<?php echo $actividad['a_id'] ?>">VER ACTIVIDAD</a>
                         </div>
                     </div>
                 </div>
