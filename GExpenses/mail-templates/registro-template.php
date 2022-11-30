@@ -14,13 +14,10 @@ try {
     $mail->Port = 2525;
     $mail->Username = '1f8bed0fca18c4';
     $mail->Password = 'e54eb581efe56d';
+    $mail->CharSet = 'UTF-8';
 
-    //$mail = new PHPMailer();
     $mail->setFrom('auto@freixa.cat', 'proves');
-    // $mail->addReplyTo('info@mailtrap.io', 'Mailtrap');
     $mail->addAddress('freixa.sureda.max@alumnat.copernic.cat', 'Max');
-    // $mail->addCC('cc1@example.com', 'Elena');
-    // $mail->addBCC('bcc1@example.com', 'Alex');
 
     $mail->Subject = '¡Te han invitacdo a GExpenses!';
     $mail->isHTML(true);
