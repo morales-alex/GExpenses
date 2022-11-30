@@ -3,6 +3,9 @@
 require '../modelo/tablesMap.php';
 require '../controlador/BbddConfig.php';
 
+$bytes = random_bytes(20);
+var_dump(bin2hex($bytes));
+
 
 if (isset($_GET["a_id"])) {
     $codigoActividad = $_GET["a_id"];
@@ -21,36 +24,53 @@ if (!isset($_SESSION['usuario'])) {
 
 if (isset($_GET['invitacion'])) {
 
-    $usuario = $_SESSION["usuario"]->getU_id();
+    $token = $_GET['invitacion'];
+    $correoUsuario = $_SESSION["usuario"]->getU_correo();
 
+    // Consulta TOKEN existe
     try {
-
-        $sql = "INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) 
-                    VALUES (:ua_idUsu, :ua_idAct)";
+        $sql = "SELECT i_correoUsuarioInvitado FROM Invitaciones WHERE i_token = :i_token";
         $stmt = $pdo->prepare($sql);
-
-        $stmt->bindParam(':ua_idUsu', $usuario);
-        $stmt->bindParam(':ua_idAct', $codigoActividad);
-
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->beginTransaction();
+        $stmt->bindParam(':i_token', $token);
 
         $stmt->execute();
-
-        $pdo->commit();
-
-        header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id=' . $codigoActividad);
-        die;
+        $correoInvitado = $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $ex) {
-        $pdo->rollBack();
-        header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id=' . $codigoActividad);
-        die;
+        echo 'Error: ' . $ex->getMessage();
     }
 
-    unset($_GET["invitacion"]);
-} else {
-    echo "Vengo sin invitación";
-};
+    $correoUsuario = $_SESSION["usuario"]->getU_correo();
+    $usuario = $_SESSION["usuario"]->getU_id();
+
+    // Si el token introducido coincide con el mail correspondiente en la base de datos lo inserta
+    if ($correoUsuario == implode($correoInvitado)) {
+
+        try {
+
+            $sql = "INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) 
+                    VALUES (:ua_idUsu, :ua_idAct)";
+            $stmt = $pdo->prepare($sql);
+
+            $stmt->bindParam(':ua_idUsu', $usuario);
+            $stmt->bindParam(':ua_idAct', $codigoActividad);
+
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->beginTransaction();
+
+            $stmt->execute();
+
+            $pdo->commit();
+
+            header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id=' . $codigoActividad);
+            die;
+        } catch (PDOException $ex) {
+            $pdo->rollBack();
+            header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id=' . $codigoActividad);
+            die;
+        }
+        unset($_GET["invitacion"]);
+    }
+}
 
 // Consulta GASTOS
 try {
@@ -99,6 +119,35 @@ if (isset($_POST['correos'])) {
         if (filter_var($correo, FILTER_VALIDATE_EMAIL)) { //validar formato correo
 
             if (compruebaEmail($correo, $pdo)) {
+                // Generamos un nuevo token
+                $nuevoToken = random_bytes(20);
+                $nuevoToken = bin2hex($nuevoToken);
+
+                // Insertamos la invitación con el token en la base de datos
+                try {
+
+                    $sql = "INSERT INTO Invitaciones (i_idUsu, i_idAct, i_token, i_correoUsuarioInvitado) VALUES (:i_idUsu, :i_idAct, :i_token, :i_correoUsuarioInvitado)";
+                    $stmt = $pdo->prepare($sql);
+
+                    $stmt->bindParam(':i_idUsu', $usuario);
+                    $stmt->bindParam(':i_idAct', $codigoActividad);
+                    $stmt->bindParam(':i_token', $nuevoToken);
+                    $stmt->bindParam(':i_correoUsuarioInvitado', $correo);
+
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $pdo->beginTransaction();
+
+                    $stmt->execute();
+
+                    $pdo->commit();
+
+                    /*header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id=' . $codigoActividad);
+                    die;*/
+                } catch (PDOException $ex) {
+                    $pdo->rollBack();
+                    /*header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id=' . $codigoActividad);
+                    die;*/
+                }
                 require_once '../mail-templates/invitacion-template.php';
             } else {
                 require_once '../mail-templates/registro-template.php';

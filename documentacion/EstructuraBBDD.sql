@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS Usuarios (
 CREATE TABLE IF NOT EXISTS Actividades (
 	a_id		int AUTO_INCREMENT,
 	a_nombre	varchar(30) NOT NULL,
-	a_moneda	char(1) NOT NULL,
+	a_moneda	varchar(3) NOT NULL,
 	a_descripcion varchar(130),
     a_fecCreacion date,
     a_fecUltMod date,
@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS Invitaciones (
 	i_id INT AUTO_INCREMENT,
     i_idUsu INT,
     i_idAct INT,
+	i_token VARCHAR(40),
     i_correoUsuarioInvitado VARCHAR(60),
 	PRIMARY KEY (i_id),
 	FOREIGN KEY (i_idUsu, i_idAct) REFERENCES UsuariosActividades (ua_idUsu, ua_idAct)
@@ -61,5 +62,9 @@ INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) v
 INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('test', '€', 'Test Test TEst', '2022/11/01', '2022/11/18');
 INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('test2', '€', 'Test Test TEst', '2022/11/05', '2022/11/13');
 INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('test3', '€', 'Test Test TEst', '2022/11/08', '2022/11/15');
+
+INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) VALUES (1, 1);
+
+INSERT INTO Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) VALUES (1, 1, 100, 'Gasto de prueba', '2022/11/15');
 
 select * from usuarios;
