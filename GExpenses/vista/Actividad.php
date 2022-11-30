@@ -4,7 +4,7 @@ require '../modelo/tablesMap.php';
 require '../controlador/BbddConfig.php';
 
 
-if(isset($_GET["a_id"])) {
+if (isset($_GET["a_id"])) {
     $codigoActividad = $_GET["a_id"];
     $_SESSION['actividad_id'] = $codigoActividad;
 };
@@ -22,7 +22,6 @@ if (!isset($_SESSION['usuario'])) {
 
 if (isset($_GET['invitacion'])) {
 
-    //$invitacion = $_GET['invitacion'];
     $usuario = $_SESSION["usuario"]->getU_id();
 
     try {
@@ -41,11 +40,11 @@ if (isset($_GET['invitacion'])) {
 
         $pdo->commit();
 
-        header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id='. $codigoActividad);
+        header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id=' . $codigoActividad);
         die;
     } catch (PDOException $ex) {
         $pdo->rollBack();
-        header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id='. $codigoActividad);
+        header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id=' . $codigoActividad);
         die;
     }
 
@@ -79,9 +78,9 @@ try {
 }
 
 try {
-    $sql = "SELECT a_nombre FROM Actividades WHERE a_id = :a_id";
+    $sql = "SELECT sum(g_precio) as total FROM Gastos INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct  WHERE g_idAct = :ua_idAct";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':a_id', $codigoActividad);
+    $stmt->bindParam(':ua_idAct', $_GET["a_id"]);
 
     $stmt->execute();
     $gastoTotal = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -120,6 +119,19 @@ if (isset($_POST['correos'])) {
             $_SESSION["errorCorreos"] = $_SESSION["errorCorreos"] . $correoInvalido . "<br>";
         }
     }
+}
+
+// Consulta ACTIVIDADES
+try {
+
+    $sql = "SELECT a_nombre FROM Actividades WHERE a_id = :a_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':a_id', $_GET["a_id"]);
+
+    $stmt->execute();
+    $actividad = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $ex) {
+    echo 'Error: ' . $ex->getMessage();
 }
 
 $pdo = null;
@@ -191,7 +203,18 @@ $pdo = null;
 
         <div id="actividadMain">
 
-            <h1 id="tituloActividad"> <?php echo $datos[0]['a_nombre'] ?></h1>
+            <h1 id="tituloActividad">
+
+                var
+
+                <?php
+                if (count($actividad) > 0) {
+                    echo $actividad[0]['a_nombre'];
+                } else {
+                    echo 'Sin título';
+                }
+                ?></h1>
+
 
 
             <div id="gastoWrapper">
@@ -204,8 +227,6 @@ $pdo = null;
                 </div>
 
                 <?php
-
-
                 if ($datos) {
                     foreach ($datos as $gasto) {
                 ?>
@@ -217,21 +238,27 @@ $pdo = null;
                             <div class="campoGastoDer"><?php echo $gasto['g_precio'] . $gasto['a_moneda'] ?></div>
                         </div>
 
-                <?php
+                    <?php
                     }
+                } else {
+                    ?>
+                    <div>
+                        <p>Aún no se han añadido gastos</p>
+                    </div>
+                <?php
                 }
 
+
+                if ($gastoTotal = null) { ?>
+                    <div id="totalActividad">
+                        <div id="tituloTotal">TOTAL:</div>
+                        <div id="campoTotal"><?php echo $gastoTotal['total'] . $gasto['a_moneda'] ?></div>
+                    </div>
+                <?php
+                }
                 ?>
-
-                <div id="totalActividad">
-                    <div id="tituloTotal">TOTAL:</div>
-                    <div id="campoTotal"><?php echo $gastoTotal['total'] . $gasto['a_moneda'] ?></div>
-                </div>
             </div>
-
-
         </div>
-
         <div id="linea"></div>
 
         <div id="participantes">
