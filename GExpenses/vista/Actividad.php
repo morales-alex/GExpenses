@@ -6,6 +6,7 @@ require '../controlador/BbddConfig.php';
 
 if(isset($_GET["a_id"])) {
     $codigoActividad = $_GET["a_id"];
+    $_SESSION['actividad_id'] = $codigoActividad;
 };
 
 //$_SESSION["a_id"] = $_GET["a_id"];
