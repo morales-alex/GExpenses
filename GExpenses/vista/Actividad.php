@@ -104,6 +104,11 @@ if (isset($_POST['correos'])) {
             } else {
                 require_once '../mail-templates/registro-template.php';
             }
+            if($mailEnviat){
+                require '../controlador/invitacion-action.php';
+            }else{
+                array_push($correosNoValidos, $correo);
+            }
         } else {
             array_push($correosNoValidos, $correo);
         }

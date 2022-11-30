@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS Invitaciones (
     i_idAct INT,
     i_correoUsuarioInvitado VARCHAR(60),
 	i_date DATETIME ,
+	i_token VARCHAR(40),
 	PRIMARY KEY (i_id),
 	FOREIGN KEY (i_idUsu, i_idAct) REFERENCES UsuariosActividades (ua_idUsu, ua_idAct)
 ) ENGINE=INNODB;

@@ -30,10 +30,12 @@ if (isset($_POST)) {
 
             $referer = $_SERVER['HTTP_REFERER']; // Redirige a la página donde se ecuentra
             header("Location: $referer");
+            die;
         } catch (PDOException $ex) {
             $pdo->rollBack();
             $referer = $_SERVER['HTTP_REFERER']; // Redirige a la página donde se ecuentra
             header("Location: $referer");
+            die;
         } finally {
             $pdo = null;
         }
