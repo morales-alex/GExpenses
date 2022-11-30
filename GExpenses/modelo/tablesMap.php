@@ -57,12 +57,16 @@ class Actividades
     private int $a_id;
     private String $a_nom;
     private String $a_descripcion;
+    private String $a_fecCreacion;
+    private String $a_fecUltMod;
 
-    public function __construct($a_id, $a_nom, $a_descripcion)
+    public function __construct($a_id, $a_nom, $a_descripcion, $a_fecCreacion, $a_fecUltMod)
     {
         $this->a_id = $a_id;
         $this->a_nom = $a_nom;
         $this->a_descripcion = $a_descripcion;
+        $this->a_fecCreacion = $a_fecCreacion;
+        $this->a_fecUltMod = $a_fecUltMod;
     }
 
     public function getA_id()
@@ -78,6 +82,14 @@ class Actividades
     public function getA_descripcion()
     {
         return $this->a_descripcion;
+    }
+    public function getA_fecCreacion()
+    {
+        return $this->a_fecCreacion;
+    }
+    public function getA_fecUltMod()
+    {
+        return $this->a_fecUltMod;
     }
 }
 
