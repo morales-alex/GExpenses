@@ -150,9 +150,9 @@ if (isset($_POST['correos'])) {
             } else {
                 require_once '../mail-templates/registro-template.php';
             }
-            if($mailEnviat){
+            if ($mailEnviat) {
                 require '../controlador/invitacion-action.php';
-            }else{
+            } else {
                 array_push($correosNoValidos, $correo);
             }
         } else {
@@ -248,31 +248,25 @@ $pdo = null;
         ?>
     </dialog>
 
+    <h1 id="tituloActividad">
+
+        <?php
+        if (count($actividad) > 0) {
+            echo $actividad['a_nombre'];
+        } else {
+            echo 'Sin título';
+        }
+        ?></h1>
+
     <div id="contenidoActividad">
-
-
-
         <div id="actividadMain">
-
-            <h1 id="tituloActividad">
-
-                <?php
-                if (count($actividad) > 0) {
-                    echo $actividad['a_nombre'];
-                } else {
-                    echo 'Sin título';
-                }
-                ?></h1>
-
-
-
             <div id="gastoWrapper">
 
                 <div id="tituloGasto">
-                    <h3 id="tituloCampoConcepto">CONCEPTO:</h3>
-                    <h3 id="tituloCampo">PAGÓ:</h3>
-                    <h3 id="tituloCampo">Fecha:</h3>
-                    <h3 id="tituloCampoPrecio">PRECIO:</h3>
+                    <h3 id="tituloCampoConcepto">Concepto</h3>
+                    <h3 id="tituloCampo">Pagó</h3>
+                    <h3 id="tituloCampo">Fecha</h3>
+                    <h3 id="tituloCampoPrecio">Precio</h3>
                 </div>
 
                 <?php
@@ -292,7 +286,7 @@ $pdo = null;
                 } else {
                     ?>
                     <div>
-                        <p class ='sinDatos'>Aún no se han añadido gastos</p>
+                        <p class='sinDatos'>Aún no se han añadido gastos</p>
                     </div>
                 <?php
                 }

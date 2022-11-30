@@ -24,7 +24,7 @@ h1 {
 }
 
 h2 {
-    font-size: 35px;
+    font-size: 25px;
     line-height: 35px;
     font-weight: 500;
 }
@@ -196,7 +196,7 @@ label {
     border: 1px solid #F7F7F7;
     border-radius: 10px;
     font-size: 14px;
-  }
+}
 
 #caja-actividades {
     display: flex;
@@ -270,7 +270,7 @@ label {
     font-weight: 600;
     margin-right: 15px;
     background-color: #4E729A;
-    
+
 
     text-decoration: none;
     color: #FFF;
@@ -284,14 +284,15 @@ label {
     margin-right: 15px;
     background-color: #4E729A;
     color: #FFF;
-    border: none;
+    border: none !important;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 0px 10px 0px rgba(0, 0, 0, 0.38);
 }
 
 .boton-nueva-actividad:hover, input#addParticipantes:hover, input:hover {
     opacity: 0.9;
 }
 
-.boton-nueva-actividad a,.boton-nueva-actividad input  {
+.boton-nueva-actividad a, .boton-nueva-actividad input {
     text-decoration: none;
     color: #FFF;
     font-weight: 600;
@@ -318,9 +319,14 @@ nav {
     height: 40px;
     justify-content: space-between;
     padding: 10px 90px;
+    max-width: 1425px;
+    margin: 0 auto;
+}
+
+header {
     background-color: #fff;
     box-shadow: 0 0 #0000, 0 0 #0000, 0 0px 10px 0px rgba(0, 0, 0, 0.16);
-  }
+}
 
 #opcionesBox {
     display: flex;
@@ -343,7 +349,6 @@ a#usuario {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 170px;
     margin: 5px;
     border-radius: 10px;
 }
@@ -356,6 +361,7 @@ a#usuario {
     align-items: center;
     justify-content: center;
     border-radius: 10px;
+    font-weight: 600;
 }
 
 .opcion:hover {
@@ -366,18 +372,20 @@ a#usuario {
 
 
 /* FOOTER */
-
-footer {
+#footer-container {
     display: flex;
     width: 100%;
-    justify-content: space-evenly;
-    background-color: gray;
-    height: auto;
+    background-color: #e1e1e1;
     align-items: center;
-    position: fixed;
-    bottom: 0px;
-    margin-right: auto;
-    margin-left: auto;
+    min-height: 150px;
+    max-width: 1425px;
+    margin: 0 auto;
+    padding: 10px 90px;
+    box-sizing: border-box;
+  }
+
+footer {
+    background-color: #e1e1e1;
 }
 
 .footerBox {
@@ -390,14 +398,14 @@ footer {
     flex-flow: column;
     float: right;
     margin-right: 15px;
-    color: #F7F7F7;
+    color: #47525E;
     height: 100%;
     justify-content: center;
 }
 
 .medio {
     text-align: center;
-    color: #F7F7F7;
+    color: #47525E;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -411,7 +419,6 @@ footer {
 }
 
 #logoFooter {
-    background-color: #4E729A;
     width: 100%;
     height: auto;
     max-width: 142px;
@@ -439,29 +446,35 @@ dialog {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     text-align: center;
 }*/
-#addActivityDialog{
+#addActivityDialog {
     border: none !important;
     box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     position: absolute;
     flex-direction: column;
-
+    border-radius: 10px;
 }
-  
-  dialog::backdrop {
+
+#dialog-activityForm h5 {
+    margin: 10px 0;
+}
+
+dialog::backdrop {
     backdrop-filter: blur(1px);
 }
 
-#addActivity textArea{
+#addActivity textArea {
     resize: none;
     height: 100px;
     width: 400px;
 }
-.dialog-header{
+
+.dialog-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-.dialog-footer{
+
+.dialog-footer {
     padding-top: 5px;
     display: flex;
     flex-direction: row;
@@ -478,7 +491,10 @@ select#moneda {
 }
 
 input#cancelDialogForm {
-    background-color: red;
+    background-color: white;
+    color: #4e729a;
+    border: none;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 0px 10px 0px rgba(0, 0, 0, 0.38);
 }
 
 .error-messageForm {
@@ -502,9 +518,10 @@ p#nombreError.error-messageForm {
 /*======================  PÁGINA ACTIVIDAD  ================================*/
 
 div#contenidoActividad {
-
     height: 80%;
     display: flex;
+    max-width: 1425px;
+    margin: 0 auto;
 }
 
 /*----- ACTIVIDAD -----*/
@@ -513,45 +530,53 @@ div#contenidoActividad {
 div#actividadMain {
     height: 100%;
     width: 65%;
+    margin: 0 25px;
 }
 
 h1#tituloActividad {
-
     text-align: center;
     padding-top: 20px;
-
+    font-size: 30px;
+    margin: 0 15px;
 }
 
 div#tituloGasto {
     display: flex;
     margin: 0 15px;
-  }
+    background-color: #4e729a;
+    color: #fff;
+    margin-top: 20px;
+    padding: 0 15px;
+}
+
+#tituloGasto h3 {
+    line-height: 0;
+}
 
 div#gasto {
     display: flex;
     border-bottom: 1px solid cornflowerblue;
     padding: 15px;
-    margin: 0px 15px;
     text-align: right;
-  }
+    margin: 0 15px;
+}
 
 
 h3#tituloCampoConcepto {
     width: 50%;
-    margin-bottom: 5px;
-    font-size: 30px;
+    font-size: 17px;
 }
 
 h3#tituloCampo {
     width: 33%;
     margin-bottom: 5px;
-    font-size: 30px;
+    font-size: 17px;
 }
 
 h3#tituloCampoPrecio {
     width: 33%;
     margin-bottom: 5px;
-    font-size: 30px;
+    font-size: 17px;
     text-align: right;
 }
 
@@ -580,7 +605,7 @@ p.sinDatos {
 }
 
 input.addUserIcon {
-    height: 55px;
+    width: 20px;
     margin-top: auto;
     margin-bottom: auto;
 }
@@ -590,12 +615,18 @@ div#linea {
     background-color: black;
     height: 88%;
     margin-top: 2%;
-    border: 0.1px solid black;
+    /*border: 0.1px solid black;*/
 }
 
 /*----- PARTICIPANTES -----*/
 div#participantes {
     width: 35%;
+    height: fit-content;
+    margin: 15px;
+    border-radius: 25px;
+    background-color: #fff;
+    padding-bottom: 20px;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 0px 10px 0px rgba(0, 0, 0, 0.16);
 }
 
 div#tituloParticipantes {
@@ -618,13 +649,11 @@ input#addParticipantes {
 }
 
 p#participante {
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #4E729A;
-    color: white;
-    width: fit-content;
-    border-radius: 25px;
     padding: 5px 15px;
+    border-bottom: 1px solid #e8e8e8;
+    margin: 0 15px;
+    color: #4e729a;
+    font-weight: 600;
 }
 
 /*----- DIALOG -----*/
@@ -634,9 +663,11 @@ dialog#addParticipanteDialog {
     min-width: 500px;
     min-height: 500px;
     height: auto;
+    max-height: 600px;
+    border-radius: 10px;
 }
 
-.dialog-footer{
+.dialog-footer {
     padding-top: 5px;
     display: flex;
     flex-direction: row;
@@ -703,15 +734,14 @@ input#addCorreo {
 div#totalActividad {
     display: flex;
     height: 70px;
-    width: 50%;
-    margin: auto 0 auto auto;
+    margin: 0 15px;
 }
 
 div#tituloTotal {
     width: auto;
-    font-size: 30px;
+    font-size: 20px;
     line-height: 30px;
-    font-weight: 500;
+    font-weight: 600;
     margin: auto 0px auto auto;
 }
 
