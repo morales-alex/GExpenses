@@ -1,4 +1,5 @@
 <?php
+
 require '../modelo/tablesMap.php';
 require '../controlador/BbddConfig.php';
 
@@ -54,7 +55,7 @@ if (isset($_GET['invitacion'])) {
 
 // Consulta GASTOS
 try {
-    $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct WHERE g_idAct = :g_idAct";
+    $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct WHERE g_idAct = :g_idAct order by g_fecCrea";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':g_idAct', $codigoActividad);
 
@@ -64,7 +65,7 @@ try {
     echo 'Error: ' . $ex->getMessage();
 }
 
-// Consulta PARTICIPANTES
+
 try {
     $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
     $stmt = $pdo->prepare($sql);
@@ -76,14 +77,13 @@ try {
     echo 'Error: ' . $ex->getMessage();
 }
 
-// Consulta ACTIVIDADES
 try {
     $sql = "SELECT a_nombre FROM Actividades WHERE a_id = :a_id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':a_id', $codigoActividad);
 
     $stmt->execute();
-    $actividad = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $gastoTotal = $stmt->fetch(PDO::FETCH_ASSOC);
 } catch (PDOException $ex) {
     echo 'Error: ' . $ex->getMessage();
 }
@@ -141,6 +141,7 @@ $pdo = null;
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <?php include_once './Header.php' ?>
 
 <body>
@@ -184,58 +185,54 @@ $pdo = null;
     </dialog>
 
     <div id="contenidoActividad">
+
+
+
         <div id="actividadMain">
 
-            <h1 id="tituloActividad">
-                <?php
-                if (count($actividad) > 0) {
-                    echo $actividad[0]['a_nombre'];
-                } else {
-                    echo 'Sin título';
-                }
-                ?></h1>
+            <h1 id="tituloActividad"> <?php echo $datos[0]['a_nombre'] ?></h1>
+
 
             <div id="gastoWrapper">
 
                 <div id="tituloGasto">
-                    <h3 id="tituloCampo">NOMBRE:</h3>
+                    <h3 id="tituloCampoConcepto">CONCEPTO:</h3>
                     <h3 id="tituloCampo">PAGÓ:</h3>
-                    <h3 id="tituloCampo">PRECIO:</h3>
+                    <h3 id="tituloCampo">Fecha:</h3>
+                    <h3 id="tituloCampoPrecio">PRECIO:</h3>
                 </div>
 
                 <?php
+
+
                 if ($datos) {
                     foreach ($datos as $gasto) {
                 ?>
+
                         <div id="gasto">
-                            <div id="campoGasto"><?php echo $gasto['g_concepto'] ?></div>
-                            <div id="campoGasto"><?php echo $gasto['u_username'] ?></div>
-                            <div id="campoGasto"><?php echo $gasto['g_precio'] . $gasto['a_moneda'] ?></div>
+                            <div class="campoGastoIzq"><?php echo $gasto['g_concepto'] ?></div>
+                            <div class="campoGastoCent"><?php echo $gasto['u_username'] ?></div>
+                            <div class="campoGastoCent"><?php echo $gasto['g_fecCrea'] ?></div>
+                            <div class="campoGastoDer"><?php echo $gasto['g_precio'] . $gasto['a_moneda'] ?></div>
                         </div>
 
-                    <?php
+                <?php
                     }
-                } else {
-                    ?>
-                    <div>
-                        <p>Aún no se han añadido gastos</p>
-                    </div>
-                <?php
                 }
 
-
-                if ($gastoTotal = null) { ?>
-                    <div id="totalActividad">
-                        <div id="tituloTotal">TOTAL:</div>
-                        <div id="campoTotal"><?php echo $gastoTotal['total'] . $gasto['a_moneda'] ?></div>
-                    </div>
-                <?php
-                }
                 ?>
+
+                <div id="totalActividad">
+                    <div id="tituloTotal">TOTAL:</div>
+                    <div id="campoTotal"><?php echo $gastoTotal['total'] . $gasto['a_moneda'] ?></div>
+                </div>
             </div>
+
+
         </div>
 
         <div id="linea"></div>
+
         <div id="participantes">
             <div id="tituloParticipantes">
                 <h2>Participantes</h2>
@@ -244,21 +241,13 @@ $pdo = null;
 
             <?php
 
-            if ($participantes) {
-
-                foreach ($participantes as $participante) {
+            foreach ($participantes as $participante) {
             ?>
-                    <p id="participante"><?php echo $participante['u_username'] ?></p>
+                <p id="participante"><?php echo $participante['u_username'] ?></p>
 
-                <?php
-                }
-            } else {
-                ?>
-                <div>
-                    <p>Aún no se han añadido participantes</p>
-                </div>
             <?php
             }
+            $pdo = null;
             ?>
 
 
@@ -266,19 +255,23 @@ $pdo = null;
 
             if (isset($_SESSION["errorCorreos"])) {
             ?>
-                <div class="error-message"><?php echo $_SESSION["errorCorreos"] . "dssda"; ?></div>
+                <div class="error-message-correos"><?php echo $_SESSION["errorCorreos"]; ?></div>
             <?php
                 unset($_SESSION["errorCorreos"]);
             }
             ?>
 
         </div>
+
+
+
     </div>
+
 </body>
 
 <?php include_once './Footer.php' ?>
 
 <script src="../script/crearParticipantes.js"></script>
-<script src="../script/actividad.js"></script>
+
 
 </html>

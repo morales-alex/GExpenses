@@ -524,7 +524,7 @@ h1#tituloActividad {
 
 div#tituloGasto {
     display: flex;
-    margin: 0 20px;
+    margin: 0 15px;
   }
 
 div#gasto {
@@ -532,17 +532,44 @@ div#gasto {
     border-bottom: 1px solid cornflowerblue;
     padding: 15px;
     margin: 0px 15px;
+    text-align: right;
   }
 
+
+h3#tituloCampoConcepto {
+    width: 50%;
+    margin-bottom: 5px;
+    font-size: 30px;
+}
 
 h3#tituloCampo {
     width: 33%;
     margin-bottom: 5px;
+    font-size: 30px;
 }
 
-div#campoGasto {
+h3#tituloCampoPrecio {
     width: 33%;
     margin-bottom: 5px;
+    font-size: 30px;
+    text-align: right;
+}
+
+div.campoGastoIzq {
+    width: 33%;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+div.campoGastoCent {
+    width: 33%;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+div.campoGastoDer {
+    width: 33%;
+    margin-bottom: right;
 }
 
 /*----- LINEA -----*/
@@ -663,6 +690,8 @@ input#addCorreo {
 div#totalActividad {
     display: flex;
     height: 70px;
+    width: 50%;
+    margin: auto 0 auto auto;
 }
 
 div#tituloTotal {
@@ -670,9 +699,11 @@ div#tituloTotal {
     font-size: 30px;
     line-height: 30px;
     font-weight: 500;
+    margin: auto 0px auto auto;
 }
 
 div#campoTotal {
     width: auto;
-    margin: auto 30px auto auto;
+    margin: auto 14px auto 20px;
+    text-align: center;
 }

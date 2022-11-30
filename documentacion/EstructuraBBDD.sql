@@ -46,8 +46,9 @@ CREATE TABLE IF NOT EXISTS Gastos (
 	g_id		int AUTO_INCREMENT,
 	g_idUsu		int, -- PERSONA QUE PAGA
 	g_idAct		int, -- ACTIVIDAD RELACIONADA
-	g_precio	int NOT NULL,
+	g_precio	double NOT NULL,
 	g_concepto	varchar(50),
+    g_fecCrea	date,
 	PRIMARY KEY (g_id),
 	FOREIGN KEY (g_idUsu, g_idAct) REFERENCES UsuariosActividades (ua_idUsu, ua_idAct)
 ) ENGINE=INNODB;
