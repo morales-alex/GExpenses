@@ -1,6 +1,7 @@
 <?php
 
 require '../modelo/tablesMap.php';
+require '../controlador/BbddConfig.php';
 
 if (session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
     SESSION_START();
@@ -52,7 +53,6 @@ if (!isset($_SESSION['usuario'])) {
         <div id="caja-actividades">
             <?php
 
-            require '../controlador/BbddConfig.php';
 
             if (!empty($_POST["ordenActividad"])) {
                 $seleccion = $_POST["ordenActividad"];
@@ -60,12 +60,21 @@ if (!isset($_SESSION['usuario'])) {
                 $seleccion = 'fechaModificacion';
             }
 
-            if ($seleccion == 'fechaCreacion') {
-                $stmt = $pdo->prepare("SELECT * FROM Actividades ORDER BY a_fecCreacion DESC");
+            $idUsuario = $_SESSION["usuario"]->getU_id();
+
+            if ($seleccion == 'fechaCreacion') {                
+
+                $stmt = $pdo->prepare("SELECT * FROM ACTIVIDADES as a INNER JOIN UsuariosActividades as ua ON ua.ua_idAct = a.a_id WHERE ua_idUsu = :u_usernameID ORDER BY a_fecCreacion DESC;");
+
+                $stmt->bindParam(':u_usernameID', $idUsuario);
+
                 $stmt->execute();
                 $consultaOrdenada = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } else {
-                $stmt = $pdo->prepare("SELECT * FROM Actividades ORDER BY a_fecUltMod DESC;");
+                $stmt = $pdo->prepare("SELECT * FROM ACTIVIDADES as a INNER JOIN UsuariosActividades as ua ON ua.ua_idAct = a.a_id WHERE ua_idUsu = :u_usernameID ORDER BY a_fecUltMod DESC;");
+
+                $stmt->bindParam(':u_usernameID', $idUsuario);
+
                 $stmt->execute();
                 $consultaOrdenada = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
@@ -83,7 +92,7 @@ if (!isset($_SESSION['usuario'])) {
                             <p>F. modif: <?php echo $actividad['a_fecUltMod'] ?></p>
                         </div>
                         <div class="caja-boton-actividad">
-                            <a href="./Actividad.php?a_id=<?php echo $actividad['a_id']?>">VER ACTIVIDAD</a>
+                            <a href="./Actividad.php?a_id=<?php echo $actividad['a_id'] ?>">VER ACTIVIDAD</a>
                         </div>
                     </div>
                 </div>

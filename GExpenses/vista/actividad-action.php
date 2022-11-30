@@ -1,5 +1,7 @@
 <?php
 
+require '../modelo/tablesMap.php';
+
 session_start();
 
 if (isset($_POST)) {
@@ -28,19 +30,40 @@ if (isset($_POST)) {
 
             $pdo->commit();
 
-            $referer = $_SERVER['HTTP_REFERER']; // Redirige a la página donde se ecuentra
-            header("Location: $referer");
         } catch (PDOException $ex) {
             $pdo->rollBack();
-            $referer = $_SERVER['HTTP_REFERER']; // Redirige a la página donde se ecuentra
-            header("Location: $referer");
-        } finally {
-            $pdo = null;
+            
+            header("Location: ./home.php");
         }
+
+        $idUsuario = $_SESSION["usuario"]->getU_id();
+
+        try {
+
+            $sql = "INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) SELECT :u_usernameID, max(a_id) FROM Actividades";
+            $stmt = $pdo->prepare($sql);
+
+            $stmt->bindParam(':u_usernameID', $idUsuario);
+        
+
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->beginTransaction();
+
+            $stmt->execute();
+
+            $pdo->commit();
+
+            header("Location: ./home.php");
+        } catch (PDOException $ex) {
+            $pdo->rollBack();
+            header("Location: ./home.php");
+        }
+
+        $pdo = null;
+
     } else {
         $_SESSION["mensajeError"] = "Tipo de moneda no valida";
-        $referer = $_SERVER['HTTP_REFERER'];
-        header("Location: $referer");
+        header("Location: ./home.php");
     }
 }
 
