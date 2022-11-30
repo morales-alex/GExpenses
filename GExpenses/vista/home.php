@@ -12,6 +12,36 @@ if (!isset($_SESSION['usuario'])) {
     header('location: ./login.php');
 }
 
+
+if (!empty($_POST["ordenActividad"])) {
+    $seleccion = $_POST["ordenActividad"];
+} else {
+    $seleccion = 'fechaModificacion';
+}
+
+$idUsuario = $_SESSION["usuario"]->getU_id();
+
+if ($seleccion == 'fechaCreacion') {
+
+    $stmt = $pdo->prepare("SELECT * FROM ACTIVIDADES as a INNER JOIN UsuariosActividades as ua ON ua.ua_idAct = a.a_id WHERE ua_idUsu = :u_usernameID ORDER BY a_fecCreacion DESC;");
+
+    $stmt->bindParam(':u_usernameID', $idUsuario);
+
+    $stmt->execute();
+    $consultaOrdenada = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $stmt = $pdo->prepare("SELECT * FROM ACTIVIDADES as a INNER JOIN UsuariosActividades as ua ON ua.ua_idAct = a.a_id WHERE ua_idUsu = :u_usernameID ORDER BY a_fecUltMod DESC;");
+
+    $stmt->bindParam(':u_usernameID', $idUsuario);
+
+    $stmt->execute();
+    $consultaOrdenada = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+$pdo = null;
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,8 +72,19 @@ if (!isset($_SESSION['usuario'])) {
                 <div class="boton-nueva-actividad" id='addActivityButton'>Añadir actividad +</div>
                 <form method="post" action="home.php">
                     <select name="ordenActividad">
-                        <option value="fechaCreacion">Fecha de creación</option>
-                        <option value="fechaModificacion">Fecha de modificacion</option>
+                        <?php
+                        if ($seleccion === 'fechaCreacion') {
+                        ?>
+                            <option value="fechaCreacion" selected>Fecha de creación</option>
+                            <option value="fechaModificacion">Fecha de modificacion</option>
+                        <?php
+                        } else {
+                        ?>
+                            <option value="fechaCreacion">Fecha de creación</option>
+                            <option value="fechaModificacion" selected>Fecha de modificacion</option>
+                        <?php
+                        }
+                        ?>
                     </select>
                     <button type="submit" name="enviar" value="enviar">OK</button>
                 </form>
@@ -53,34 +94,6 @@ if (!isset($_SESSION['usuario'])) {
         <div id="caja-actividades">
             <?php
 
-
-            if (!empty($_POST["ordenActividad"])) {
-                $seleccion = $_POST["ordenActividad"];
-            } else {
-                $seleccion = 'fechaModificacion';
-            }
-
-            $idUsuario = $_SESSION["usuario"]->getU_id();
-
-            if ($seleccion == 'fechaCreacion') {                
-
-                $stmt = $pdo->prepare("SELECT * FROM ACTIVIDADES as a INNER JOIN UsuariosActividades as ua ON ua.ua_idAct = a.a_id WHERE ua_idUsu = :u_usernameID ORDER BY a_fecCreacion DESC;");
-
-                $stmt->bindParam(':u_usernameID', $idUsuario);
-
-                $stmt->execute();
-                $consultaOrdenada = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            } else {
-                $stmt = $pdo->prepare("SELECT * FROM ACTIVIDADES as a INNER JOIN UsuariosActividades as ua ON ua.ua_idAct = a.a_id WHERE ua_idUsu = :u_usernameID ORDER BY a_fecUltMod DESC;");
-
-                $stmt->bindParam(':u_usernameID', $idUsuario);
-
-                $stmt->execute();
-                $consultaOrdenada = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            }
-
-
-            $pdo = null;
 
             foreach ($consultaOrdenada as $actividad) {
             ?>

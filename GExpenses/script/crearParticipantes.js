@@ -58,7 +58,7 @@ function addCorreoParticipante() {
 
 const correos = [];
 
-const abrirFormulario = document.querySelector("#addParticipantes");
+const abrirFormulario = document.querySelector(".addUserIcon");
 
 const dialog = document.querySelector("#addParticipanteDialog");
 
