@@ -8,13 +8,19 @@ if (session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INIC
 
 
 if (isset($_POST["login"])) {
-    
+
     // AÑADIR EN EL REGISTRO.PHP
     //$passwordEncriptada = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     if (compruebaUsuario(htmlentities($_POST["usuario"]), htmlentities($_POST['password']))) {
 
         $_SESSION["mensajeError"] = null;
+
+        // Si el login es valido comprueba si hay invitación, si la hay inserta en actividad
+        // SI HI HA CAMPS DE INVITACIO I L'USUARI CORRESPON AMB EL TOKEM CONVIDAT REGISTRAL DIRECTAMENT A L'ACTIVITAT =============
+        if (!empty($_POST['a-id']) && !empty($_POST['invitacion'])) {
+            procesarInvitacion();
+        }
         header("Location: ./home.php"); // LOGIN CORRECTO
 
     } else {
@@ -57,4 +63,70 @@ function compruebaUsuario($username, $password)
     }
 
     $pdo = null;
+}
+
+
+function procesarInvitacion() {
+
+    require '../controlador/BbddConfig.php';
+
+    $a_id = $_POST['a-id'];
+    $token = $_POST['invitacion'];
+
+    var_dump($a_id);
+    var_dump($token);
+
+    // Consulta TOKEN existe
+    try {
+        $sql = "SELECT i_correoUsuarioInvitado FROM Invitaciones WHERE i_token = :i_token";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':i_token', $token);
+
+        $stmt->execute();
+        $correoInvitado = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $ex) {
+        echo 'Error: ' . $ex->getMessage();
+    }
+    $correoInvitado = implode($correoInvitado);
+    var_dump($correoInvitado);
+
+    try {
+        $sql = "SELECT u_id FROM usuarios WHERE u_correo = :u_correo;";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':u_correo', $correoInvitado);
+
+        $stmt->execute();
+        $idInvitado = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $ex) {
+        echo 'Error: ' . $ex->getMessage();
+    }
+
+    $correoUsuario = $_SESSION["usuario"]->getU_correo();
+    var_dump($correoUsuario);
+
+    $idInvitado = implode($idInvitado);
+    var_dump($idInvitado);
+
+    // Si el token introducido coincide con el mail correspondiente en la base de datos lo inserta
+    if ($correoUsuario == $correoInvitado) {
+
+        try {
+
+            $sql = "INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) 
+                            VALUES (:ua_idUsu, :ua_idAct)";
+            $stmt = $pdo->prepare($sql);
+
+            $stmt->bindParam(':ua_idUsu', $idInvitado);
+            $stmt->bindParam(':ua_idAct', $a_id);
+
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->beginTransaction();
+
+            $stmt->execute();
+            $pdo->commit();
+        } catch (PDOException $ex) {
+            $pdo->rollBack();
+
+        }
+    }
 }
