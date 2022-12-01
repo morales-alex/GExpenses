@@ -110,27 +110,43 @@ $correosNoValidos = [];
 
 if (isset($_POST['correos'])) {
 
-    require_once "compruebaEmail.php";
+    require_once '../controlador/compruebaEmail.php';
+
+    $fechaDeHoy = date("Y-m-d H:i:s");
+    $idUsuarioInvita = $_SESSION["usuario"]->getU_id();
 
     foreach ($_POST["correos"] as $correo) {
+
 
         if (filter_var($correo, FILTER_VALIDATE_EMAIL)) { //validar formato correo
 
             if (compruebaEmail($correo, $pdo)) {
+                require '../mail-templates/invitacion-template.php';
+            } else {
+                require '../mail-templates/registro-template.php';
+            }
+            if ($mailEnviat) {
+
+
+
                 // Generamos un nuevo token
                 $nuevoToken = random_bytes(20);
                 $nuevoToken = bin2hex($nuevoToken);
 
+
                 // Insertamos la invitación con el token en la base de datos
                 try {
 
-                    $sql = "INSERT INTO Invitaciones (i_idUsu, i_idAct, i_token, i_correoUsuarioInvitado) VALUES (:i_idUsu, :i_idAct, :i_token, :i_correoUsuarioInvitado)";
+                    $sql = "INSERT INTO Invitaciones (i_idUsu, i_idAct, i_token, i_correoUsuarioInvitado, i_fecInv) 
+                    VALUES (:i_idUsu, :i_idAct, :i_token, :i_correoUsuarioInvitado, :i_fecInv)";
+
                     $stmt = $pdo->prepare($sql);
 
-                    $stmt->bindParam(':i_idUsu', $usuario);
+                    $stmt->bindParam(':i_idUsu', $idUsuarioInvita);
                     $stmt->bindParam(':i_idAct', $codigoActividad);
                     $stmt->bindParam(':i_token', $nuevoToken);
                     $stmt->bindParam(':i_correoUsuarioInvitado', $correo);
+                    $stmt->bindParam(':i_fecInv', $fechaDeHoy);
 
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     $pdo->beginTransaction();
@@ -138,20 +154,11 @@ if (isset($_POST['correos'])) {
                     $stmt->execute();
 
                     $pdo->commit();
-
-                    /*header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id=' . $codigoActividad);
-                    die;*/
                 } catch (PDOException $ex) {
                     $pdo->rollBack();
                     /*header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id=' . $codigoActividad);
                     die;*/
                 }
-                require_once '../mail-templates/invitacion-template.php';
-            } else {
-                require_once '../mail-templates/registro-template.php';
-            }
-            if ($mailEnviat) {
-                require '../controlador/invitacion-action.php';
             } else {
                 array_push($correosNoValidos, $correo);
             }
