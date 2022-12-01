@@ -29,7 +29,7 @@ if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]), $pdo)) {
 
         $pdo->commit();
         $_SESSION["mensajeError"] = "Usuario registrado correctamente!";
-        header("Location: ./login.php"); // INSERCION DE DATOS INCORRECTA
+        header("Location: ./index.php"); // INSERCION DE DATOS INCORRECTA
 
     } catch (PDOException $ex) {
         $pdo->rollBack();

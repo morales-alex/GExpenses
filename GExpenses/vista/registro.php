@@ -92,7 +92,7 @@
                 <div id="no-registrado">
                     <div class="row">
                         <p>¿Ya tienes cuenta?</p>
-                        <a class="btn" href="login.php">Iniciar sesión</a>
+                        <a class="btn" href="index.php">Iniciar sesión</a>
                     </div>
                 </div>
             </div>

@@ -20,11 +20,11 @@ if (isset($_POST["login"])) {
     } else {
 
         $_SESSION["mensajeError"] = "Credenciales Inválidos!";
-        header("Location: ./login.php"); // LOGIN INCORRECTO
+        header("Location: ./index.php"); // LOGIN INCORRECTO
     }
 } else {
     $_SESSION["mensajeError"] = "Credenciales Inválidos!";
-    header("Location: ./login.php"); // LOGIN INCORRECTO
+    header("Location: ./index.php"); // LOGIN INCORRECTO
 }
 
 function compruebaUsuario($username, $password)
