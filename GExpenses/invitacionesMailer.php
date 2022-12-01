@@ -1,6 +1,6 @@
 <?php
 
-require './vista/compruebaEmail.php';
+require '../GExpenses/compruebaEmail.php';
 require '../GExpenses/controlador/BbddConfig.php';
 
 $emails = array("freixa.abcd.max@alumnat.copernic.cat", "correofalso@gmail.com");

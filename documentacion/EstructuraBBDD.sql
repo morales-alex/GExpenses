@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS Invitaciones (
     i_idAct INT,
 	i_token VARCHAR(40),
     i_correoUsuarioInvitado VARCHAR(60),
+	i_fecInv datetime,
 	PRIMARY KEY (i_id),
 	FOREIGN KEY (i_idUsu, i_idAct) REFERENCES UsuariosActividades (ua_idUsu, ua_idAct)
 ) ENGINE=INNODB;
@@ -64,8 +65,6 @@ INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fec
 INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('Gincana por el monte', 'USD', 'Test Test TEst', '2022/11/08', '2022/11/15');
 
 INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) VALUES (1, 1);
-
-INSERT INTO Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) VALUES (1, 1, 100, 'Gasto de prueba', '2022/11/15');
 
 INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) values (1, 1);
 INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) values (2, 1);
