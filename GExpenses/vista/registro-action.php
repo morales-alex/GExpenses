@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+require '../controlador/compruebaEmail.php';
 require '../controlador/BbddConfig.php';
 if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]), $pdo)) {
 
@@ -43,4 +43,3 @@ if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]), $pdo)) {
     header("Location: ./registro.php"); // INSERCION DE DATOS INCORRECTO
 }
 
-require '../controlador/compruebaEmail.php';
