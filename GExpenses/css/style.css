@@ -382,7 +382,7 @@ a#usuario {
     margin: 0 auto;
     padding: 10px 90px;
     box-sizing: border-box;
-  }
+}
 
 footer {
     background-color: #e1e1e1;
@@ -542,15 +542,23 @@ h1#tituloActividad {
 
 div#tituloGasto {
     display: flex;
-    margin: 0 15px;
     background-color: #4e729a;
     color: #fff;
-    margin-top: 20px;
-    padding: 0 15px;
+    margin-top: 15px;
+    padding: 5px 20px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+#gastoWrapper {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 0px 10px 0px rgba(0, 0, 0, 0.16);
 }
 
 #tituloGasto h3 {
     line-height: 0;
+    font-weight: 600;
 }
 
 div#gasto {
@@ -601,7 +609,8 @@ p.sinDatos {
     text-align: center;
     font-size: 25px;
     font-weight: bold;
-    margin-top: 40px;
+    padding: 30px;
+    margin: 0;
 }
 
 input.addUserIcon {
@@ -623,7 +632,7 @@ div#participantes {
     width: 35%;
     height: fit-content;
     margin: 15px;
-    border-radius: 25px;
+    border-radius: 10px;
     background-color: #fff;
     padding-bottom: 20px;
     box-shadow: 0 0 #0000, 0 0 #0000, 0 0px 10px 0px rgba(0, 0, 0, 0.16);
@@ -636,6 +645,7 @@ div#tituloParticipantes {
 
 div#tituloParticipantes h2 {
     margin-right: 10px;
+    font-weight: 600;
 }
 
 input#addParticipantes {
