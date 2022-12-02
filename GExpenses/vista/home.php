@@ -70,8 +70,8 @@ $pdo = null;
             </div>
             <div class="ordenar">
                 <div class="boton-nueva-actividad" id='addActivityButton'>Añadir actividad +</div>
-                <form method="post" action="home.php">
-                    <select name="ordenActividad">
+                <form method="post" action="home.php" name="orden">
+                    <select name="ordenActividad" onchange="orden.submit();">
                         <?php
                         if ($seleccion === 'fechaCreacion') {
                         ?>
@@ -86,7 +86,6 @@ $pdo = null;
                         }
                         ?>
                     </select>
-                    <button type="submit" name="enviar" value="enviar">OK</button>
                 </form>
             </div>
         </div>
