@@ -17,7 +17,7 @@ try {
     $mail->CharSet = 'UTF-8';
 
     $mail->setFrom('auto@freixa.cat', 'proves');
-    $mail->addAddress('freixa.sureda.max@alumnat.copernic.cat', 'Max');
+    $mail->addAddress($correo, 'Max');
 
     $mail->Subject = '¡Te han invitacdo a GExpenses!';
     $mail->isHTML(true);

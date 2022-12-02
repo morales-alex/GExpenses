@@ -3,7 +3,6 @@
 session_start();
 require '../controlador/compruebaEmail.php';
 require '../controlador/BbddConfig.php';
-require 'compruebaEmail.php';
 
 if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]), $pdo)) {
     $password_hasheado = htmlentities($_POST["password"]);
@@ -109,5 +108,3 @@ if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]), $pdo)) {
     $_SESSION["mensajeError"] = "Usuario registrado correctamente";
     header("Location: ./login.php"); // INSERCION DE DATOS INCORRECTO
 }
-
-require 'compruebaEmail.php';

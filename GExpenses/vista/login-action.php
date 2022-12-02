@@ -88,7 +88,7 @@ function procesarInvitacion() {
         echo 'Error: ' . $ex->getMessage();
     }
     $correoInvitado = implode($correoInvitado);
-    var_dump($correoInvitado);
+    //var_dump($correoInvitado);
 
     try {
         $sql = "SELECT u_id FROM usuarios WHERE u_correo = :u_correo;";

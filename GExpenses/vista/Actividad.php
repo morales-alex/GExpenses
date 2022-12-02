@@ -120,19 +120,19 @@ if (isset($_POST['correos'])) {
 
         if (filter_var($correo, FILTER_VALIDATE_EMAIL)) { //validar formato correo
 
+            // Generamos un nuevo token
+            $nuevoToken = random_bytes(20);
+            $nuevoToken = bin2hex($nuevoToken);
+
             if (compruebaEmail($correo, $pdo)) {
                 require '../mail-templates/invitacion-template.php';
             } else {
                 require '../mail-templates/registro-template.php';
             }
+
+            var_dump($mailEnviat);
+
             if ($mailEnviat) {
-
-
-
-                // Generamos un nuevo token
-                $nuevoToken = random_bytes(20);
-                $nuevoToken = bin2hex($nuevoToken);
-
 
                 // Insertamos la invitación con el token en la base de datos
                 try {
@@ -142,37 +142,37 @@ if (isset($_POST['correos'])) {
 
                     $stmt = $pdo->prepare($sql);
 
-                $stmt->bindParam(':i_idUsu', $idUsuarioInvita);
-                $stmt->bindParam(':i_idAct', $codigoActividad);
-                $stmt->bindParam(':i_token', $nuevoToken);
-                $stmt->bindParam(':i_correoUsuarioInvitado', $correo);
+                    $stmt->bindParam(':i_idUsu', $idUsuarioInvita);
+                    $stmt->bindParam(':i_idAct', $codigoActividad);
+                    $stmt->bindParam(':i_token', $nuevoToken);
+                    $stmt->bindParam(':i_correoUsuarioInvitado', $correo);
                     $stmt->bindParam(':i_fecInv', $fechaDeHoy);
 
-                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $pdo->beginTransaction();
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $pdo->beginTransaction();
 
-                $stmt->execute();
+                    $stmt->execute();
 
-                $pdo->commit();
-            } catch (PDOException $ex) {
-                $pdo->rollBack();
-            }
+                    $pdo->commit();
+                } catch (PDOException $ex) {
+                    $pdo->rollBack();
+                }
 
-            if (compruebaEmail($correo, $pdo)) {
-                require_once '../mail-templates/invitacion-template.php';
-            } else {
-                require_once '../mail-templates/registro-template.php';
-            }
-            if ($mailEnviat) {
-                require '../controlador/invitacion-action.php';
+                if (compruebaEmail($correo, $pdo)) {
+                    require_once '../mail-templates/invitacion-template.php';
+                } else {
+                    require_once '../mail-templates/registro-template.php';
+                }
+                if ($mailEnviat) {
+                    require '../controlador/invitacion-action.php';
+                } else {
+                    array_push($correosNoValidos, $correo);
+                }
             } else {
                 array_push($correosNoValidos, $correo);
             }
-        } else {
-            array_push($correosNoValidos, $correo);
         }
     }
-
     unset($_POST["correos"]);
 
     if (sizeof($correosNoValidos) != 0) {
