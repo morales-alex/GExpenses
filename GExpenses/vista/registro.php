@@ -1,3 +1,11 @@
+<?php
+        if(isset($_GET['a_id'])) {
+            $a_id = $_GET['a_id'];
+        }
+        if(isset($_GET['invitacion'])) {
+            $invitacion = $_GET['invitacion'];
+        }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,8 +24,6 @@
 
     <div id="container">
         <div id="caja-principal">
-
-
             <div id="intro">
                 <h1>Bienvenido a <span class="negrita">GExpenses</span></h1>
                 <p>Con una flota de programadores a su espalda. GExpenses ha abierto sus puertas este año para todas los grupos de personas que quieran dividir sus gastos de manera fácil y sencilla.</p>
@@ -70,6 +76,10 @@
                             <input type="password" id="password-confirm" name="password-confirm" placeholder="Confirme su contraseña">
                             <p class="error-messageForm">Las contraseñas no coinciden</p>
                         </div>
+
+                        <input type="hidden" id="a-id" name="a-id" value="<?= $a_id ?>">
+                        <input type="hidden" id="invitacion" name="invitacion" value="<?= $invitacion ?>">
+
                     </div>
 
 
@@ -92,7 +102,7 @@
                 <div id="no-registrado">
                     <div class="row">
                         <p>¿Ya tienes cuenta?</p>
-                        <a class="btn" href="login.php">Iniciar sesión</a>
+                        <a class="btn" href="index.php">Iniciar sesión</a>
                     </div>
                 </div>
             </div>

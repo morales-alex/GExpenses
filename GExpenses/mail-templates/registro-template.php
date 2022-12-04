@@ -17,7 +17,7 @@ try {
     $mail->CharSet = 'UTF-8';
 
     $mail->setFrom('auto@freixa.cat', 'proves');
-    $mail->addAddress('freixa.sureda.max@alumnat.copernic.cat', 'Max');
+    $mail->addAddress($correo, 'Max');
 
     $mail->Subject = '¡Te han invitacdo a GExpenses!';
     $mail->isHTML(true);
@@ -48,7 +48,7 @@ try {
                     <p style="font-size:14px;padding-bottom:10px;margin:0">La mejor aplicación que calcula los gastos de tus planes favoritos por ti!</p>
                     <p style="font-size:14px;padding-bottom:10px;margin:0">Haz click al siguiente enlace para iniciar el proceso de registro y empezar a repartir gastos con tus amigos.</p>
                     <div class="caja-boton">
-                        <a href="#">Registrarse</a>
+                        <a href="http://localhost/Copernic/abp/GExpenses_3p1/GExpenses/vista/registro.php?&ref=1&a_id='.$codigoActividad.'&invitacion='.$nuevoToken.'">Registrarse</a>
                     </div>
     
                 </div>

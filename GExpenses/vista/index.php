@@ -40,6 +40,16 @@
                     <div class="row">
                         <label for="password">Contraseña</label>
                         <input type="password" name="password" placeholder="Escriba su contraseña">
+                                    
+                        <?php
+                        if (isset($_GET['a_id']) && isset($_GET['invitacion'])) {
+                            $a_id = $_GET['a_id'];
+                            $invitacion = $_GET['invitacion'];
+                        ?>
+                            <input type="hidden" id="a-id" name="a-id" value="<?= $a_id ?>">
+                            <input type="hidden" id="invitacion" name="invitacion" value="<?= $invitacion ?>">
+                        <?php
+                        } ?>
                     </div>
                     <div class="row">
                         <input type="submit" class="btn-login" name="login" value="Iniciar sesión">
