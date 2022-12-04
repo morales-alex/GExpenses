@@ -22,5 +22,9 @@ if (!isset($_SESSION['usuario'])) {
         </div>
 
         <a id="usuario"> <?php echo  $_SESSION["usuario"]->getU_username() ?> </a>
+        
+        <a href="./index.php"><img class="logout" src="../img/logout.png" alt="Icono Logout"></a>
+        
+
     </nav>
 </header>

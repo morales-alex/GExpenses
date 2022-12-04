@@ -23,10 +23,10 @@ function compruebaDatosForm() {
 }
 
 function addCorreoParticipante() {
-  if (!validarEmail(nombreActividad.value)) {
+  if (!validarEmail(nombreActividad.value.toLowerCase())) {
     nombreError.innerText = "EL FORMATO DEL CORREO NO ES VÁLIDO";
     nombreError.style.display = "block";
-  } else if (correos.includes(nombreActividad.value)) {
+  } else if (correos.includes(nombreActividad.value.toLowerCase())) {
     nombreError.innerText = "YA HAS AÑADIDO ESE CORREO";
     nombreError.style.display = "block";
   } else {
@@ -39,7 +39,7 @@ function addCorreoParticipante() {
     nombreCorreo.setAttribute("class", "correo");
     nombreCorreo.setAttribute("type", "text");
     nombreCorreo.setAttribute("name", "correos[]");
-    nombreCorreo.setAttribute("value", nombreActividad.value);
+    nombreCorreo.setAttribute("value", nombreActividad.value.toLowerCase());
     nombreCorreo.setAttribute("readonly", "");
 
     const deleteCorreo = document.createElement("input");
@@ -52,7 +52,7 @@ function addCorreoParticipante() {
 
     box.appendChild(correoWrapper);
 
-    correos.push(nombreActividad.value);
+    correos.push(nombreActividad.value.toLowerCase());
   }
 }
 
@@ -100,9 +100,9 @@ addParticipante.addEventListener("click", function (e) {
 deleteParticipante.addEventListener("click", function (e) {
   e.preventDefault();
   if (e.target.id == "deleteCorreo") {
-    e.target.parentElement.remove();
 
-    var index = correos.indexOf(e.target.parentNode.firstChild.innerText);
+    const index = correos.indexOf(e.target.parentNode.firstChild.value);
+    e.target.parentElement.remove();
 
     if (index != -1) {
       correos.splice(index, 1);

@@ -349,7 +349,7 @@ a#usuario {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 5px;
+    margin: 5px 42px 5px auto;
     border-radius: 10px;
 }
 
@@ -367,6 +367,10 @@ a#usuario {
 .opcion:hover {
     background-color: #4E729A;
     color: white;
+}
+
+img.logout {
+    width: 39px;
 }
 
 

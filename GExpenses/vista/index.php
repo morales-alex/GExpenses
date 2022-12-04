@@ -1,3 +1,11 @@
+<?php
+
+if(session_status() === 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
+    session_destroy();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
