@@ -198,6 +198,19 @@ try {
     echo 'Error: ' . $ex->getMessage();
 }
 
+// CONSULTA FECHA ACTIVIDAD
+try {
+
+    $sql = "SELECT a_fecCreacion FROM Actividades WHERE a_id = :a_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':a_id', $_GET["a_id"]);
+
+    $stmt->execute();
+    $fechaActividad = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $ex) {
+    echo 'Error: ' . $ex->getMessage();
+}
+
 
 
 //$destino = '../vista/Actividad.php?a_id='.$_SESSION["a_id"];
@@ -338,7 +351,7 @@ try {
 
         <?php
         if (count($actividad) > 0) {
-            echo $actividad['a_nombre'];
+            echo $actividad['a_nombre'] . " <span class='fecha-titulo'>" . $fechaActividad['a_fecCreacion'] . "</span>";
         } else {
             echo 'Sin título';
         }
@@ -387,39 +400,56 @@ try {
 
             </div>
         </div>
-        <div id="linea"></div>
-
-        <div id="participantes">
-            <div id="tituloParticipantes">
-                <h2>Participantes</h2>
-                <!--<input id="addParticipantes" type="button" value="Añadir">
-                //<img class="addUserIcon" src="../img/add-user-icon.png" alt="Icono Add user">-->
-
-                <input id="addParticipantes" class="addUserIcon" type="image" alt="Icono Add user" src="../img/add-user-icon.png">
+        <div id="seccion-lateral">
+            <div id="opciones">
+                <div id="tituloParticipantes">
+                    <h2>Editar actividad</h2>
+                </div>
+                <div class="lista-opciones addGasto">
+                        <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/afegir-despsa.png">
+                        <a href="#" class="titulo-opcion">Añadir gasto</a>
+                </div>
+                <div class="lista-opciones balance">
+                        <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/balance.png">
+                        <a href="#" class="titulo-opcion">Ver balance</a>
+                </div>
+                <div class="lista-opciones addUser">
+                        <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/add-user-icon.png">
+                        <a href="#" class="titulo-opcion">Invitar usuarios</a>
+                </div>
+                <div class="lista-opciones editUser">
+                        <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/editar-usuari.png">
+                        <a href="#" class="titulo-opcion">Gestionar usuarios</a>
+                </div>
             </div>
+            <div id="participantes">
+                <div id="tituloParticipantes">
+                    <h2>Participantes</h2>
+                </div>
 
-            <?php
+                <?php
 
-            foreach ($participantes as $participante) {
-            ?>
-                <p id="participante"><?php echo $participante['u_username'] ?></p>
+                foreach ($participantes as $participante) {
+                ?>
+                    <p id="participante"><?php echo $participante['u_username'] ?></p>
 
-            <?php
-            }
-            $pdo = null;
-            ?>
+                <?php
+                }
+                $pdo = null;
+                ?>
 
 
-            <?php
+                <?php
 
-            if (isset($_SESSION["errorCorreos"])) {
-            ?>
-                <div class="error-message-correos"><?php echo $_SESSION["errorCorreos"]; ?></div>
-            <?php
-                unset($_SESSION["errorCorreos"]);
-            }
-            ?>
+                if (isset($_SESSION["errorCorreos"])) {
+                ?>
+                    <div class="error-message-correos"><?php echo $_SESSION["errorCorreos"]; ?></div>
+                <?php
+                    unset($_SESSION["errorCorreos"]);
+                }
+                ?>
 
+            </div>
         </div>
 
 

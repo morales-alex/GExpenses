@@ -1,10 +1,10 @@
 <?php
-        if(isset($_GET['a_id'])) {
-            $a_id = $_GET['a_id'];
-        }
-        if(isset($_GET['invitacion'])) {
-            $invitacion = $_GET['invitacion'];
-        }
+if (isset($_GET['a_id'])) {
+    $a_id = $_GET['a_id'];
+}
+if (isset($_GET['invitacion'])) {
+    $invitacion = $_GET['invitacion'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,37 +43,45 @@
                 <form method="post" id="formulario" action="registro-action.php">
                     <div class="row-registro">
                         <div class="col">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" placeholder="Escriba su nombre">
+                            <label for="nombre">Nombre<div class="tooltip">?
+                                    <span class="tooltiptext">Debe contener una letra como mínimo</span>
+                                </div></label>
+                            <input type="text" id="nombre" name="nombre" placeholder="Mombre">
                             <p class="error-messageForm">No has introducido un nombre valido</p>
                         </div>
                         <div class="col">
-                            <label for="apellidos">Apellidos</label>
-                            <input type="text" id="apellidos" name="apellidos" placeholder="Escriba sus apellidos">
+                            <label for="apellidos">Apellidos <div class="tooltip">?
+                                    <span class="tooltiptext">Debes introducir los dos apellidos.</span>
+                                </div></label>
+                            <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos">
                             <p class="error-messageForm">No has introducido apellidos validos</p>
                         </div>
                     </div>
                     <div class="row-registro">
                         <div class="col">
-                            <label for="usuario">Usuario</label>
-                            <input type="text" id="usuario" name="usuario" placeholder="Escriba su nombre de usuario">
+                            <label for="usuario">Usuario <div class="tooltip">?
+                                    <span class="tooltiptext">El usuario debe contener 5 caracteres como mínimo</span>
+                                </div></label>
+                            <input type="text" id="usuario" name="usuario" placeholder="Usuario">
                             <p class="error-messageForm">No has introducido un usuario valido</p>
                         </div>
                         <div class="col">
                             <label for="email">Correo electrónico</label>
-                            <input type="email" id="email" name="email" placeholder="Escriba su correo eletrónico">
+                            <input type="email" id="email" name="email" placeholder="Correo eletrónico">
                             <p class="error-messageForm">No has introducido un correo eletrónico valido</p>
                         </div>
                     </div>
                     <div class="row-registro">
                         <div class="col">
-                            <label for="password">Contraseña</label>
-                            <input type="password" id="password" name="password" placeholder="Escriba su contraseña">
+                            <label for="password">Contraseña <div class="tooltip">?
+                                    <span class="tooltiptext">Debe incluir letras minusculas, mayusculas, números y algun simbolo: !#.$%&'*+/=? </span>
+                                </div></label>
+                            <input type="password" id="password" name="password" placeholder="Contraseña">
                             <p class="error-messageForm">No has introducido una contraseña valida</p>
                         </div>
                         <div class="col">
                             <label for="password-confirm">Repetir contraseña</label>
-                            <input type="password" id="password-confirm" name="password-confirm" placeholder="Confirme su contraseña">
+                            <input type="password" id="password-confirm" name="password-confirm" placeholder="Confirmar contraseña">
                             <p class="error-messageForm">Las contraseñas no coinciden</p>
                         </div>
 
@@ -88,7 +96,7 @@
                     </div>
                     <?php
 
-                    
+
 
                     if (isset($_SESSION["mensajeError"])) {
                     ?>
