@@ -198,7 +198,7 @@ try {
     echo 'Error: ' . $ex->getMessage();
 }
 
-// CONSULTA NOMBRE ACTIVIDAD
+// CONSULTA FECHA ACTIVIDAD
 try {
 
     $sql = "SELECT a_fecCreacion FROM Actividades WHERE a_id = :a_id";
@@ -342,7 +342,7 @@ try {
                 </div>
                 <div class="lista-opciones addUser">
                         <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/add-user-icon.png">
-                        <a href="#" class="titulo-opcion addUser">Invitar usuarios</a>
+                        <a href="#" class="titulo-opcion">Invitar usuarios</a>
                 </div>
                 <div class="lista-opciones editUser">
                         <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/editar-usuari.png">
