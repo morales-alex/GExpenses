@@ -3,7 +3,7 @@ sudo apt update
 #sudo apt install -y software-properties-common
 sudo apt update && sudo apt install -y mariadb-server mariadb-client
 cp -f /vagrant/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-echo 'CopyPaste configuration file'
+echo 'CopyPaste configuration file...'
 echo 'mariadb Version: '
 mariadb --version
 echo 'Activación mariadb...'
