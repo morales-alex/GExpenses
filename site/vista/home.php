@@ -3,8 +3,8 @@
 require '../modelo/tablesMap.php';
 require '../controlador/BbddConfig.php';
 
-if (session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INICIADA
-    SESSION_START();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
 if (!isset($_SESSION['usuario'])) {
