@@ -223,6 +223,8 @@ try {
 
 <body>
 
+    <button class="addGasto">addGasto</button>
+
     <dialog id='addParticipanteDialog' class="dialogForm centered" close>
         <div id="dialog-activityForm" class="dialog-header">
             <h5>Invitar Usuarios a la Actividad</h5>
@@ -248,6 +250,77 @@ try {
                     <input type="submit" name="enviar" value="Enviar" id="boton-aceptar" class="boton-aceptar">
                 </div>
 
+            </div>
+
+        </form>
+        <?php
+        if (isset($_SESSION["mensajeError"])) {
+        ?>
+            <div class="error-message"><?php echo $_SESSION["mensajeError"]; ?></div>
+        <?php
+            unset($_SESSION["mensajeError"]);
+        }
+        ?>
+    </dialog>
+
+    <dialog id='addGastoDialog' class="dialogForm centered" close>
+        <div id="dialog-gastoForm" class="dialog-header">
+            <h5>Añadir gasto a la actividad</h5>
+            <span id='cancelarGastoX'>x</span>
+        </div>
+        <form method="post" action="" id="addActivity" class="formAddParticipantes">
+
+            <label for="nombre">Concepto del gasto:</label>
+            <div id="addParticipante">
+                <input type="text" id="conceptoValue">
+            </div>
+
+            <p id='nombreErrorConcepto' class='error-messageForm'>El concepto debe tener entre 1 y 50 carácteres</p>
+
+            <div class="pagadorGasto">
+                <label class="labelGasto" for="usuarioPagador">Pagador:</label>
+
+                <select name="usuarioPagador" id="usuarioPagador">
+
+                    <?php
+                    foreach ($participantes as $participante) {
+                    ?>
+                        <option value="<?php echo $participante['u_username'] ?>"><?php echo $participante['u_username'] ?></option>
+                    <?php
+                    }
+                    ?>
+                </select>
+
+                <label for="cuantia" class="labelGasto">Cuantía:</label>
+                <input type="number" name="cuantia" class="cuantia">
+
+            </div>
+
+            <label for="cuantia" class="labelGasto">Paga:</label>
+
+            <div class="cuantiaPorUsuario">
+                <?php
+                foreach ($participantes as $participante) {
+
+                    $usuarioParticipante = $participante['u_username'];
+                ?>
+
+                    <div class="cuantiaUsuario">
+                        <label class="usuarioPaga" for=""><?php echo $usuarioParticipante ?></label>
+                        <input class="paga" id="echo $usuarioParticipante" value="0" readonly></input>
+                    </div>
+
+                <?php
+                }
+                ?>
+
+                <p id='nombreErrorCuantias' class='error-messageForm'>La suma de cuantías debe dar el total.</p>
+
+            </div>
+
+            <div id="dialogFooterParticipante">
+                <input type="button" class="boton-aceptar" value="Cerrar" id="cancelGastoForm"></input>
+                <input type="submit" name="enviar" value="Añadir" id="boton-aceptar-gastos" class="boton-aceptar">
             </div>
 
         </form>
@@ -357,7 +430,9 @@ try {
 
 <?php include_once './Footer.php' ?>
 
+<script src="../script/crearGastos.js"></script>
 <script src="../script/crearParticipantes.js"></script>
+
 
 
 </html>

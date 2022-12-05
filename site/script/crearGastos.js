@@ -1,140 +1,85 @@
-function validarEmail(email) {
-  return String(email)
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
+function addGastos() {
+  let gastoValido = true;
+  const concepto = document.querySelector("#conceptoValue").value;
+  
+  
+
+  if (concepto.length > 50) {
+    gastoValido = false;
+    errorConcepto.style.display = "block";
+  } else if (concepto.length <= 0) {
+    gastoValido = false;
+    errorConcepto.style.display = "block";
+  } else {
+    errorConcepto.style.display = "none";
+  }
+
+  let suma = 0;
+  const total = parseFloat(precioTotal.value);
+
+  aPagar.forEach((pago) => {
+    suma += parseFloat(pago.value);
+  });
+
+  if (suma < total || suma > total + 0.02) {
+    gastoValido = false;
+    errorCuantias.style.display = "block";
+  } else {
+    errorCuantias.style.display = "none";
+  }
+
+  return gastoValido;
 }
 
-function compruebaDatosForm() {
-  let envio = true;
+const errorConcepto = document.querySelector("#nombreErrorConcepto");
+const errorCuantias = document.querySelector("#nombreErrorCuantias");
 
-  const valorNombre = nombreActividad.value;
 
-  if (correos.length === 0) {
-    nombreError.innerText = "DEBES AÑADIR ALGÚN CORREO PARA ENVIAR EL FORMULARIO";
-    nombreError.style.display = "block";
-    envio = false;
-  } else {
-    nombreError.style.display = "none";
-  }
+const abrirFormularioGastos = document.querySelector(".addGasto");
+const dialogGastos = document.querySelector("#addGastoDialog");
 
-  return envio ? true : false;
-}
+const addGasto = document.querySelector("#boton-aceptar-gastos");
+const cancelarGastos = document.querySelector("#cancelGastoForm");
+const cancelarXGastos = document.querySelector("#cancelarGastoX");
 
-function addCorreoParticipante() {
-  if (!validarEmail(nombreActividad.value.toLowerCase())) {
-    nombreError.innerText = "EL FORMATO DEL CORREO NO ES VÁLIDO";
-    nombreError.style.display = "block";
-  } else if (correos.includes(nombreActividad.value.toLowerCase())) {
-    nombreError.innerText = "YA HAS AÑADIDO ESE CORREO";
-    nombreError.style.display = "block";
-  } else {
-    const box = document.querySelector("#correoInvitaciones");
+const precioTotal = document.querySelector(".cuantia");
 
-    const correoWrapper = document.createElement("div");
-    correoWrapper.setAttribute("id", "correoInvWrapper");
-
-    const nombreCorreo = document.createElement("input");
-    nombreCorreo.setAttribute("class", "correo");
-    nombreCorreo.setAttribute("type", "text");
-    nombreCorreo.setAttribute("name", "correos[]");
-    nombreCorreo.setAttribute("value", nombreActividad.value.toLowerCase());
-    nombreCorreo.setAttribute("readonly", "");
-
-    const deleteCorreo = document.createElement("input");
-    deleteCorreo.setAttribute("type", "button");
-    deleteCorreo.setAttribute("id", "deleteCorreo");
-    deleteCorreo.setAttribute("value", "Eliminar");
-
-    correoWrapper.appendChild(nombreCorreo);
-    correoWrapper.appendChild(deleteCorreo);
-
-    box.appendChild(correoWrapper);
-
-    correos.push(nombreActividad.value.toLowerCase());
-  }
-}
-
-const correos = [];
-
-const abrirFormulario = document.querySelector(".addUserIcon");
-
-const dialog = document.querySelector("#addParticipanteDialog");
-
-const formulario = document.querySelector(".formAddParticipantes");
-
-const addParticipante = document.querySelector("#addCorreo");
-
-const deleteParticipante = document.querySelector("#correoInvitaciones");
-
-const aceptar = document.querySelector("#boton-aceptar");
-const cancelar = document.querySelector("#cancelDialogForm");
-const cancelarX = document.querySelector("#cancelarX");
-
-const nombreActividad = document.querySelector("#nombreValue");
-
-const nombreError = document.querySelector("#nombreError");
-
-abrirFormulario.addEventListener("click", function (e) {
+abrirFormularioGastos.addEventListener("click", function (e) {
   e.preventDefault();
 
-  nombreActividad.value = "";
-
-  nombreError.style.display = "none";
-
-  dialog.showModal();
+  dialogGastos.showModal();
 });
 
-addParticipante.addEventListener("click", function (e) {
+cancelarGastos.addEventListener("click", function (e) {
   e.preventDefault();
 
-  if (correos.length > 7) {
-    nombreError.innerText = "NO PUEDES AÑADIR MÁS CORREOS";
-    nombreError.style.display = "block";
-  } else {
-    addCorreoParticipante();
+  errorConcepto.style.display = "none";
+  errorCuantias.style.display = "none";
+
+  dialogGastos.close("Dialogo cerrado");
+});
+
+cancelarXGastos.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  errorConcepto.style.display = "none";
+  errorCuantias.style.display = "none";
+
+  dialogGastos.close("Dialogo cerrado");
+});
+
+const aPagar = document.querySelectorAll(".paga");
+const divididoEntre = aPagar.length;
+
+precioTotal.addEventListener("keyup", (e) => {
+  for (i = 0; i < aPagar.length; i++) {
+    aPagar[i].value =
+      Math.round((precioTotal.value / divididoEntre) * 100) / 100;
   }
 });
 
-deleteParticipante.addEventListener("click", function (e) {
-  e.preventDefault();
-  if (e.target.id == "deleteCorreo") {
-
-    const index = correos.indexOf(e.target.parentNode.firstChild.value);
-    e.target.parentElement.remove();
-
-    if (index != -1) {
-      correos.splice(index, 1);
-    }
-  }
-});
-
-cancelar.addEventListener("click", function (e) {
+addGasto.addEventListener("click", (e) => {
   e.preventDefault();
 
-  nombreActividad.value = "";
-
-  nombreError.style.display = "none";
-
-  dialog.close("Dialogo cerrado");
-});
-
-cancelarX.addEventListener("click", function (e) {
-  e.preventDefault();
-
-  nombreActividad.value = "";
-
-  nombreError.style.display = "none";
-
-  dialog.close("Dialogo cerrado");
-});
-
-aceptar.addEventListener("click", function (e) {
-  e.preventDefault();
-
-  if (compruebaDatosForm()) {
-    nombreError.style.display = "none";
-    formulario.submit();
-  }
+  console.log(addGastos());
 });

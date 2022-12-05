@@ -494,7 +494,7 @@ select#moneda {
     width: 50px;
 }
 
-input#cancelDialogForm {
+input#cancelDialogForm, input#cancelGastoForm {
     background-color: white;
     color: #4e729a;
     border: none;
@@ -507,6 +507,7 @@ input#cancelDialogForm {
     background-color: #ffd3d3;
     width: fit-content;
     border-radius: 25px;
+    padding: 10px;
 }
 
 p#nombreError.error-messageForm {
@@ -517,6 +518,56 @@ p#nombreError.error-messageForm {
 .mostrar {
     display: block;
     padding: 6px;
+}
+
+select#usuarioPagador {
+    width: auto;
+    min-width: 150px;
+    text-align: center;
+    font-size: 15px;
+    height: fit-content;
+    margin: auto 0px;
+}
+
+div.pagadorGasto {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#addActivity input.cuantia {
+    width: 80px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 25px;
+    border: 1px solid black;
+    margin: 20px 0px 25px 0px;
+}
+
+label.labelGasto {
+    margin: auto 20px auto 0px;
+}
+
+div.cuantiaPorUsuario {
+    display: flex;
+    max-width: 100%;
+    margin-top: 18px;
+    flex-direction: column;
+    padding-bottom: 48px;
+    width: 49%;
+}
+
+div.cuantiaUsuario {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+#addActivity input.paga {
+    margin: auto 10px;
+    max-width: 100px;
+}
+
+label.usuarioPaga {
+    margin: auto;
 }
 
 /*======================  PÁGINA ACTIVIDAD  ================================*/
@@ -672,7 +723,7 @@ p#participante {
 
 /*----- DIALOG -----*/
 
-dialog#addParticipanteDialog {
+dialog#addParticipanteDialog, dialog#addGastoDialog {
     border: 0px;
     min-width: 500px;
     min-height: 500px;
@@ -721,15 +772,15 @@ input#deleteCorreo:hover {
     opacity: 0.75;
 }
 
-span#cancelarX:hover {
+span#cancelarX:hover, #cancelarGastoX:hover {
     opacity: 0.4;
 }
 
-#cancelarX {
+#cancelarX, #cancelarGastoX {
     height: fit-content;
 }
 
-div#dialog-activityForm {
+div#dialog-activityForm, div#dialog-gastoForm {
     font-size: 25px;
 }
 
