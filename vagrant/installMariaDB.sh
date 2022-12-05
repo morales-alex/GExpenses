@@ -1,15 +1,17 @@
 #!/bin/bash 
 sudo apt update
-sudo apt install -y software-properties-common
-sudo apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc'
-sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mariadb.mirror.liquidtelecom.com/repo/10.6/ubuntu focal main'
+#sudo apt install -y software-properties-common
 sudo apt update && sudo apt install -y mariadb-server mariadb-client
+cp -f /vagrant/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+echo 'CopyPaste configuration file...'
 echo 'mariadb Version: '
 mariadb --version
-echo 'Activación por si acaso...'
+echo 'Activación mariadb...'
 sudo systemctl start mariadb
 sudo systemctl enable mariadb
 echo 'script creacion estructura BBDD'
 sudo mariadb < /vagrant/estructuraBBDD.sql
 echo 'script creacion usuario admin'
 sudo mariadb < /vagrant/createUser.sql
+
+sudo systemctl restart mariadb
