@@ -35,7 +35,7 @@ const errorConcepto = document.querySelector("#nombreErrorConcepto");
 const errorCuantias = document.querySelector("#nombreErrorCuantias");
 
 
-const abrirFormularioGastos = document.querySelector(".addGasto");
+const abrirFormularioGastos = document.querySelector("#addGasto");
 const dialogGastos = document.querySelector("#addGastoDialog");
 
 const addGasto = document.querySelector("#boton-aceptar-gastos");

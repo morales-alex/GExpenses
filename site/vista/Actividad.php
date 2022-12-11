@@ -120,6 +120,27 @@ if (isset($_POST['correos'])) {
 
         if (filter_var($correo, FILTER_VALIDATE_EMAIL)) { //validar formato correo
 
+
+
+            // CONSULTA SI EL CORREO YA PARTICIPA EN ESTA ACTIVIDAD
+            try {
+                $sql = "SELECT Usuarios.u_correo FROM UsuariosActividades ua INNER JOIN Usuarios ON Usuarios.u_id = ua.ua_idUsu WHERE Usuarios.u_correo = :u_correo AND ua_idAct = :ua_idAct";
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':ua_idAct', $codigoActividad);
+                $stmt->bindParam(':u_correo', $correo);
+
+                $stmt->execute();
+                $correoYaParticipa = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $ex) {
+                echo 'Error: ' . $ex->getMessage();
+            }
+
+            if($correoYaParticipa) {
+                array_push($correosNoValidos, $correo);
+            } else {
+
+
             // Generamos un nuevo token
             $nuevoToken = random_bytes(20);
             $nuevoToken = bin2hex($nuevoToken);
@@ -129,8 +150,6 @@ if (isset($_POST['correos'])) {
             } else {
                 require '../mail-templates/registro-template.php';
             }
-
-            var_dump($mailEnviat);
 
             if ($mailEnviat) {
 
@@ -170,9 +189,15 @@ if (isset($_POST['correos'])) {
                 }
             } else {
                 array_push($correosNoValidos, $correo);
-            }
+                }
+
+        }
+        } else {
+
+            array_push($correosNoValidos, $correo);
         }
     }
+
     unset($_POST["correos"]);
 
     if (sizeof($correosNoValidos) != 0) {
@@ -235,8 +260,6 @@ try {
 <?php include_once './Header.php' ?>
 
 <body>
-
-    <button class="addGasto">addGasto</button>
 
     <dialog id='addParticipanteDialog' class="dialogForm centered" close>
         <div id="dialog-activityForm" class="dialog-header">
@@ -405,7 +428,7 @@ try {
                 <div id="tituloParticipantes">
                     <h2>Editar actividad</h2>
                 </div>
-                <div class="lista-opciones addGasto">
+                <div class="lista-opciones addGasto" id="addGasto">
                         <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/afegir-despsa.png">
                         <a href="#" class="titulo-opcion">Añadir gasto</a>
                 </div>

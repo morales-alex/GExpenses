@@ -67,7 +67,9 @@ try {
     $mail->Body = $mailContent;
 
     if($mail->send()){
-        $mailEnviat=true;
+        $mailEnviat = true;
+    } else {
+        $mailEnviat = false;
     }
 } catch (Exception $ex) {
     echo $ex->message;
