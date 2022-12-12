@@ -1,7 +1,7 @@
 <?php
 // https://mailtrap.io/blog/phpmailer/#SMTP-configuration
 
-require '../vendor/autoload.php';
+require './vendor/autoload.php';
 
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
