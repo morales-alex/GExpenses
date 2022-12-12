@@ -9,15 +9,8 @@ if (session_status() === PHP_SESSION_NONE) {
 if (isset($_SESSION['usuario'])) {
 
     if (isset($_GET['a_id']) && isset($_GET['invitacion'])) {
-
-
         procesarInvitacion();
-
     }
-
-
-
-
     header('Location: ./home.php');
 } else {
 

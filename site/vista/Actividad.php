@@ -1,12 +1,13 @@
 <?php
 
+
 require '../modelo/tablesMap.php';
 require '../controlador/BbddConfig.php';
 
 if (isset($_GET["a_id"])) {
     $codigoActividad = $_GET["a_id"];
     $_SESSION['actividad_id'] = $codigoActividad;
-};
+}
 
 
 if (session_status() === PHP_SESSION_NONE) {
@@ -69,9 +70,44 @@ if (isset($_GET['invitacion'])) {
     unset($_GET["invitacion"]);
 }
 
+// SI HAS ENVIADO EL FORMULARIO DE AÑADIR GASTO CREA EL REGISTRO EN LA BBDD
+if (isset($_POST['enviar'])) {
+
+    $fechaDeHoy = date("Y-m-d H:i:s");
+    $concepto = $_POST['conceptoGastoSencillo'];
+    $usuarioPagador = $_POST['usuarioPagador'];
+    $cuantiaGastoSencillo = $_POST['cuantiaGastoSencillo'];
+
+    try {
+
+        $sql = "INSERT INTO Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) 
+                    SELECT (SELECT u_id from Usuarios where u_username = :g_username), :g_idAct, :g_precio, :g_concepto, :g_fecCrea;";
+        $stmt = $pdo->prepare($sql);
+
+        $stmt->bindParam(':g_username', $usuarioPagador);
+        $stmt->bindParam(':g_idAct', $codigoActividad);
+        $stmt->bindParam(':g_precio', $cuantiaGastoSencillo);
+        $stmt->bindParam(':g_concepto', $concepto);
+        $stmt->bindParam(':g_fecCrea', $fechaDeHoy);
+
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->beginTransaction();
+
+        $stmt->execute();
+        $pdo->commit();
+    } catch (PDOException $ex) {
+        $pdo->rollBack();
+    }
+
+    unset($_POST['conceptoGastoSencillo']);
+    unset($_POST['usuarioPagador']);
+    unset($_POST['cuantiaGastoSencillo']);
+    unset($_POST['enviar']);
+}
+
 // CONSULTA GASTOS
 try {
-    $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct WHERE g_idAct = :g_idAct order by g_fecCrea";
+    $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = Gastos.g_idAct WHERE g_idAct = :g_idAct order by g_fecCrea";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':g_idAct', $codigoActividad);
 
@@ -83,7 +119,7 @@ try {
 
 // CONSULTA PARTICIPANTES ACTIVIDAD
 try {
-    $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
+    $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON Usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':ua_idAct', $codigoActividad);
 
@@ -95,7 +131,7 @@ try {
 
 // CONSULTA SUMA TOTAL GASTOS
 try {
-    $sql = "SELECT sum(g_precio) as total FROM Gastos INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct  WHERE g_idAct = :ua_idAct";
+    $sql = "SELECT sum(g_precio) as total FROM Gastos INNER JOIN Actividades ON Actividades.a_id = Gastos.g_idAct  WHERE g_idAct = :ua_idAct";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':ua_idAct', $_GET["a_id"]);
 
@@ -119,8 +155,6 @@ if (isset($_POST['correos'])) {
 
 
         if (filter_var($correo, FILTER_VALIDATE_EMAIL)) { //validar formato correo
-
-
 
             // CONSULTA SI EL CORREO YA PARTICIPA EN ESTA ACTIVIDAD
             try {
@@ -332,7 +366,7 @@ try {
                 </select>
 
                 <label for="cuantia" class="labelGasto">Cuantía:</label>
-                <input type="number" name="cuantia" class="cuantia">
+                <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0">
 
             </div>
 
@@ -487,9 +521,7 @@ try {
 
             </div>
         </div>
-
-
-
+        
     </div>
 
 </body>
@@ -499,7 +531,12 @@ try {
 <script src="../script/crearGastos.js"></script>
 <script src="../script/crearParticipantes.js"></script>
 <script src="../script/validacionGastos.js"></script>
-
+<script>
+    // CONDICIONAL PARA EVITAR QUE AL REFRESCAR LA PÁGINA SE VUELVA A ENVIAR UN FORMULARIO
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
 
 
 </html>
