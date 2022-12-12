@@ -131,66 +131,63 @@ if (isset($_POST['correos'])) {
 
                 $stmt->execute();
                 $correoYaParticipa = $stmt->fetch(PDO::FETCH_ASSOC);
-
             } catch (PDOException $ex) {
                 echo 'Error: ' . $ex->getMessage();
             }
 
-            if($correoYaParticipa) {
+            if ($correoYaParticipa) {
                 array_push($correosNoValidos, $correo);
             } else {
 
 
-            // Generamos un nuevo token
-            $nuevoToken = random_bytes(20);
-            $nuevoToken = bin2hex($nuevoToken);
-
-            if (compruebaEmail($correo, $pdo)) {
-                require '../mail-templates/invitacion-template.php';
-            } else {
-                require '../mail-templates/registro-template.php';
-            }
-
-            if ($mailEnviat) {
-
-                // Insertamos la invitación con el token en la base de datos
-                try {
-
-                    $sql = "INSERT INTO Invitaciones (i_idUsu, i_idAct, i_token, i_correoUsuarioInvitado, i_fecInv) 
-                    VALUES (:i_idUsu, :i_idAct, :i_token, :i_correoUsuarioInvitado, :i_fecInv)";
-
-                    $stmt = $pdo->prepare($sql);
-
-                    $stmt->bindParam(':i_idUsu', $idUsuarioInvita);
-                    $stmt->bindParam(':i_idAct', $codigoActividad);
-                    $stmt->bindParam(':i_token', $nuevoToken);
-                    $stmt->bindParam(':i_correoUsuarioInvitado', $correo);
-                    $stmt->bindParam(':i_fecInv', $fechaDeHoy);
-
-                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $pdo->beginTransaction();
-
-                    $stmt->execute();
-
-                    $pdo->commit();
-                } catch (PDOException $ex) {
-                    $pdo->rollBack();
-                }
+                // Generamos un nuevo token
+                $nuevoToken = random_bytes(20);
+                $nuevoToken = bin2hex($nuevoToken);
 
                 if (compruebaEmail($correo, $pdo)) {
-                    require_once '../mail-templates/invitacion-template.php';
+                    require '../mail-templates/invitacion-template.php';
                 } else {
-                    require_once '../mail-templates/registro-template.php';
-                }
-                if (!$mailEnviat) {
-                    array_push($correosNoValidos, $correo);
-                }
-                
-            } else {
-                array_push($correosNoValidos, $correo);
+                    require '../mail-templates/registro-template.php';
                 }
 
-        }
+                if ($mailEnviat) {
+
+                    // Insertamos la invitación con el token en la base de datos
+                    try {
+
+                        $sql = "INSERT INTO Invitaciones (i_idUsu, i_idAct, i_token, i_correoUsuarioInvitado, i_fecInv) 
+                    VALUES (:i_idUsu, :i_idAct, :i_token, :i_correoUsuarioInvitado, :i_fecInv)";
+
+                        $stmt = $pdo->prepare($sql);
+
+                        $stmt->bindParam(':i_idUsu', $idUsuarioInvita);
+                        $stmt->bindParam(':i_idAct', $codigoActividad);
+                        $stmt->bindParam(':i_token', $nuevoToken);
+                        $stmt->bindParam(':i_correoUsuarioInvitado', $correo);
+                        $stmt->bindParam(':i_fecInv', $fechaDeHoy);
+
+                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        $pdo->beginTransaction();
+
+                        $stmt->execute();
+
+                        $pdo->commit();
+                    } catch (PDOException $ex) {
+                        $pdo->rollBack();
+                    }
+
+                    if (compruebaEmail($correo, $pdo)) {
+                        require_once '../mail-templates/invitacion-template.php';
+                    } else {
+                        require_once '../mail-templates/registro-template.php';
+                    }
+                    if (!$mailEnviat) {
+                        array_push($correosNoValidos, $correo);
+                    }
+                } else {
+                    array_push($correosNoValidos, $correo);
+                }
+            }
         } else {
 
             array_push($correosNoValidos, $correo);
@@ -303,7 +300,7 @@ try {
             <h5>Añadir gasto a la actividad</h5>
             <span id='cancelarGastoX'>x</span>
         </div>
-        <form method="post" action="" id="addActivity" class="formAddParticipantes">
+        <form method="post" action="" id="addGastos" class="formAddParticipantes">
 
             <label for="nombre">Concepto del gasto:</label>
             <div id="addParticipante">
@@ -311,6 +308,14 @@ try {
             </div>
 
             <p id='nombreErrorConcepto' class='error-messageForm'>El concepto debe tener entre 1 y 50 carácteres</p>
+
+            <div>
+                <select name="opcionDePago" id="opcionDePago">
+                    <option value="1">General</option>
+                    <option value="2">Avanzado</option>
+                    <option value="3">Proporcion</option>
+                </select>
+            </div>
 
             <div class="pagadorGasto">
                 <label class="labelGasto" for="usuarioPagador">Pagador:</label>
@@ -331,7 +336,7 @@ try {
 
             </div>
 
-            <label for="cuantia" class="labelGasto">Paga:</label>
+            <label for="cuantia" class="labelGasto">Participantes:</label>
 
             <div class="cuantiaPorUsuario">
                 <?php
@@ -341,8 +346,17 @@ try {
                 ?>
 
                     <div class="cuantiaUsuario">
-                        <label class="usuarioPaga" for=""><?php echo $usuarioParticipante ?></label>
-                        <input class="paga" id="echo $usuarioParticipante" value="0" readonly></input>
+                        <div class="gastosFormCol">
+                            <span class="usuarioPaga" for=""><?php echo $usuarioParticipante ?></span>
+                        </div>
+                        <div class="gastosFormCol">
+                            <label class="proporcion" style="display: block;">Pagará:</label>
+                            <input type="number" class="paga" id="echo $usuarioParticipante" value="0" readonly="readonly"></input>
+                        </div>
+                        <div class="gastosFormCol">
+                            <label class="labelImporteProporcional" style="display: none;" for="importeProporcional">Proporcion:</label>
+                            <input class="importeProporcional" style="display: none;" value="1"></input>
+                        </div>
                     </div>
 
                 <?php
@@ -428,20 +442,20 @@ try {
                     <h2>Editar actividad</h2>
                 </div>
                 <div class="lista-opciones addGasto" id="addGasto">
-                        <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/afegir-despsa.png">
-                        <a href="#" class="titulo-opcion">Añadir gasto</a>
+                    <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/afegir-despsa.png">
+                    <a href="#" class="titulo-opcion">Añadir gasto</a>
                 </div>
                 <div class="lista-opciones balance">
-                        <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/balance.png">
-                        <a href="#" class="titulo-opcion">Ver balance</a>
+                    <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/balance.png">
+                    <a href="#" class="titulo-opcion">Ver balance</a>
                 </div>
                 <div class="lista-opciones addUser">
-                        <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/add-user-icon.png">
-                        <a href="#" class="titulo-opcion">Invitar usuarios</a>
+                    <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/add-user-icon.png">
+                    <a href="#" class="titulo-opcion">Invitar usuarios</a>
                 </div>
                 <div class="lista-opciones editUser">
-                        <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/editar-usuari.png">
-                        <a href="#" class="titulo-opcion">Gestionar usuarios</a>
+                    <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/editar-usuari.png">
+                    <a href="#" class="titulo-opcion">Gestionar usuarios</a>
                 </div>
             </div>
             <div id="participantes">
@@ -484,6 +498,7 @@ try {
 
 <script src="../script/crearGastos.js"></script>
 <script src="../script/crearParticipantes.js"></script>
+<script src="../script/validacionGastos.js"></script>
 
 
 

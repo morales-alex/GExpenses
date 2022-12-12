@@ -42,7 +42,7 @@ h4 {
 }
 
 
-#formulario input, #addActivity input {
+#formulario input, #addActivity input, #addGastos input {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
@@ -534,7 +534,7 @@ div.pagadorGasto {
     justify-content: space-evenly;
 }
 
-#addActivity input.cuantia {
+#addActivity input.cuantia, #addGastos input.cuantia {
     width: 80px;
     padding: 10px;
     box-sizing: border-box;
@@ -553,21 +553,18 @@ div.cuantiaPorUsuario {
     margin-top: 18px;
     flex-direction: column;
     padding-bottom: 48px;
-    width: 49%;
+    width: 100%;
 }
 
 div.cuantiaUsuario {
     display: flex;
     margin-bottom: 10px;
+    justify-content: space-between;
 }
 
-#addActivity input.paga {
+#addActivity input.paga, #addGastos input.paga {
     margin: auto 10px;
     max-width: 100px;
-}
-
-label.usuarioPaga {
-    margin: auto;
 }
 
 /*======================  PÁGINA ACTIVIDAD  ================================*/
@@ -764,9 +761,9 @@ dialog#addParticipanteDialog, dialog#addGastoDialog {
 div#dialogFooterParticipante {
     padding-top: 5px;
     display: flex;
-    position: absolute;
+    /*position: absolute;*/
     bottom: 0;
-    width: 95%;
+    width: 100%;
 }
 
 div#correoInvWrapper {
@@ -781,6 +778,16 @@ div#correoInvWrapper {
     margin: auto 20px auto 10px;
     border: 0px;
 }
+
+.importeProporcional {
+    max-width: 100px;
+    margin: 0 !important;
+}
+
+.gastosFormCol {
+    display: flex;
+    flex-direction: column;
+  }
 
 input#deleteCorreo {
     width: auto;

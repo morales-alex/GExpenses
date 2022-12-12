@@ -1,6 +1,6 @@
-const form = document.getElementById('form');
+const form = document.getElementById('addGastos');
 const inputs = Array.from(form.getElementsByClassName('pago'));
-const submit = document.getElementById('submit');
+const submit = document.getElementById('boton-aceptar-gastos');
 console.log(submit);
 console.log(inputs);
 const total = 10;
