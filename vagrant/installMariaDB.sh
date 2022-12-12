@@ -7,6 +7,7 @@ echo 'CopyPaste configuration file...'
 echo 'mariadb Version: '
 mariadb --version
 echo 'Activación mariadb...'
+sudo systemctl restart mariadb
 sudo systemctl start mariadb
 sudo systemctl enable mariadb
 echo 'script creacion estructura BBDD'
@@ -14,4 +15,3 @@ sudo mariadb < /vagrant/estructuraBBDD.sql
 echo 'script creacion usuario admin'
 sudo mariadb < /vagrant/createUser.sql
 
-sudo systemctl restart mariadb
