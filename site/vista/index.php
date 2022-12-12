@@ -1,10 +1,23 @@
 <?php
 
+require '../modelo/tablesMap.php';
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 if (isset($_SESSION['usuario'])) {
+
+    if (isset($_GET['a_id']) && isset($_GET['invitacion'])) {
+
+
+        procesarInvitacion();
+
+    }
+
+
+
+
     header('Location: ./home.php');
 } else {
 
@@ -98,4 +111,64 @@ if (isset($_SESSION['usuario'])) {
 
 <?php
 
+}
+
+
+function procesarInvitacion() {
+
+    require '../controlador/BbddConfig.php';
+
+    $a_id = $_GET['a_id'];
+    $token = $_GET['invitacion'];
+
+    // Consulta TOKEN existe
+    try {
+        $sql = "SELECT i_correoUsuarioInvitado FROM Invitaciones WHERE i_token = :i_token";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':i_token', $token);
+
+        $stmt->execute();
+        $correoInvitado = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $ex) {
+        echo 'Error: ' . $ex->getMessage();
+    }
+    $correoInvitado = implode($correoInvitado);
+
+    try {
+        $sql = "SELECT u_id FROM usuarios WHERE u_correo = :u_correo;";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':u_correo', $correoInvitado);
+
+        $stmt->execute();
+        $idInvitado = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $ex) {
+        echo 'Error: ' . $ex->getMessage();
+    }
+
+    $correoUsuario = $_SESSION["usuario"]->getU_correo();
+
+    $idInvitado = implode($idInvitado);
+
+    // Si el token introducido coincide con el mail correspondiente en la base de datos lo inserta
+    if ($correoUsuario == $correoInvitado) {
+
+        try {
+
+            $sql = "INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) 
+                            VALUES (:ua_idUsu, :ua_idAct)";
+            $stmt = $pdo->prepare($sql);
+
+            $stmt->bindParam(':ua_idUsu', $idInvitado);
+            $stmt->bindParam(':ua_idAct', $a_id);
+
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->beginTransaction();
+
+            $stmt->execute();
+            $pdo->commit();
+        } catch (PDOException $ex) {
+            $pdo->rollBack();
+
+        }
+    }
 }

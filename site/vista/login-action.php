@@ -7,6 +7,8 @@ if (session_status() !== 2) { // SI VALE DOS SIGNIFICA QUE LA SESIÓN ESTÁ INIC
 }
 
 
+
+
 if (isset($_POST["login"])) {
 
     // AÑADIR EN EL REGISTRO.PHP
