@@ -27,8 +27,6 @@ if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]), $pdo)) {
 
         $pdo->commit();
         $_SESSION["mensajeError"] = "Usuario registrado correctamente!";
-        header("Location: ./home.php");
-
     } catch (PDOException $ex) {
         $pdo->rollBack();
         $_SESSION["mensajeError"] = 'Error: ' . $ex->getMessage();
@@ -43,7 +41,9 @@ if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]), $pdo)) {
 
         // Consulta TOKEN existe
         try {
-            $sql = "SELECT i_correoUsuarioInvitado FROM Invitaciones WHERE i_token = :i_token";
+            $sql = "SELECT i_correoUsuarioInvitado 
+                        FROM Invitaciones 
+                    WHERE i_token = :i_token AND DATE_ADD(i_fecinv, INTERVAL +1 MINUTE) > sysdate();";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':i_token', $token);
 
@@ -52,9 +52,6 @@ if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]), $pdo)) {
         } catch (PDOException $ex) {
             echo 'Error: ' . $ex->getMessage();
         }
-
-        $correoInvitado = implode($correoInvitado);
-        var_dump($correoInvitado);
 
         try {
             $sql = "SELECT u_id FROM usuarios WHERE u_correo = :u_correo;";
@@ -68,43 +65,43 @@ if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]), $pdo)) {
         }
 
         $correoUsuario = $_POST["email"];
-        var_dump($correoUsuario);
-
-        $idInvitado = implode($idInvitado);
-        var_dump($idInvitado);
 
         // Si el token introducido coincide con el mail correspondiente en la base de datos lo inserta
-        if ($correoUsuario == $correoInvitado) {
+            if ($correoUsuario == $correoInvitado) {
 
-            try {
-
-                $sql = "INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) 
+                try {
+                    
+                    $sql = "INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) 
                             VALUES (:ua_idUsu, :ua_idAct)";
-                $stmt = $pdo->prepare($sql);
+                    $stmt = $pdo->prepare($sql);
 
-                $stmt->bindParam(':ua_idUsu', $idInvitado);
-                $stmt->bindParam(':ua_idAct', $a_id);
+                    $stmt->bindParam(':ua_idUsu', $idInvitado);
+                    $stmt->bindParam(':ua_idAct', $a_id);
 
-                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $pdo->beginTransaction();
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $pdo->beginTransaction();
 
-                $stmt->execute();
+                    $stmt->execute();
 
-                $pdo->commit();
+                    $pdo->commit();
 
-                header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id=' . $a_id);
-                die;
-            } catch (PDOException $ex) {
-                $pdo->rollBack();
-                header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id=' . $a_id);
-                die;
+                    $_SESSION["mensajeError"] = $_SESSION["mensajeError"] . ' . Ha sido añadido a la actividad a la que has sido invitado!';
+
+                    die;
+                } catch (PDOException $ex) {
+                    $pdo->rollBack();
+                    header('Location: ' . $_SERVER['PHP_SELF'] . '?a_id=' . $a_id);
+                    die;
+                }
+                unset($_GET["invitacion"]);
             }
             unset($_GET["invitacion"]);
-        }
-        unset($_GET["invitacion"]);
-        header("Location: ./home.php");
+
+
+        
+    } else {
+        $_SESSION["mensajeError"] = $_SESSION["mensajeError"] . ' . Lamentablemente no hemos podido añadirte a la actividad a la que has sido invitado.';
     }
-} else {
-    $_SESSION["mensajeError"] = "Usuario registrado correctamente";
-    header("Location: ./login.php"); // INSERCION DE DATOS INCORRECTO
 }
+
+header("Location: ./home.php");
