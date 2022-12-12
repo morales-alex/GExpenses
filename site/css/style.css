@@ -42,7 +42,7 @@ h4 {
 }
 
 
-#formulario input, #addActivity input {
+#formulario input, #addActivity input, #addGastoForm input {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
@@ -466,7 +466,7 @@ dialog::backdrop {
     backdrop-filter: blur(1px);
 }
 
-#addActivity textArea {
+#addActivity textArea, #addGastoForm textArea {
     resize: none;
     height: 100px;
     width: 400px;
@@ -534,7 +534,7 @@ div.pagadorGasto {
     justify-content: space-evenly;
 }
 
-#addActivity input.cuantia {
+#addGastoForm input.cuantia {
     width: 80px;
     padding: 10px;
     box-sizing: border-box;
@@ -561,7 +561,7 @@ div.cuantiaUsuario {
     margin-bottom: 10px;
 }
 
-#addActivity input.paga {
+#addGastoForm input.paga {
     margin: auto 10px;
     max-width: 100px;
 }

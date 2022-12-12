@@ -1,8 +1,6 @@
 function addGastos() {
   let gastoValido = true;
   const concepto = document.querySelector("#conceptoValue").value;
-  
-  
 
   if (concepto.length > 50) {
     gastoValido = false;
@@ -31,9 +29,10 @@ function addGastos() {
   return gastoValido;
 }
 
+const formularioGasto = document.querySelector("#addGastoForm");
+
 const errorConcepto = document.querySelector("#nombreErrorConcepto");
 const errorCuantias = document.querySelector("#nombreErrorCuantias");
-
 
 const abrirFormularioGastos = document.querySelector("#addGasto");
 const dialogGastos = document.querySelector("#addGastoDialog");
@@ -79,7 +78,20 @@ precioTotal.addEventListener("keyup", (e) => {
 });
 
 addGasto.addEventListener("click", (e) => {
-  e.preventDefault();
+  // e.preventDefault();
 
   console.log(addGastos());
+
+  if (addGastos()) {
+
+    const conceptoPOST = document.querySelector("#conceptoValue").name = "conceptoGastoSencillo";
+
+    errorConcepto.style.display = "none";
+    errorCuantias.style.display = "none";
+
+    formularioGasto.submit();
+
+    conceptoPOST.name = "";
+  }
 });
+
