@@ -78,14 +78,20 @@ precioTotal.addEventListener("keyup", (e) => {
 });
 
 addGasto.addEventListener("click", (e) => {
-  e.preventDefault();
+  // e.preventDefault();
 
   console.log(addGastos());
 
   if (addGastos()) {
+
+    const conceptoPOST = document.querySelector("#conceptoValue").name = "conceptoGastoSencillo";
+
     errorConcepto.style.display = "none";
     errorCuantias.style.display = "none";
 
     formularioGasto.submit();
+
+    conceptoPOST.name = "";
   }
 });
+
