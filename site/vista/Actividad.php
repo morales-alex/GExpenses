@@ -69,6 +69,36 @@ if (isset($_GET['invitacion'])) {
     unset($_GET["invitacion"]);
 }
 
+// SI HAS ENVIADO EL FORMULARIO DE AÑADIR GASTO CREA EL REGISTRO EN LA BBDD
+if (isset($_POST['conceptoGastoSencillo']) && isset($_post['usuarioPagador']) && isset($_post['cuantiaGastoSencillo'])) {
+
+    $fechaDeHoy = date("Y-m-d H:i:s");
+
+
+    try {
+
+        $sql = "INSERT INTO Gastos (ua_idUsu, ua_idAct) 
+                VALUES (:ua_idUsu, :ua_idAct)";
+        $stmt = $pdo->prepare($sql);
+
+        $stmt->bindParam(':ua_idUsu', $usuario);
+        $stmt->bindParam(':ua_idAct', $codigoActividad);
+
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->beginTransaction();
+
+        $stmt->execute();
+
+        $pdo->commit();
+
+        die;
+    } catch (PDOException $ex) {
+        $pdo->rollBack();
+        die;
+    }
+
+}
+
 // CONSULTA GASTOS
 try {
     $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct WHERE g_idAct = :g_idAct order by g_fecCrea";
@@ -119,8 +149,6 @@ if (isset($_POST['correos'])) {
 
 
         if (filter_var($correo, FILTER_VALIDATE_EMAIL)) { //validar formato correo
-
-
 
             // CONSULTA SI EL CORREO YA PARTICIPA EN ESTA ACTIVIDAD
             try {
@@ -303,11 +331,11 @@ try {
             <h5>Añadir gasto a la actividad</h5>
             <span id='cancelarGastoX'>x</span>
         </div>
-        <form method="post" action="" id="addActivity" class="formAddParticipantes">
+        <form method="post" action="" id="addGastoForm" class="formAddParticipantes">
 
             <label for="nombre">Concepto del gasto:</label>
             <div id="addParticipante">
-                <input type="text" id="conceptoValue">
+                <input type="text" id="conceptoValue" name="conceptoGastoSencillo">
             </div>
 
             <p id='nombreErrorConcepto' class='error-messageForm'>El concepto debe tener entre 1 y 50 carácteres</p>
@@ -327,7 +355,7 @@ try {
                 </select>
 
                 <label for="cuantia" class="labelGasto">Cuantía:</label>
-                <input type="number" name="cuantia" class="cuantia">
+                <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0">
 
             </div>
 
