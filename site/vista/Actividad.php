@@ -80,7 +80,7 @@ if (isset($_POST['enviar'])) {
 
     try {
 
-        $sql = "INSERT INTO gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) 
+        $sql = "INSERT INTO Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) 
                     SELECT (SELECT u_id from Usuarios where u_username = :g_username), :g_idAct, :g_precio, :g_concepto, :g_fecCrea;";
         $stmt = $pdo->prepare($sql);
 
@@ -107,7 +107,7 @@ if (isset($_POST['enviar'])) {
 
 // CONSULTA GASTOS
 try {
-    $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct WHERE g_idAct = :g_idAct order by g_fecCrea";
+    $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = Gastos.g_idAct WHERE g_idAct = :g_idAct order by g_fecCrea";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':g_idAct', $codigoActividad);
 
@@ -119,7 +119,7 @@ try {
 
 // CONSULTA PARTICIPANTES ACTIVIDAD
 try {
-    $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
+    $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON Usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':ua_idAct', $codigoActividad);
 
@@ -131,7 +131,7 @@ try {
 
 // CONSULTA SUMA TOTAL GASTOS
 try {
-    $sql = "SELECT sum(g_precio) as total FROM Gastos INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct  WHERE g_idAct = :ua_idAct";
+    $sql = "SELECT sum(g_precio) as total FROM Gastos INNER JOIN Actividades ON Actividades.a_id = Gastos.g_idAct  WHERE g_idAct = :ua_idAct";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':ua_idAct', $_GET["a_id"]);
 
