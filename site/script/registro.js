@@ -1,6 +1,6 @@
 // Verifica que el password es seguro, debe contener mayuscula, minuscula, simbolo y numero
 const validarPassword = () => {
-    var regexPassword = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!#.$%&'*+/=?])");
+    var regexPassword = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!#.$%&'@*+/=?])");
     var comprovacionPassword = regexPassword.test(passwordInput.value);
 
     if (comprovacionPassword == true) {

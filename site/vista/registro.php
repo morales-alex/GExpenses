@@ -74,7 +74,7 @@ if (isset($_GET['invitacion'])) {
                     <div class="row-registro">
                         <div class="col">
                             <label for="password">Contraseña <div class="tooltip">?
-                                    <span class="tooltiptext">Debe incluir letras minusculas, mayusculas, números y algun simbolo: !#.$%&'*+/=? </span>
+                                    <span class="tooltiptext">Debe incluir letras minusculas, mayusculas, números y alguno de los siguientes simbolos: !#.$%@&'*+/=? </span>
                                 </div></label>
                             <input type="password" id="password" name="password" placeholder="Contraseña">
                             <p class="error-messageForm">No has introducido una contraseña valida</p>
