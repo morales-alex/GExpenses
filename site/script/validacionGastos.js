@@ -1,29 +1,36 @@
-const form = document.getElementById('form');
-const inputs = Array.from(form.getElementsByClassName('pago'));
-const submit = document.getElementById('submit');
-console.log(submit);
-console.log(inputs);
-const total = 10;
-let totalSuma = 0;
-
-inputs.forEach(input => {
-    input.addEventListener('keyup', e => {
-        totalSuma = 0;
-        inputs.forEach(input => {
-            totalSuma += parseInt(input.value);
+export class ValidacionCuantiaAvanzado{
+    cuantiaTotal;
+    totalSuma;
+    constructor(cuantiaTotal){
+        this.cuantiaTotal = parseInt(cuantiaTotal);
+        this.totalSuma = 0;
+    }
+    calcTotalSuma(inputs){
+        inputs.forEach(input =>{
+            if(input.value){
+              this.totalSuma += parseInt(input.value);  
+            }else{
+                this.totalSuma += 0;
+            }
+            
         });
-        if (totalSuma < total) {
-            console.log(`Te quedan por asignar ${total - totalSuma}`);
+    }
+
+    logicaRetroaccionUsuario(submit){
+        if (this.totalSuma < this.cuantiaTotal) {
+            console.log(`Te quedan por asignar ${this.cuantiaTotal - this.totalSuma}`);
             submit.disabled = true;
-        } else if (totalSuma > total) {
-            console.log(`Te has pasado, sobran ${totalSuma - total}`);
+        } else if (this.totalSuma > this.cuantiaTotal) {
+            console.log(`Te has pasado, sobran ${this.totalSuma - this.cuantiaTotal}`);
             submit.disabled = true;
-        } else if(totalSuma === total){
-            console.log(`Correcte (suma)${totalSuma} = (total)${total}`);
+        } else if(this.totalSuma === this.cuantiaTotal){
+            console.log(`Correcte (suma)${this.totalSuma} = (cuantiaTotal)${this.cuantiaTotal}`);
             submit.disabled = false;
 
         }
-    });
-});
+    }
+    
+}
+
 
 
