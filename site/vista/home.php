@@ -27,14 +27,14 @@ $idUsuario = $_SESSION["usuario"]->getU_id();
 
 if ($seleccion == 'fechaCreacion') {
 
-    $stmt = $pdo->prepare("SELECT * FROM ACTIVIDADES as a INNER JOIN UsuariosActividades as ua ON ua.ua_idAct = a.a_id WHERE ua_idUsu = :u_usernameID ORDER BY a_fecCreacion DESC");
+    $stmt = $pdo->prepare("SELECT * FROM Actividades as a INNER JOIN UsuariosActividades as ua ON ua.ua_idAct = a.a_id WHERE ua_idUsu = :u_usernameID ORDER BY a_fecCreacion DESC");
 
     $stmt->bindParam(':u_usernameID', $idUsuario);
 
     $stmt->execute();
     $consultaOrdenada = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } else {
-    $stmt = $pdo->prepare("SELECT * FROM ACTIVIDADES as a INNER JOIN UsuariosActividades as ua ON ua.ua_idAct = a.a_id WHERE ua_idUsu = :u_usernameID ORDER BY a_fecUltMod DESC;");
+    $stmt = $pdo->prepare("SELECT * FROM Actividades as a INNER JOIN UsuariosActividades as ua ON ua.ua_idAct = a.a_id WHERE ua_idUsu = :u_usernameID ORDER BY a_fecUltMod DESC;");
 
     $stmt->bindParam(':u_usernameID', $idUsuario);
 
