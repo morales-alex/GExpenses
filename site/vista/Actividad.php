@@ -342,32 +342,32 @@ try {
             </div>
 
             <p id='nombreErrorConcepto' class='error-messageForm'>El concepto debe tener entre 1 y 50 carácteres</p>
+            <div class="pagadorGasto">
 
-            <div>
+                <div class="container-gasto">
+                    <label class="labelGasto" for="usuarioPagador">Pagador:</label>
+                    <select name="usuarioPagador" id="usuarioPagador">
+                        <?php
+                        foreach ($participantes as $participante) {
+                        ?>
+                            <option value="<?php echo $participante['u_username'] ?>"><?php echo $participante['u_username'] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="container-opcion-pago">
+                <label for="opcionDePago" class="labelGasto">Repartición:</label>
                 <select name="opcionDePago" id="opcionDePago">
                     <option value="1">General</option>
                     <option value="2">Avanzado</option>
                     <option value="3">Proporcion</option>
                 </select>
             </div>
-
-            <div class="pagadorGasto">
-                <label class="labelGasto" for="usuarioPagador">Pagador:</label>
-
-                <select name="usuarioPagador" id="usuarioPagador">
-
-                    <?php
-                    foreach ($participantes as $participante) {
-                    ?>
-                        <option value="<?php echo $participante['u_username'] ?>"><?php echo $participante['u_username'] ?></option>
-                    <?php
-                    }
-                    ?>
-                </select>
-
-                <label for="cuantia" class="labelGasto">Cuantía:</label>
-                <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0">
-
+                <div class="container-tipo-gasto">
+                    <label for="cuantia" class="labelGasto">Cuantía:</label>
+                    <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0">
+                </div>
             </div>
 
             <label for="cuantia" class="labelGasto">Participantes:</label>
@@ -387,9 +387,9 @@ try {
                             <label class="proporcion" style="display: block;">Pagará:</label>
                             <input type="number" class="paga" id="echo $usuarioParticipante" value="0" readonly="readonly"></input>
                         </div>
-                        <div class="gastosFormCol">
-                            <label class="labelImporteProporcional" style="display: none;" for="importeProporcional">Proporcion:</label>
-                            <input class="importeProporcional" style="display: none;" value="1"></input>
+                        <div class="gastosFormColProp" style="display: none;">
+                            <label class="labelImporteProporcional" for="importeProporcional">Proporcion:</label>
+                            <input class="importeProporcional" value="1"></input>
                         </div>
                     </div>
 
@@ -521,7 +521,7 @@ try {
 
             </div>
         </div>
-        
+
     </div>
 
 </body>

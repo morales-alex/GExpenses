@@ -70,6 +70,7 @@ cancelarXGastos.addEventListener("click", function (e) {
 const aPagar = document.querySelectorAll(".paga");
 const importeProporcional = document.querySelectorAll('.importeProporcional');
 const importeLabelProporcional = document.querySelectorAll('.labelImporteProporcional');
+const proporcionesForm = document.querySelectorAll('.gastosFormColProp');
 const divididoEntre = aPagar.length;
 const opcionDePago = document.querySelector("#opcionDePago");
 let opcionSeleccionada;
@@ -102,11 +103,8 @@ opcionGeneral = () => {
   [].forEach.call(aPagar, function (habilitarReadonly) {
     habilitarReadonly.setAttribute('readonly', true);
   });
-  [].forEach.call(importeProporcional, function (mostrarImporteProporcion) {
+  [].forEach.call(proporcionesForm, function (mostrarImporteProporcion) {
     mostrarImporteProporcion.style.display = 'none';
-  });
-  [].forEach.call(importeLabelProporcional, function (importeLabelProporcional) {
-    importeLabelProporcional.style.display = 'none';
   });
 
   for (i = 0; i < aPagar.length; i++) {
@@ -121,11 +119,8 @@ opcionAvanzada = () => {
   [].forEach.call(aPagar, function (deshabilitarReadOnly) {
     deshabilitarReadOnly.removeAttribute('readonly');
   });
-  [].forEach.call(importeProporcional, function (mostrarImporteProporcion) {
+  [].forEach.call(proporcionesForm, function (mostrarImporteProporcion) {
     mostrarImporteProporcion.style.display = 'none';
-  });
-  [].forEach.call(importeLabelProporcional, function (importeLabelProporcional) {
-    importeLabelProporcional.style.display = 'none';
   });
 }
 
@@ -135,11 +130,8 @@ opcionProporcion = () => {
   [].forEach.call(aPagar, function (habilitarReadonly) {
     habilitarReadonly.setAttribute('readonly', true);
   });
-  [].forEach.call(importeProporcional, function (mostrarImporteProporcion) {
-    mostrarImporteProporcion.style.display = 'block';
-  });
-  [].forEach.call(importeLabelProporcional, function (importeLabelProporcional) {
-    importeLabelProporcional.style.display = 'block';
+  [].forEach.call(proporcionesForm, function (mostrarImporteProporcion) {
+    mostrarImporteProporcion.style.display = 'flex';
   });
 
   let sumadorProporcions = 0;
@@ -174,7 +166,7 @@ importeProporcional.forEach(valorProporcion => {
 
 
 addGasto.addEventListener("click", (e) => {
-  // e.preventDefault();
+   e.preventDefault();
 
   console.log(addGastos());
 

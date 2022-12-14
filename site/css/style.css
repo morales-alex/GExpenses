@@ -45,10 +45,10 @@ h4 {
 #formulario input, #addActivity input, #addGastos input,
 #formulario input, #addActivity input, #addGastoForm input {
     width: 100%;
-    padding: 10px;
+    padding: 5px;
     box-sizing: border-box;
     margin-bottom: 25px;
-    border-radius: 25px;
+    border-radius: 5px;
     border: 1px solid black;
     margin-top: 8px;
     margin-left: auto;
@@ -500,6 +500,8 @@ input#cancelDialogForm, input#cancelGastoForm {
     color: #4e729a;
     border: none;
     box-shadow: 0 0 #0000, 0 0 #0000, 0 0px 10px 0px rgba(0, 0, 0, 0.38);
+    padding: 10px;
+    border-radius: 25px;
 }
 
 .error-messageForm {
@@ -528,21 +530,26 @@ select#usuarioPagador {
     font-size: 15px;
     height: fit-content;
     margin: auto 0px;
+    padding: 4px;
 }
 
 div.pagadorGasto {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 #addActivity input.cuantia, #addGastos input.cuantia,
 #addGastoForm input.cuantia {
     width: 80px;
-    padding: 10px;
     box-sizing: border-box;
-    border-radius: 25px;
     border: 1px solid black;
-    margin: 20px 0px 25px 0px;
+    margin: 0;
+    text-align: right;
+}
+
+#opcionDePago {
+    padding: 4px;
 }
 
 label.labelGasto {
@@ -560,14 +567,21 @@ div.cuantiaPorUsuario {
 
 div.cuantiaUsuario {
     display: flex;
-    margin-bottom: 10px;
     justify-content: space-between;
-}
+    margin-top: 5px;
+    border-bottom: 1px solid #4e729a;
+  }
 
 #addActivity input.paga, #addGastos input.paga,
 #addGastoForm input.paga {
     margin: auto 10px;
-    max-width: 100px;
+    max-width: 75px;
+    margin-bottom: 5px;
+    text-align: right;
+}
+
+.importeProporcional {
+    margin-left: 10px;
 }
 
 /*======================  PÁGINA ACTIVIDAD  ================================*/
@@ -747,7 +761,7 @@ p#participante {
 
 dialog#addParticipanteDialog, dialog#addGastoDialog {
     border: 0px;
-    min-width: 500px;
+    min-width: 650px;
     min-height: 500px;
     height: auto;
     max-height: 600px;
@@ -784,12 +798,18 @@ div#correoInvWrapper {
 
 .importeProporcional {
     max-width: 100px;
-    margin: 0 !important;
+    margin: 0px 10px !important;
+    text-align: right;
+  }
+
+.gastosFormCol, .gastosFormColProp {
+    flex-direction: row;
+    align-items: center;
+    display: flex;
 }
 
-.gastosFormCol {
-    display: flex;
-    flex-direction: column;
+.gastosFormCol .usuarioPaga {
+    width: 50px;
   }
 
 input#deleteCorreo {
@@ -826,6 +846,8 @@ input#addCorreo {
     background-color: #4E729A;
     border: 0px;
     color: white;
+    padding: 10px;
+    border-radius: 25px;
 }
 
 div#totalActividad {
@@ -869,7 +891,8 @@ div#campoTotal {
     border-radius: 6px;
     padding: 5px 0;
     border: 1px solid #fff;
-    padding: 5px;;
+    padding: 5px;
+    ;
 
     /* Position the tooltip */
     position: absolute;
@@ -878,4 +901,25 @@ div#campoTotal {
 
 .tooltip:hover .tooltiptext {
     visibility: visible;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+#boton-aceptar-gastos, #cancelGastoForm {
+    padding: 10px !important;
+    border-radius: 25px !important;
+}
+
+#boton-aceptar {
+    border-radius: 25px !important;
 }
