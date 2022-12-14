@@ -148,7 +148,6 @@ if (isset($_POST['correos'])) {
 
     require_once '../controlador/compruebaEmail.php';
 
-    $fechaDeHoy = date("Y-m-d H:i:s");
     $idUsuarioInvita = $_SESSION["usuario"]->getU_id();
 
     foreach ($_POST["correos"] as $correo) {
@@ -189,8 +188,8 @@ if (isset($_POST['correos'])) {
                     // Insertamos la invitación con el token en la base de datos
                     try {
 
-                        $sql = "INSERT INTO Invitaciones (i_idUsu, i_idAct, i_token, i_correoUsuarioInvitado, i_fecInv) 
-                    VALUES (:i_idUsu, :i_idAct, :i_token, :i_correoUsuarioInvitado, :i_fecInv)";
+                        $sql = "INSERT INTO Invitaciones (i_idUsu, i_idAct, i_token, i_correoUsuarioInvitado, i_fecInv)
+                                    SELECT :i_idUsu, :i_idAct, :i_token, :i_correoUsuarioInvitado, SYSDATE()";
 
                         $stmt = $pdo->prepare($sql);
 
@@ -198,7 +197,6 @@ if (isset($_POST['correos'])) {
                         $stmt->bindParam(':i_idAct', $codigoActividad);
                         $stmt->bindParam(':i_token', $nuevoToken);
                         $stmt->bindParam(':i_correoUsuarioInvitado', $correo);
-                        $stmt->bindParam(':i_fecInv', $fechaDeHoy);
 
                         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         $pdo->beginTransaction();
@@ -285,6 +283,7 @@ try {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/LOGO_VENTANA.ico" />
 </head>
 
 <?php include_once './Header.php' ?>

@@ -5,7 +5,11 @@ require '../controlador/BbddConfig.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+    if (isset($_SESSION["mensajeError"])) {
+        $mensajeDeError = $_SESSION["mensajeError"];
+    }
 }
+
 
 if (!isset($_SESSION['usuario'])) {
     SESSION_DESTROY();
@@ -23,7 +27,7 @@ $idUsuario = $_SESSION["usuario"]->getU_id();
 
 if ($seleccion == 'fechaCreacion') {
 
-    $stmt = $pdo->prepare("SELECT * FROM ACTIVIDADES as a INNER JOIN UsuariosActividades as ua ON ua.ua_idAct = a.a_id WHERE ua_idUsu = :u_usernameID ORDER BY a_fecCreacion DESC;");
+    $stmt = $pdo->prepare("SELECT * FROM ACTIVIDADES as a INNER JOIN UsuariosActividades as ua ON ua.ua_idAct = a.a_id WHERE ua_idUsu = :u_usernameID ORDER BY a_fecCreacion DESC");
 
     $stmt->bindParam(':u_usernameID', $idUsuario);
 
@@ -55,6 +59,7 @@ $pdo = null;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/LOGO_VENTANA.ico" />
 </head>
 
 <?php include_once './Header.php' ?>
@@ -67,6 +72,25 @@ $pdo = null;
         <div id="titulo-pagina">
             <div>
                 <h1>Actividades</h1>
+                <?php
+                if (isset($mensajeDeError)) {
+                    if ($mensajeDeError === 'Usuario registrado correctamente!' || $mensajeDeError === 'Usuario registrado correctamente! . Ha sido añadido a la actividad a la que has sido invitado!') {
+                ?>
+
+                        <div class="ok-message"><?php echo $mensajeDeError ?></div>
+                    <?php
+                    } elseif ($mensajeDeError === 'Usuario registrado correctamente! . Lamentablemente no hemos podido añadirte a la actividad a la que has sido invitado.') {
+
+                    ?>
+
+                        <div class="warning-message"><?php echo $mensajeDeError ?></div>
+                <?php
+
+                    }
+                    unset($mensajeDeError);
+                }
+                ?>
+
             </div>
             <div class="ordenar">
                 <div class="boton-nueva-actividad" id='addActivityButton'>Añadir actividad +</div>
@@ -111,6 +135,7 @@ $pdo = null;
             <?php
             }
             ?>
+
         </div>
     </div>
 </body>

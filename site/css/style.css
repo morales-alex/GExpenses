@@ -155,12 +155,24 @@ label {
     align-items: center;
 }
 
-.error-message {
+.error-message, .warning-message, .ok-message {
     color: #c40000;
     background-color: #ffd3d3;
     width: fit-content;
     padding: 6px;
     border-radius: 25px;
+}
+
+div.warning-message {
+    color: black;
+    background-color: yellow;
+    margin: 10px;
+}
+
+div.ok-message {
+    color: white;
+    background-color: green;
+    margin: 10px;
 }
 
 .landing .row {
