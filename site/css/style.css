@@ -6,6 +6,8 @@ body {
     font-family: 'Montserrat', serif;
     background-color: #EEE;
     color: #171717;
+    display: flex;
+    flex-direction: column;
 }
 
 a,
@@ -183,6 +185,8 @@ label {
     padding: 0 90px;
     max-width: 1200px;
     margin: 0 auto;
+    flex-grow: 1;
+    width: 100%;
 }
 
 .ordenar {
