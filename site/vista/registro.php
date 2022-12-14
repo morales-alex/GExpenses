@@ -1,10 +1,13 @@
 <?php
-if (isset($_GET['a_id'])) {
+
+$registroConInvitacion = false;
+
+if (isset($_GET['a_id']) && isset($_GET['invitacion'])) {
     $a_id = $_GET['a_id'];
-}
-if (isset($_GET['invitacion'])) {
     $invitacion = $_GET['invitacion'];
+    $registroConInvitacion = true;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +21,7 @@ if (isset($_GET['invitacion'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/LOGO_VENTANA.ico" />
 </head>
 
 <body>
@@ -85,8 +89,8 @@ if (isset($_GET['invitacion'])) {
                             <p class="error-messageForm">Las contraseñas no coinciden</p>
                         </div>
 
-                        <input type="hidden" id="a-id" name="a-id" value="<?= $a_id ?>">
-                        <input type="hidden" id="invitacion" name="invitacion" value="<?= $invitacion ?>">
+                        <input type="hidden" id="a-id" name="a-id" value="<?= $registroConInvitacion ? $a_id : null ?>">
+                        <input type="hidden" id="invitacion" name="invitacion" value="<?= $registroConInvitacion ? $invitacion : null ?>">
 
                     </div>
 

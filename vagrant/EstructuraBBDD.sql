@@ -72,8 +72,3 @@ INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (1, 3);
 
 insert into Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 55.90, 'Bocadillos de jamón con tomate', sysdate());
 insert into Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 300.56, 'Buceo con tiburones', sysdate());
-
-select * from Gastos;
-select * from UsuariosActividades;
-select * from Actividades;
-select * from Usuarios;

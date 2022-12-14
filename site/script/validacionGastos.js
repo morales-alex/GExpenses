@@ -26,6 +26,7 @@ export class ValidacionCuantiaAvanzado{
         } else if(this.totalSuma === this.cuantiaTotal){
             console.log(`Correcte (suma)${this.totalSuma} = (cuantiaTotal)${this.cuantiaTotal}`);
             submit.disabled = false;
+
         }
     }
     

@@ -74,43 +74,27 @@ function procesarInvitacion() {
 
     $a_id = $_POST['a-id'];
     $token = $_POST['invitacion'];
-
-    var_dump($a_id);
-    var_dump($token);
-
-    // Consulta TOKEN existe
-    try {
-        $sql = "SELECT i_correoUsuarioInvitado FROM Invitaciones WHERE i_token = :i_token";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':i_token', $token);
-
-        $stmt->execute();
-        $correoInvitado = $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $ex) {
-        echo 'Error: ' . $ex->getMessage();
-    }
-    $correoInvitado = implode($correoInvitado);
-    //var_dump($correoInvitado);
-
-    try {
-        $sql = "SELECT u_id FROM usuarios WHERE u_correo = :u_correo;";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':u_correo', $correoInvitado);
-
-        $stmt->execute();
-        $idInvitado = $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $ex) {
-        echo 'Error: ' . $ex->getMessage();
-    }
-
     $correoUsuario = $_SESSION["usuario"]->getU_correo();
-    var_dump($correoUsuario);
 
-    $idInvitado = implode($idInvitado);
-    var_dump($idInvitado);
+        // Consulta TOKEN existe
+        try {
+            $sql = "SELECT i_correoUsuarioInvitado, u_id
+                        FROM Invitaciones
+                            INNER JOIN Usuarios ON Usuarios.u_correo = Invitaciones.i_correoUsuarioInvitado 
+                    WHERE i_token = :i_token AND DATE_ADD(i_fecinv, INTERVAL +3 MINUTE) > sysdate()"; // LA INVITACION CADUCA EN 2 MINUTOS
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':i_token', $token);
+
+            $stmt->execute();
+            $correoInvitado = $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $ex) {
+            echo 'Error: ' . $ex->getMessage();
+        }
+
+    
 
     // Si el token introducido coincide con el mail correspondiente en la base de datos lo inserta
-    if ($correoUsuario == $correoInvitado) {
+    if ($correoUsuario == $correoInvitado['i_correoUsuarioInvitado']) {
 
         try {
 
@@ -118,7 +102,7 @@ function procesarInvitacion() {
                             VALUES (:ua_idUsu, :ua_idAct)";
             $stmt = $pdo->prepare($sql);
 
-            $stmt->bindParam(':ua_idUsu', $idInvitado);
+            $stmt->bindParam(':ua_idUsu', $correoInvitado['u_id']);
             $stmt->bindParam(':ua_idAct', $a_id);
 
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -126,9 +110,15 @@ function procesarInvitacion() {
 
             $stmt->execute();
             $pdo->commit();
+
+            $_SESSION["mensajeError"] = '¡Enhorabuena! Te has unido a la actividad satisfactoriamente!';
+
         } catch (PDOException $ex) {
             $pdo->rollBack();
-
+            $_SESSION["mensajeError"] = '¡Cuidado! No te has podido unir a la actividad porque ha caducado!';
+            echo 'Error: ' . $ex->getMessage();
         }
+    } else {
+        $_SESSION["mensajeError"] = '¡Cuidado! No te has podido unir a la actividad!';
     }
 }

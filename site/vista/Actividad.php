@@ -80,7 +80,7 @@ if (isset($_POST['enviar'])) {
 
     try {
 
-        $sql = "INSERT INTO Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) 
+        $sql = "INSERT INTO gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) 
                     SELECT (SELECT u_id from Usuarios where u_username = :g_username), :g_idAct, :g_precio, :g_concepto, :g_fecCrea;";
         $stmt = $pdo->prepare($sql);
 
@@ -107,7 +107,7 @@ if (isset($_POST['enviar'])) {
 
 // CONSULTA GASTOS
 try {
-    $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = Gastos.g_idAct WHERE g_idAct = :g_idAct order by g_fecCrea";
+    $sql = "SELECT * FROM Gastos INNER JOIN Usuarios on Usuarios.u_id = Gastos.g_idUsu INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct WHERE g_idAct = :g_idAct order by g_fecCrea";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':g_idAct', $codigoActividad);
 
@@ -119,7 +119,7 @@ try {
 
 // CONSULTA PARTICIPANTES ACTIVIDAD
 try {
-    $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON Usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
+    $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':ua_idAct', $codigoActividad);
 
@@ -131,7 +131,7 @@ try {
 
 // CONSULTA SUMA TOTAL GASTOS
 try {
-    $sql = "SELECT sum(g_precio) as total FROM Gastos INNER JOIN Actividades ON Actividades.a_id = Gastos.g_idAct  WHERE g_idAct = :ua_idAct";
+    $sql = "SELECT sum(g_precio) as total FROM Gastos INNER JOIN Actividades ON Actividades.a_id = gastos.g_idAct  WHERE g_idAct = :ua_idAct";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':ua_idAct', $_GET["a_id"]);
 
@@ -148,7 +148,6 @@ if (isset($_POST['correos'])) {
 
     require_once '../controlador/compruebaEmail.php';
 
-    $fechaDeHoy = date("Y-m-d H:i:s");
     $idUsuarioInvita = $_SESSION["usuario"]->getU_id();
 
     foreach ($_POST["correos"] as $correo) {
@@ -189,8 +188,8 @@ if (isset($_POST['correos'])) {
                     // Insertamos la invitación con el token en la base de datos
                     try {
 
-                        $sql = "INSERT INTO Invitaciones (i_idUsu, i_idAct, i_token, i_correoUsuarioInvitado, i_fecInv) 
-                    VALUES (:i_idUsu, :i_idAct, :i_token, :i_correoUsuarioInvitado, :i_fecInv)";
+                        $sql = "INSERT INTO Invitaciones (i_idUsu, i_idAct, i_token, i_correoUsuarioInvitado, i_fecInv)
+                                    SELECT :i_idUsu, :i_idAct, :i_token, :i_correoUsuarioInvitado, SYSDATE()";
 
                         $stmt = $pdo->prepare($sql);
 
@@ -198,7 +197,6 @@ if (isset($_POST['correos'])) {
                         $stmt->bindParam(':i_idAct', $codigoActividad);
                         $stmt->bindParam(':i_token', $nuevoToken);
                         $stmt->bindParam(':i_correoUsuarioInvitado', $correo);
-                        $stmt->bindParam(':i_fecInv', $fechaDeHoy);
 
                         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         $pdo->beginTransaction();
@@ -285,6 +283,7 @@ try {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/LOGO_VENTANA.ico" />
 </head>
 
 <?php include_once './Header.php' ?>
@@ -334,7 +333,7 @@ try {
             <h5>Añadir gasto a la actividad</h5>
             <span id='cancelarGastoX'>x</span>
         </div>
-        <form method="post" action="" id="addGastos" class="formAddParticipantes">
+        <form method="post" id="addGastoForm" class="formAddParticipantes">
 
             <label for="nombre">Concepto del gasto:</label>
             <div id="addParticipante">
@@ -342,35 +341,27 @@ try {
             </div>
 
             <p id='nombreErrorConcepto' class='error-messageForm'>El concepto debe tener entre 1 y 50 carácteres</p>
+
             <div class="pagadorGasto">
+                <label class="labelGasto" for="usuarioPagador">Pagador:</label>
 
-                <div class="container-gasto">
-                    <label class="labelGasto" for="usuarioPagador">Pagador:</label>
-                    <select name="usuarioPagador" id="usuarioPagador">
-                        <?php
-                        foreach ($participantes as $participante) {
-                        ?>
-                            <option value="<?php echo $participante['u_username'] ?>"><?php echo $participante['u_username'] ?></option>
-                        <?php
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="container-opcion-pago">
-                <label for="opcionDePago" class="labelGasto">Repartición:</label>
-                <select name="opcionDePago" id="opcionDePago">
-                    <option value="1">General</option>
-                    <option value="2">Avanzado</option>
-                    <option value="3">Proporcion</option>
+                <select name="usuarioPagador" id="usuarioPagador">
+
+                    <?php
+                    foreach ($participantes as $participante) {
+                    ?>
+                        <option value="<?php echo $participante['u_username'] ?>"><?php echo $participante['u_username'] ?></option>
+                    <?php
+                    }
+                    ?>
                 </select>
-            </div>
-                <div class="container-tipo-gasto">
-                    <label for="cuantia" class="labelGasto">Cuantía:</label>
-                    <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0">
-                </div>
+
+                <label for="cuantia" class="labelGasto">Cuantía:</label>
+                <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0">
+
             </div>
 
-            <label for="cuantia" class="labelGasto">Participantes:</label>
+            <label for="cuantia" class="labelGasto">Paga:</label>
 
             <div class="cuantiaPorUsuario">
                 <?php
@@ -380,17 +371,8 @@ try {
                 ?>
 
                     <div class="cuantiaUsuario">
-                        <div class="gastosFormCol">
-                            <span class="usuarioPaga" for=""><?php echo $usuarioParticipante ?></span>
-                        </div>
-                        <div class="gastosFormCol">
-                            <label class="proporcion" style="display: block;">Pagará:</label>
-                            <input type="number" class="paga" id="echo $usuarioParticipante" value="0" readonly="readonly"></input>
-                        </div>
-                        <div class="gastosFormColProp" style="display: none;">
-                            <label class="labelImporteProporcional" for="importeProporcional">Proporcion:</label>
-                            <input class="importeProporcional" value="1"></input>
-                        </div>
+                        <label class="usuarioPaga" for=""><?php echo $usuarioParticipante ?></label>
+                        <input class="paga" id="echo $usuarioParticipante" value="0" readonly></input>
                     </div>
 
                 <?php
@@ -521,7 +503,7 @@ try {
 
             </div>
         </div>
-
+        
     </div>
 
 </body>

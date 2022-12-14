@@ -30,7 +30,7 @@ function addGastos() {
   return gastoValido;
 }
 
-const formularioGasto = document.querySelector("#addGastos");
+const formularioGasto = document.querySelector("#addGastoForm");
 
 const errorConcepto = document.querySelector("#nombreErrorConcepto");
 const errorCuantias = document.querySelector("#nombreErrorCuantias");
@@ -180,7 +180,6 @@ importeProporcional.forEach(valorProporcion => {
 
   });
 });
-
 
 addGasto.addEventListener("click", (e) => {
    e.preventDefault();
