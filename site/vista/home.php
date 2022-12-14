@@ -74,12 +74,12 @@ $pdo = null;
                 <h1>Actividades</h1>
                 <?php
                 if (isset($mensajeDeError)) {
-                    if ($mensajeDeError === 'Usuario registrado correctamente!' || $mensajeDeError === 'Usuario registrado correctamente! . Ha sido añadido a la actividad a la que has sido invitado!') {
+                    if (str_starts_with($mensajeDeError, "¡Enhorabuena!")) {
                 ?>
 
                         <div class="ok-message"><?php echo $mensajeDeError ?></div>
                     <?php
-                    } elseif ($mensajeDeError === 'Usuario registrado correctamente! . Lamentablemente no hemos podido añadirte a la actividad a la que has sido invitado.') {
+                    } elseif (str_starts_with($mensajeDeError, "¡Cuidado!")) {
 
                     ?>
 
