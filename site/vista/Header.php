@@ -14,7 +14,8 @@ if (!isset($_SESSION['usuario'])) {
 <header>
     <nav>
         <div id="opcionesBox">
-            <img id="logo" src="../img/LOGO_ESTIRADO.png" alt="Logo cabecera">
+            <a href="./home.php"><img id="logo" src="../img/LOGO_ESTIRADO.png" alt="Logo cabecera"></a>
+            
             <div class="opcion"><a href="./home.php">Actividades</a></div>
             <div class="opcion">Invitaciones</div>
             <div class="opcion">Social</div>
