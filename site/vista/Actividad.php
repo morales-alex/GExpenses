@@ -290,222 +290,224 @@ try {
 
 <body>
 
-    <dialog id='addParticipanteDialog' class="dialogForm centered" close>
-        <div id="dialog-activityForm" class="dialog-header">
-            <h5>Invitar Usuarios a la Actividad</h5>
-            <span id='cancelarX'>x</span>
-        </div>
-        <form method="post" action="" id="addActivity" class="formAddParticipantes">
+    <div class="main">
 
-            <label for="nombre">Correo Electrónico:</label>
-            <div id="addParticipante">
-                <input type="text" id="nombreValue">
-                <input type="button" value="Añadir" id="addCorreo">
+        <dialog id='addParticipanteDialog' class="dialogForm centered" close>
+            <div id="dialog-activityForm" class="dialog-header">
+                <h5>Invitar Usuarios a la Actividad</h5>
+                <span id='cancelarX'>x</span>
             </div>
+            <form method="post" action="" id="addActivity" class="formAddParticipantes">
 
-
-
-            <p id='nombreError' class='error-messageForm'>El formato de correo no es correcto...</p>
-            <label for="descripcion">Invitaciones:</label>
-
-            <div id="correoInvitaciones">
-
-                <div id="dialogFooterParticipante">
-                    <input type="button" class="boton-aceptar" value="Cerrar" id="cancelDialogForm"></input>
-                    <input type="submit" name="enviar" value="Enviar" id="boton-aceptar" class="boton-aceptar">
+                <label for="nombre">Correo Electrónico:</label>
+                <div id="addParticipante">
+                    <input type="text" id="nombreValue">
+                    <input type="button" value="Añadir" id="addCorreo">
                 </div>
 
-            </div>
 
-        </form>
-        <?php
-        if (isset($_SESSION["mensajeError"])) {
-        ?>
-            <div class="error-message"><?php echo $_SESSION["mensajeError"]; ?></div>
-        <?php
-            unset($_SESSION["mensajeError"]);
-        }
-        ?>
-    </dialog>
 
-    <dialog id='addGastoDialog' class="dialogForm centered" close>
-        <div id="dialog-gastoForm" class="dialog-header">
-            <h5>Añadir gasto a la actividad</h5>
-            <span id='cancelarGastoX'>x</span>
-        </div>
-        <form method="post" id="addGastoForm" class="formAddParticipantes">
+                <p id='nombreError' class='error-messageForm'>El formato de correo no es correcto...</p>
+                <label for="descripcion">Invitaciones:</label>
 
-            <label for="nombre">Concepto del gasto:</label>
-            <div id="addParticipante">
-                <input type="text" id="conceptoValue">
-            </div>
+                <div id="correoInvitaciones">
 
-            <p id='nombreErrorConcepto' class='error-messageForm'>El concepto debe tener entre 1 y 50 carácteres</p>
-
-            <div class="pagadorGasto">
-                <label class="labelGasto" for="usuarioPagador">Pagador:</label>
-
-                <select name="usuarioPagador" id="usuarioPagador">
-
-                    <?php
-                    foreach ($participantes as $participante) {
-                    ?>
-                        <option value="<?php echo $participante['u_username'] ?>"><?php echo $participante['u_username'] ?></option>
-                    <?php
-                    }
-                    ?>
-                </select>
-
-                <label for="cuantia" class="labelGasto">Cuantía:</label>
-                <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0">
-
-            </div>
-
-            <label for="cuantia" class="labelGasto">Paga:</label>
-
-            <div class="cuantiaPorUsuario">
-                <?php
-                foreach ($participantes as $participante) {
-
-                    $usuarioParticipante = $participante['u_username'];
-                ?>
-
-                    <div class="cuantiaUsuario">
-                        <label class="usuarioPaga" for=""><?php echo $usuarioParticipante ?></label>
-                        <input class="paga" id="echo $usuarioParticipante" value="0" readonly></input>
+                    <div id="dialogFooterParticipante">
+                        <input type="button" class="boton-aceptar" value="Cerrar" id="cancelDialogForm"></input>
+                        <input type="submit" name="enviar" value="Enviar" id="boton-aceptar" class="boton-aceptar">
                     </div>
 
-                <?php
-                }
-                ?>
-
-                <p id='nombreErrorCuantias' class='error-messageForm'>La suma de cuantías debe dar el total.</p>
-
-            </div>
-
-            <div id="dialogFooterParticipante">
-                <input type="button" class="boton-aceptar" value="Cerrar" id="cancelGastoForm"></input>
-                <input type="submit" name="enviar" value="Añadir" id="boton-aceptar-gastos" class="boton-aceptar">
-            </div>
-
-        </form>
-        <?php
-        if (isset($_SESSION["mensajeError"])) {
-        ?>
-            <div class="error-message"><?php echo $_SESSION["mensajeError"]; ?></div>
-        <?php
-            unset($_SESSION["mensajeError"]);
-        }
-        ?>
-    </dialog>
-
-    <h1 id="tituloActividad">
-
-        <?php
-        if (count($actividad) > 0) {
-            echo $actividad['a_nombre'] . " <span class='fecha-titulo'>" . $fechaActividad['a_fecCreacion'] . "</span>";
-        } else {
-            echo 'Sin título';
-        }
-        ?></h1>
-
-    <div id="contenidoActividad">
-        <div id="actividadMain">
-            <div id="gastoWrapper">
-
-                <div id="tituloGasto">
-                    <h3 id="tituloCampoConcepto">Concepto</h3>
-                    <h3 id="tituloCampo">Pagó</h3>
-                    <h3 id="tituloCampo">Fecha</h3>
-                    <h3 id="tituloCampoPrecio">Precio</h3>
                 </div>
 
-                <?php
-                if ($datos) {
-                    foreach ($datos as $gasto) {
-                ?>
+            </form>
+            <?php
+            if (isset($_SESSION["mensajeError"])) {
+            ?>
+                <div class="error-message"><?php echo $_SESSION["mensajeError"]; ?></div>
+            <?php
+                unset($_SESSION["mensajeError"]);
+            }
+            ?>
+        </dialog>
 
-                        <div id="gasto">
-                            <div class="campoGastoIzq"><?php echo $gasto['g_concepto'] ?></div>
-                            <div class="campoGastoCent"><?php echo $gasto['u_username'] ?></div>
-                            <div class="campoGastoCent"><?php echo $gasto['g_fecCrea'] ?></div>
-                            <div class="campoGastoDer"><?php echo $gasto['g_precio'] . $gasto['a_moneda'] ?></div>
+        <dialog id='addGastoDialog' class="dialogForm centered" close>
+            <div id="dialog-gastoForm" class="dialog-header">
+                <h5>Añadir gasto a la actividad</h5>
+                <span id='cancelarGastoX'>x</span>
+            </div>
+            <form method="post" id="addGastoForm" class="formAddParticipantes">
+
+                <label for="nombre">Concepto del gasto:</label>
+                <div id="addParticipante">
+                    <input type="text" id="conceptoValue">
+                </div>
+
+                <p id='nombreErrorConcepto' class='error-messageForm'>El concepto debe tener entre 1 y 50 carácteres</p>
+
+                <div class="pagadorGasto">
+                    <label class="labelGasto" for="usuarioPagador">Pagador:</label>
+
+                    <select name="usuarioPagador" id="usuarioPagador">
+
+                        <?php
+                        foreach ($participantes as $participante) {
+                        ?>
+                            <option value="<?php echo $participante['u_username'] ?>"><?php echo $participante['u_username'] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+
+                    <label for="cuantia" class="labelGasto">Cuantía:</label>
+                    <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0">
+
+                </div>
+
+                <label for="cuantia" class="labelGasto">Paga:</label>
+
+                <div class="cuantiaPorUsuario">
+                    <?php
+                    foreach ($participantes as $participante) {
+
+                        $usuarioParticipante = $participante['u_username'];
+                    ?>
+
+                        <div class="cuantiaUsuario">
+                            <label class="usuarioPaga" for=""><?php echo $usuarioParticipante ?></label>
+                            <input class="paga" id="echo $usuarioParticipante" value="0" readonly></input>
                         </div>
 
                     <?php
                     }
-                } else {
                     ?>
-                    <div>
-                        <p class='sinDatos'>Aún no se han añadido gastos</p>
+
+                    <p id='nombreErrorCuantias' class='error-messageForm'>La suma de cuantías debe dar el total.</p>
+
+                </div>
+
+                <div id="dialogFooterParticipante">
+                    <input type="button" class="boton-aceptar" value="Cerrar" id="cancelGastoForm"></input>
+                    <input type="submit" name="enviar" value="Añadir" id="boton-aceptar-gastos" class="boton-aceptar">
+                </div>
+
+            </form>
+            <?php
+            if (isset($_SESSION["mensajeError"])) {
+            ?>
+                <div class="error-message"><?php echo $_SESSION["mensajeError"]; ?></div>
+            <?php
+                unset($_SESSION["mensajeError"]);
+            }
+            ?>
+        </dialog>
+
+        <h1 id="tituloActividad">
+
+            <?php
+            if (count($actividad) > 0) {
+                echo $actividad['a_nombre'] . " <span class='fecha-titulo'>" . $fechaActividad['a_fecCreacion'] . "</span>";
+            } else {
+                echo 'Sin título';
+            }
+            ?></h1>
+
+        <div id="contenidoActividad">
+            <div id="actividadMain">
+                <div id="gastoWrapper">
+
+                    <div id="tituloGasto">
+                        <h3 id="tituloCampoConcepto">Concepto</h3>
+                        <h3 id="tituloCampo">Pagó</h3>
+                        <h3 id="tituloCampo">Fecha</h3>
+                        <h3 id="tituloCampoPrecio">Precio</h3>
                     </div>
-                <?php
-                }
 
-                if ($gastoTotal['total'] !== null) {
-                ?>
-                    <div id="totalActividad">
-                        <div id="tituloTotal">TOTAL:</div>
-                        <div id="campoTotal"><?php echo $gastoTotal['total'] . $gasto['a_moneda'] ?></div>
+                    <?php
+                    if ($datos) {
+                        foreach ($datos as $gasto) {
+                    ?>
+
+                            <div id="gasto">
+                                <div class="campoGastoIzq"><?php echo $gasto['g_concepto'] ?></div>
+                                <div class="campoGastoCent"><?php echo $gasto['u_username'] ?></div>
+                                <div class="campoGastoCent"><?php echo $gasto['g_fecCrea'] ?></div>
+                                <div class="campoGastoDer"><?php echo $gasto['g_precio'] . $gasto['a_moneda'] ?></div>
+                            </div>
+
+                        <?php
+                        }
+                    } else {
+                        ?>
+                        <div>
+                            <p class='sinDatos'>Aún no se han añadido gastos</p>
+                        </div>
+                    <?php
+                    }
+
+                    if ($gastoTotal['total'] !== null) {
+                    ?>
+                        <div id="totalActividad">
+                            <div id="tituloTotal">TOTAL:</div>
+                            <div id="campoTotal"><?php echo $gastoTotal['total'] . $gasto['a_moneda'] ?></div>
+                        </div>
+                    <?php } ?>
+
+                </div>
+            </div>
+            <div id="seccion-lateral">
+                <div id="opciones">
+                    <div id="tituloParticipantes">
+                        <h2>Editar actividad</h2>
                     </div>
-                <?php } ?>
+                    <div class="lista-opciones addGasto" id="addGasto">
+                        <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/afegir-despsa.png">
+                        <a href="#" class="titulo-opcion">Añadir gasto</a>
+                    </div>
+                    <div class="lista-opciones balance">
+                        <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/balance.png">
+                        <a href="#" class="titulo-opcion">Ver balance</a>
+                    </div>
+                    <div class="lista-opciones addUser">
+                        <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/add-user-icon.png">
+                        <a href="#" class="titulo-opcion">Invitar usuarios</a>
+                    </div>
+                    <div class="lista-opciones editUser">
+                        <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/editar-usuari.png">
+                        <a href="#" class="titulo-opcion">Gestionar usuarios</a>
+                    </div>
+                </div>
+                <div id="participantes">
+                    <div id="tituloParticipantes">
+                        <h2>Participantes</h2>
+                    </div>
 
+                    <?php
+
+                    foreach ($participantes as $participante) {
+                    ?>
+                        <p id="participante"><?php echo $participante['u_username'] ?></p>
+
+                    <?php
+                    }
+                    $pdo = null;
+                    ?>
+
+
+                    <?php
+
+                    if (isset($_SESSION["errorCorreos"])) {
+                    ?>
+                        <div class="error-message-correos"><?php echo $_SESSION["errorCorreos"]; ?></div>
+                    <?php
+                        unset($_SESSION["errorCorreos"]);
+                    }
+                    ?>
+
+                </div>
             </div>
+
         </div>
-        <div id="seccion-lateral">
-            <div id="opciones">
-                <div id="tituloParticipantes">
-                    <h2>Editar actividad</h2>
-                </div>
-                <div class="lista-opciones addGasto" id="addGasto">
-                    <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/afegir-despsa.png">
-                    <a href="#" class="titulo-opcion">Añadir gasto</a>
-                </div>
-                <div class="lista-opciones balance">
-                    <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/balance.png">
-                    <a href="#" class="titulo-opcion">Ver balance</a>
-                </div>
-                <div class="lista-opciones addUser">
-                    <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/add-user-icon.png">
-                    <a href="#" class="titulo-opcion">Invitar usuarios</a>
-                </div>
-                <div class="lista-opciones editUser">
-                    <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/editar-usuari.png">
-                    <a href="#" class="titulo-opcion">Gestionar usuarios</a>
-                </div>
-            </div>
-            <div id="participantes">
-                <div id="tituloParticipantes">
-                    <h2>Participantes</h2>
-                </div>
-
-                <?php
-
-                foreach ($participantes as $participante) {
-                ?>
-                    <p id="participante"><?php echo $participante['u_username'] ?></p>
-
-                <?php
-                }
-                $pdo = null;
-                ?>
-
-
-                <?php
-
-                if (isset($_SESSION["errorCorreos"])) {
-                ?>
-                    <div class="error-message-correos"><?php echo $_SESSION["errorCorreos"]; ?></div>
-                <?php
-                    unset($_SESSION["errorCorreos"]);
-                }
-                ?>
-
-            </div>
-        </div>
-        
     </div>
-
 </body>
 
 <?php include_once './Footer.php' ?>
