@@ -6,6 +6,8 @@ body {
     font-family: 'Montserrat', serif;
     background-color: #EEE;
     color: #171717;
+    display: flex;
+    flex-direction: column;
 }
 
 a,
@@ -194,6 +196,8 @@ div.ok-message {
     padding: 0 90px;
     max-width: 1200px;
     margin: 0 auto;
+    flex-grow: 1;
+    width: 100%;
 }
 
 .ordenar {
@@ -871,7 +875,8 @@ div#campoTotal {
     border-radius: 6px;
     padding: 5px 0;
     border: 1px solid #fff;
-    padding: 5px;;
+    padding: 5px;
+    ;
 
     /* Position the tooltip */
     position: absolute;
