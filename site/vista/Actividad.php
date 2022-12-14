@@ -528,9 +528,9 @@ try {
 
 <?php include_once './Footer.php' ?>
 
-<script src="../script/crearGastos.js"></script>
+<script type="module" src="../script/crearGastos.js"></script>
 <script src="../script/crearParticipantes.js"></script>
-<script src="../script/validacionGastos.js"></script>
+<script type="module" src="../script/validacionGastos.js"></script>
 <script>
     // CONDICIONAL PARA EVITAR QUE AL REFRESCAR LA PÁGINA SE VUELVA A ENVIAR UN FORMULARIO
     if (window.history.replaceState) {

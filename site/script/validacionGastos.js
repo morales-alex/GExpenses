@@ -1,45 +1,35 @@
-class ValidacionCuantiaAvanzado{
+export class ValidacionCuantiaAvanzado{
     cuantiaTotal;
-    totalSuma = 0;
+    totalSuma;
     constructor(cuantiaTotal){
-        this.cuantiaTotal = cuantiaTotal;
+        this.cuantiaTotal = parseInt(cuantiaTotal);
         this.totalSuma = 0;
     }
     calcTotalSuma(inputs){
         inputs.forEach(input =>{
-            this.totalSuma += parseInt(input.value);
+            if(input.value){
+              this.totalSuma += parseInt(input.value);  
+            }else{
+                this.totalSuma += 0;
+            }
+            
         });
-        return this.totalSuma;
     }
 
-    logicaRetroaccionUsuario(){
-        if (totalSuma < cuantiaTotal) {
-            console.log(`Te quedan por asignar ${cuantiaTotal - totalSuma}`);
+    logicaRetroaccionUsuario(submit){
+        if (this.totalSuma < this.cuantiaTotal) {
+            console.log(`Te quedan por asignar ${this.cuantiaTotal - this.totalSuma}`);
             submit.disabled = true;
-        } else if (totalSuma > cuantiaTotal) {
-            console.log(`Te has pasado, sobran ${totalSuma - cuantiaTotal}`);
+        } else if (this.totalSuma > this.cuantiaTotal) {
+            console.log(`Te has pasado, sobran ${this.totalSuma - this.cuantiaTotal}`);
             submit.disabled = true;
-        } else if(totalSuma === cuantiaTotal){
-            console.log(`Correcte (suma)${totalSuma} = (cuantiaTotal)${cuantiaTotal}`);
+        } else if(this.totalSuma === this.cuantiaTotal){
+            console.log(`Correcte (suma)${this.totalSuma} = (cuantiaTotal)${this.cuantiaTotal}`);
             submit.disabled = false;
         }
     }
     
 }
 
-const form = document.getElementById('addGastos');
-const inputs = Array.from(form.getElementsByClassName('pago'));
-const submit = document.getElementById('boton-aceptar-gastos');
-const cuantiaTotal = document.getElementsByClassName('cuantia')[0].value;
-
-const ValidacionCuantiaAvanzado = new ValidacionCuantiaAvanzado(cuantiaTotal);
-
-inputs.forEach(input => {
-    input.addEventListener('keyup', e => {
-        totalSuma = 0;
-        ValidacionCuantiaAvanzado.calcTotalSuma(inputs);
-        logicaRetroaccionUsuario();
-    });
-});
 
 
