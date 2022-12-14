@@ -108,43 +108,66 @@ if (isset($_SESSION['usuario'])) {
 }
 
 
+function compruebaUsuario($username, $password)
+{
+
+    require '../controlador/BbddConfig.php';
+
+    try {
+        $sql = "SELECT u_id, u_username, u_correo, u_password, u_nombre, u_apellidos FROM Usuarios where (u_username = :u_username OR u_correo = :u_correo)";
+        $stmt = $pdo->prepare($sql);
+
+        $stmt->bindParam(':u_username', $username);
+        $stmt->bindParam(':u_correo', $username);
+
+        $stmt->execute();
+        $datos = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $ex) {
+        echo 'Error: ' . $ex->getMessage();
+
+    }
+
+    if (($username === $datos['u_username'] or $username === $datos['u_correo']) AND password_verify($password, $datos['u_password'])
+    ) {
+
+        $_SESSION['usuario'] = new usuarios($datos['u_id'], $datos['u_username'], $datos['u_nombre'], $datos['u_apellidos'], $datos['u_correo']);
+
+        return true;
+    } else {
+        return false;
+    }
+
+    $pdo = null;
+}
+
+
 function procesarInvitacion() {
 
     require '../controlador/BbddConfig.php';
 
-    $a_id = $_GET['a_id'];
+    $a_id = $_GET['a-id'];
     $token = $_GET['invitacion'];
-
-    // Consulta TOKEN existe
-    try {
-        $sql = "SELECT i_correoUsuarioInvitado FROM Invitaciones WHERE i_token = :i_token";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':i_token', $token);
-
-        $stmt->execute();
-        $correoInvitado = $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $ex) {
-        echo 'Error: ' . $ex->getMessage();
-    }
-    $correoInvitado = implode($correoInvitado);
-
-    try {
-        $sql = "SELECT u_id FROM usuarios WHERE u_correo = :u_correo;";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':u_correo', $correoInvitado);
-
-        $stmt->execute();
-        $idInvitado = $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $ex) {
-        echo 'Error: ' . $ex->getMessage();
-    }
-
     $correoUsuario = $_SESSION["usuario"]->getU_correo();
 
-    $idInvitado = implode($idInvitado);
+        // Consulta TOKEN existe
+        try {
+            $sql = "SELECT i_correoUsuarioInvitado, u_id, i_idAct
+                        FROM Invitaciones
+                            INNER JOIN Usuarios ON Usuarios.u_correo = Invitaciones.i_correoUsuarioInvitado 
+                    WHERE i_token = :i_token AND DATE_ADD(i_fecinv, INTERVAL +3 MINUTE) > sysdate()"; // LA INVITACION CADUCA EN 3 MINUTOS
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':i_token', $token);
+
+            $stmt->execute();
+            $correoInvitado = $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $ex) {
+            echo 'Error: ' . $ex->getMessage();
+        }
+
+    
 
     // Si el token introducido coincide con el mail correspondiente en la base de datos lo inserta
-    if ($correoUsuario == $correoInvitado) {
+    if ($correoUsuario == $correoInvitado['i_correoUsuarioInvitado']) {
 
         try {
 
@@ -152,17 +175,23 @@ function procesarInvitacion() {
                             VALUES (:ua_idUsu, :ua_idAct)";
             $stmt = $pdo->prepare($sql);
 
-            $stmt->bindParam(':ua_idUsu', $idInvitado);
-            $stmt->bindParam(':ua_idAct', $a_id);
+            $stmt->bindParam(':ua_idUsu', $correoInvitado['u_id']);
+            $stmt->bindParam(':ua_idAct', $correoInvitado['i_idAct']);
 
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $pdo->beginTransaction();
 
             $stmt->execute();
             $pdo->commit();
+
+            $_SESSION["mensajeError"] = '¡Enhorabuena! Te has unido a la actividad satisfactoriamente!';
+
         } catch (PDOException $ex) {
             $pdo->rollBack();
-
+            $_SESSION["mensajeError"] = '¡Cuidado! Ha sucedido un error con la base de datos. Contacta con el soporte técnico.';
+            echo 'Error: ' . $ex->getMessage();
         }
+    } else {
+        $_SESSION["mensajeError"] = '¡Cuidado! No te has podido unir a la actividad porque ha caducado!';
     }
 }

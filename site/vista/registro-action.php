@@ -45,7 +45,7 @@ if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]), $pdo)) {
         session_unset();
         $_SESSION['usuario'] = new usuarios($idUsuario['u_id'], $_POST["usuario"], $_POST["nombre"], $_POST["apellidos"], $_POST["email"]);
 
-        $_SESSION["mensajeError"] = "Usuario registrado correctamente!";
+        $_SESSION["mensajeError"] = "¡Enhorabuena! Usuario registrado correctamente!";
     } catch (PDOException $ex) {
         $pdo->rollBack();
         $_SESSION["mensajeError"] = 'Error: ' . $ex->getMessage();
@@ -104,7 +104,7 @@ if (isset($_POST) && !compruebaEmail(htmlentities($_POST["email"]), $pdo)) {
             }
             unset($_GET["invitacion"]);
         } else {
-            $_SESSION["mensajeError"] = $_SESSION["mensajeError"] . ' . Lamentablemente no hemos podido añadirte a la actividad a la que has sido invitado.';
+            $_SESSION["mensajeError"] = '¡Cuidado! Usuario registrado correctamente, pero lamentablemente no hemos podido añadirte a la actividad a la que has sido invitado.';
         }
         unset($_GET["invitacion"]);
     }
