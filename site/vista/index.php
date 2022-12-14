@@ -45,6 +45,7 @@ if (isset($_SESSION['usuario'])) {
                         <li>Invitar a todos tus amigos en las actividades que participaréis.</li>
                         <li>Crear invitaciones por correo electrónico para poder agilizar todo el proceso.</li>
                     </ul>
+                    
 
                 </div>
 
