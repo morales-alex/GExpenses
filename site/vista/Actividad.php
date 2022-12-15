@@ -291,7 +291,7 @@ try {
 
 <body>
 
-    <div class="main">
+    <div id="main">
 
         <dialog id='addParticipanteDialog' class="dialogForm centered" close>
             <div id="dialog-activityForm" class="dialog-header">

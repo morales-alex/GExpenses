@@ -36,7 +36,9 @@ CREATE TABLE IF NOT EXISTS Invitaciones (
 	i_id INT AUTO_INCREMENT,
     i_idUsu INT,
     i_idAct INT,
+	i_token VARCHAR(40),
     i_correoUsuarioInvitado VARCHAR(60),
+	i_fecInv datetime,
 	PRIMARY KEY (i_id),
 	FOREIGN KEY (i_idUsu, i_idAct) REFERENCES UsuariosActividades (ua_idUsu, ua_idAct)
 ) ENGINE=INNODB;
@@ -62,13 +64,20 @@ INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fec
 INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('Visita al palau de la música', 'EUR', 'Test Test TEst', '2022/11/05', '2022/11/13');
 INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('Gincana por el monte', 'USD', 'Test Test TEst', '2022/11/08', '2022/11/15');
 
-INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (1, 1);
-INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (2, 1);
-INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (3, 1);
-INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (4, 1);
+INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) VALUES (1, 1);
 
-INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (1, 2);
-INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (1, 3);
+INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) values (1, 1);
+INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) values (2, 1);
+INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) values (3, 1);
+INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) values (4, 1);
 
-insert into Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 55.90, 'Bocadillos de jamón con tomate', sysdate());
-insert into Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 300.56, 'Buceo con tiburones', sysdate());
+INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) values (1, 2);
+INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) values (1, 3);
+
+insert into gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 55.90, 'Bocadillos de jamón con tomate', sysdate());
+insert into gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 300.56, 'Buceo con tiburones', sysdate());
+
+select * from gastos;
+select * from usuariosActividades;
+select * from actividades;
+select * from usuarios;
