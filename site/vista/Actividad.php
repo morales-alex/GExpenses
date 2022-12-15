@@ -71,9 +71,8 @@ if (isset($_GET['invitacion'])) {
 }
 
 // SI HAS ENVIADO EL FORMULARIO DE AÑADIR GASTO CREA EL REGISTRO EN LA BBDD
-if (isset($_POST['enviar'])) {
+if (isset($_POST['DatosEnviosCorrectos'])) {
 
-    $fechaDeHoy = date("Y-m-d H:i:s");
     $concepto = $_POST['conceptoGastoSencillo'];
     $usuarioPagador = $_POST['usuarioPagador'];
     $cuantiaGastoSencillo = $_POST['cuantiaGastoSencillo'];
@@ -81,14 +80,13 @@ if (isset($_POST['enviar'])) {
     try {
 
         $sql = "INSERT INTO Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) 
-                    SELECT (SELECT u_id from Usuarios where u_username = :g_username), :g_idAct, :g_precio, :g_concepto, :g_fecCrea;";
+                    SELECT (SELECT u_id from Usuarios where u_username = :g_username), :g_idAct, :g_precio, :g_concepto, sysdate();";
         $stmt = $pdo->prepare($sql);
 
         $stmt->bindParam(':g_username', $usuarioPagador);
         $stmt->bindParam(':g_idAct', $codigoActividad);
         $stmt->bindParam(':g_precio', $cuantiaGastoSencillo);
         $stmt->bindParam(':g_concepto', $concepto);
-        $stmt->bindParam(':g_fecCrea', $fechaDeHoy);
 
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $pdo->beginTransaction();
@@ -148,7 +146,6 @@ if (isset($_POST['correos'])) {
 
     require_once '../controlador/compruebaEmail.php';
 
-    $fechaDeHoy = date("Y-m-d H:i:s");
     $idUsuarioInvita = $_SESSION["usuario"]->getU_id();
 
     foreach ($_POST["correos"] as $correo) {
@@ -190,7 +187,7 @@ if (isset($_POST['correos'])) {
                     try {
 
                         $sql = "INSERT INTO Invitaciones (i_idUsu, i_idAct, i_token, i_correoUsuarioInvitado, i_fecInv) 
-                    VALUES (:i_idUsu, :i_idAct, :i_token, :i_correoUsuarioInvitado, :i_fecInv)";
+                    VALUES (:i_idUsu, :i_idAct, :i_token, :i_correoUsuarioInvitado, sysdate())";
 
                         $stmt = $pdo->prepare($sql);
 
@@ -198,7 +195,6 @@ if (isset($_POST['correos'])) {
                         $stmt->bindParam(':i_idAct', $codigoActividad);
                         $stmt->bindParam(':i_token', $nuevoToken);
                         $stmt->bindParam(':i_correoUsuarioInvitado', $correo);
-                        $stmt->bindParam(':i_fecInv', $fechaDeHoy);
 
                         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         $pdo->beginTransaction();
@@ -240,37 +236,19 @@ if (isset($_POST['correos'])) {
     }
 }
 
-// CONSULTA NOMBRE ACTIVIDAD
+// CONSULTA NOMBRE, FECHA ACTIVIDAD
 try {
 
-    $sql = "SELECT a_nombre FROM Actividades WHERE a_id = :a_id";
+    $sql = "SELECT a_nombre, a_fecCreacion FROM Actividades WHERE a_id = :a_id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':a_id', $_GET["a_id"]);
 
     $stmt->execute();
-    $actividad = $stmt->fetch(PDO::FETCH_ASSOC);
+    $datosActividad = $stmt->fetch(PDO::FETCH_ASSOC);
 } catch (PDOException $ex) {
     echo 'Error: ' . $ex->getMessage();
 }
 
-// CONSULTA FECHA ACTIVIDAD
-try {
-
-    $sql = "SELECT a_fecCreacion FROM Actividades WHERE a_id = :a_id";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':a_id', $_GET["a_id"]);
-
-    $stmt->execute();
-    $fechaActividad = $stmt->fetch(PDO::FETCH_ASSOC);
-} catch (PDOException $ex) {
-    echo 'Error: ' . $ex->getMessage();
-}
-
-
-
-//$destino = '../vista/Actividad.php?a_id='.$_SESSION["a_id"];
-
-//header('location: '.$destino);
 ?>
 
 <!DOCTYPE html>
@@ -340,7 +318,7 @@ try {
 
                 <label for="nombre">Concepto del gasto:</label>
                 <div id="addParticipante">
-                    <input type="text" id="conceptoValue">
+                    <input type="text" id="conceptoValue" name="conceptoGastoSencillo">
                 </div>
 
             <p id='nombreErrorConcepto' class='error-messageForm'>El concepto debe tener entre 1 y 50 carácteres</p>
@@ -405,7 +383,8 @@ try {
 
                 <div id="dialogFooterParticipante">
                     <input type="button" class="boton-aceptar" value="Cerrar" id="cancelGastoForm"></input>
-                    <input type="submit" name="enviar" value="Añadir" id="boton-aceptar-gastos" class="boton-aceptar">
+                    <input type="hidden" id="DatosEnviosCorrectos">
+                    <input type="button" name="enviar" id="boton-aceptar-gastos" value="Añadir" class="boton-aceptar">
                 </div>
 
             </form>
@@ -422,8 +401,8 @@ try {
         <h1 id="tituloActividad">
 
             <?php
-            if (count($actividad) > 0) {
-                echo $actividad['a_nombre'] . " <span class='fecha-titulo'>" . $fechaActividad['a_fecCreacion'] . "</span>";
+            if (count($datosActividad) > 0) {
+                echo $datosActividad['a_nombre'] . " <span class='fecha-titulo'>" . $datosActividad['a_fecCreacion'] . "</span>";
             } else {
                 echo 'Sin título';
             }
