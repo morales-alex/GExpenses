@@ -366,14 +366,15 @@ header {
 
 
 a#usuario {
-    background-color: #4E729A;
-    color: white;
-    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 5px 42px 5px auto;
     border-radius: 10px;
+    font-weight: 600;
+    margin-left: 200px;
+    background-color: cornflowerblue;
+    width: auto;
+    padding: 0px 24px;
 }
 
 .opcion {

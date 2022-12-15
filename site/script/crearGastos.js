@@ -20,7 +20,10 @@ function addGastos() {
     suma += parseFloat(pago.value);
   });
 
-  if (suma < total || suma > total + 0.02) {
+  if (suma + 0.02 < total || suma > total + 0.02) {
+    gastoValido = false;
+    errorCuantias.style.display = "block";
+  } else if(total < 0) {
     gastoValido = false;
     errorCuantias.style.display = "block";
   } else {
@@ -194,7 +197,7 @@ importeProporcional.forEach(valorProporcion => {
 });
 
 addGasto.addEventListener("click", (e) => {;
-
+// PONERLO TIPO SUBMIT@@@@!!!
   e.preventDefault;
 
 
