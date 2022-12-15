@@ -47,7 +47,7 @@ h4 {
 #formulario input, #addActivity input, #addGastos input,
 #formulario input, #addActivity input, #addGastoForm input {
     width: 100%;
-    padding: 5px;
+    padding: 7px;
     box-sizing: border-box;
     margin-bottom: 25px;
     border-radius: 5px;
@@ -89,8 +89,8 @@ label {
     font-family: 'Montserrat';
     border: none !important;
     width: 100%;
-    border-radius: 25px;
-    padding: 12px;
+    border-radius: 25px !important;
+    padding: 12px !important;
     font-weight: 600;
 }
 
@@ -724,6 +724,13 @@ input.addUserIcon {
 .titulo-opcion {
     margin-left: 10px;
     font-size: 18px;
+    transition: 0.2s;
+}
+
+#addGasto a:hover, .lista-opciones:hover {
+    transition: 0.2s;
+    color: #4e729a;
+    font-weight: 600;
 }
 
 #seccion-lateral {
@@ -945,3 +952,4 @@ input[type=number] {
 #boton-aceptar {
     border-radius: 25px !important;
 }
+

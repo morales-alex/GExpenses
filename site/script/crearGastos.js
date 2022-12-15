@@ -30,7 +30,7 @@ function addGastos() {
   return gastoValido;
 }
 
-const formularioGasto = document.querySelector("#addGastoForm");
+const formularioGasto = document.querySelector("#addGastos");
 
 const errorConcepto = document.querySelector("#nombreErrorConcepto");
 const errorCuantias = document.querySelector("#nombreErrorCuantias");
@@ -193,19 +193,22 @@ importeProporcional.forEach(valorProporcion => {
   });
 });
 
-addGasto.addEventListener("click", (e) => {
-   e.preventDefault();
+addGasto.addEventListener("click", (e) => {;
+
+  e.preventDefault;
+
 
   if (addGastos()) {
 
-    const conceptoPOST = document.querySelector("#conceptoValue").name = "conceptoGastoSencillo";
+    const DatosEnviosCorrectos = document.querySelector("#DatosEnviosCorrectos");
+
+    DatosEnviosCorrectos.name = "DatosEnviosCorrectos";
+
 
     errorConcepto.style.display = "none";
     errorCuantias.style.display = "none";
 
     formularioGasto.submit();
-
-    conceptoPOST.name = "";
   }
 });
 
