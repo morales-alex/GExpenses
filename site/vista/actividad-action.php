@@ -40,7 +40,7 @@ if (isset($_POST)) {
 
         try {
 
-            $sql = "INSERT INTO usuariosactividades (ua_idUsu, ua_idAct) SELECT :u_usernameID, max(a_id) FROM Actividades";
+            $sql = "INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) SELECT :u_usernameID, max(a_id) FROM Actividades";
             $stmt = $pdo->prepare($sql);
 
             $stmt->bindParam(':u_usernameID', $idUsuario);

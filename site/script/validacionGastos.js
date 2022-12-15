@@ -2,13 +2,13 @@ export class ValidacionCuantiaAvanzado{
     cuantiaTotal;
     totalSuma;
     constructor(cuantiaTotal){
-        this.cuantiaTotal = parseInt(cuantiaTotal);
+        this.cuantiaTotal = Number(Number.parseFloat(cuantiaTotal).toFixed(2));
         this.totalSuma = 0;
     }
     calcTotalSuma(inputs){
         inputs.forEach(input =>{
             if(input.value){
-              this.totalSuma += parseInt(input.value);  
+              this.totalSuma += Number(Number.parseFloat(input.value).toFixed(2));  
             }else{
                 this.totalSuma += 0;
             }
@@ -18,19 +18,21 @@ export class ValidacionCuantiaAvanzado{
 
     logicaRetroaccionUsuario(submit){
         if (this.totalSuma < this.cuantiaTotal) {
-            console.log(`Te quedan por asignar ${this.cuantiaTotal - this.totalSuma}`);
+            console.log(submit);
             submit.disabled = true;
+            return `Te quedan por asignar ${Number(Number.parseFloat(this.cuantiaTotal - this.totalSuma).toFixed(2))}`;
+            
         } else if (this.totalSuma > this.cuantiaTotal) {
-            console.log(`Te has pasado, sobran ${this.totalSuma - this.cuantiaTotal}`);
             submit.disabled = true;
+            return `Te has pasado, sobran ${Number(Number.parseFloat(this.totalSuma - this.cuantiaTotal).toFixed(2))}`;
+            
         } else if(this.totalSuma === this.cuantiaTotal){
-            console.log(`Correcte (suma)${this.totalSuma} = (cuantiaTotal)${this.cuantiaTotal}`);
             submit.disabled = false;
+            console.log(submit);
+            return true;
+            
 
         }
     }
     
 }
-
-
-

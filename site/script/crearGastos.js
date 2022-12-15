@@ -52,12 +52,24 @@ const divididoEntre = aPagar.length;
 const opcionDePago = document.querySelector("#opcionDePago");
 let opcionSeleccionada;
 let validacionCuantiaAvanzado;
-
+function limpiarMensaje(){
+  const div = document.getElementsByClassName('mensaje-dinamico-avanzado')[0];
+  if(div){
+    div.remove();
+  }
+}
 function opcionAvanzadaLogica(){
+  limpiarMensaje();
   const inputs = Array.from(aPagar);
   validacionCuantiaAvanzado = new ValidacionCuantiaAvanzado(precioTotal.value);
   validacionCuantiaAvanzado.calcTotalSuma(inputs);
-  validacionCuantiaAvanzado.logicaRetroaccionUsuario(addGasto);
+  const mensaje = validacionCuantiaAvanzado.logicaRetroaccionUsuario(addGasto);
+  const div = document.createElement('div');
+  if(typeof mensaje === 'string'){
+div.setAttribute('class','error-message mensaje-dinamico-avanzado');
+  document.getElementsByClassName('cuantiaPorUsuario')[0].insertAdjacentElement('afterend',div)
+  div.innerText = mensaje;
+  } 
 }
 
 abrirFormularioGastos.addEventListener("click", function (e) {

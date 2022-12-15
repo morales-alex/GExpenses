@@ -398,7 +398,6 @@ try {
                     <?php
                     }
                     ?>
-
                     <p id='nombreErrorCuantias' class='error-messageForm'>La suma de cuantías debe dar el total.</p>
 
                 </div>
