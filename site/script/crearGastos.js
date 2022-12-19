@@ -45,7 +45,10 @@ let gastoValido = true;
     suma += parseFloat(pago.value);
   });
 
-  if (suma < total || suma > total + 0.02) {
+  if (suma + 0.02 < total || suma > total + 0.02) {
+    gastoValido = false;
+    errorCuantias.style.display = "block";
+  } else if(total < 0) {
     gastoValido = false;
     errorCuantias.style.display = "block";
   } else {
@@ -196,7 +199,7 @@ importeProporcional.forEach(valorProporcion => {
 });
 
 addGasto.addEventListener("click", (e) => {;
-
+// PONERLO TIPO SUBMIT@@@@!!!
   e.preventDefault;
 
 
@@ -212,5 +215,16 @@ addGasto.addEventListener("click", (e) => {;
 
     formularioGasto.submit();
   }
+});
+
+// Girar fechas
+const fecha = document.querySelectorAll(".fecha");
+const fechaTitulo = document.querySelector(".fecha-titulo");
+
+fechaTitulo.innerHTML = (fechaTitulo.innerText).split('-').reverse().join('-');
+
+fecha.forEach(fechaValor => {
+  let fechaGirada = (fechaValor.innerText).split('-').reverse().join('-');
+  fechaValor.innerHTML = fechaGirada;
 });
 

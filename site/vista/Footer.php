@@ -15,7 +15,9 @@ if (!isset($_SESSION['usuario'])) {
     <div id="footer-container">
         <div class="footerBox">
             <div class="partIzq">
-                <img id="logoFooter" src="../img/LOGO.png" alt="Logo pie de página">
+                <a href="./home.php">
+                    <img id="logoFooter" src="../img/LOGO.png" alt="Logo pie de página">
+                </a>
                 <span>COPYRIGHT © 2022</span>
             </div>
         </div>

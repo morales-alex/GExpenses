@@ -95,3 +95,20 @@ aceptar.addEventListener("click", function (e) {
     formulario.submit();
   }
 });
+
+const fechaCreacion = document.querySelectorAll(".fechaCreacion");
+const fechaModificacion = document.querySelectorAll(".fechaModificacion");
+
+const girarFecha = (fechaValor) => {
+  return (fechaValor.innerText).split('-').reverse().join('-');
+}
+
+fechaCreacion.forEach(fechaValor => {
+  fechaValor.innerHTML = girarFecha(fechaValor);
+});
+
+fechaModificacion.forEach(fechaValor => {
+  fechaValor.innerHTML = girarFecha(fechaValor);
+});
+
+
