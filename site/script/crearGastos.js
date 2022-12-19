@@ -1,6 +1,31 @@
 import {ValidacionCuantiaAvanzado} from '../script/validacionGastos.js'; //importacion de la classe
+
+const formularioGasto = document.querySelector("#addGastos");
+
+const errorConcepto = document.querySelector("#nombreErrorConcepto");
+const errorCuantias = document.querySelector("#nombreErrorCuantias");
+
+const abrirFormularioGastos = document.querySelector("#addGasto");
+const dialogGastos = document.querySelector("#addGastoDialog");
+
+const addGasto = document.querySelector("#boton-aceptar-gastos");
+const cancelarGastos = document.querySelector("#cancelGastoForm");
+const cancelarXGastos = document.querySelector("#cancelarGastoX");
+
+const precioTotal = document.querySelector(".cuantia");
+
+const aPagar = document.querySelectorAll(".paga");
+const importeProporcional = document.querySelectorAll('.importeProporcional');
+const proporcionesForm = document.querySelectorAll('.gastosFormColProp');
+
+const opcionDePago = document.querySelector("#opcionDePago");
+const numeroParticipantes = aPagar.length;
+let opcionSeleccionada;
+let validacionCuantiaAvanzado;
+let proporcion = [];
+
 function addGastos() {
-  let gastoValido = true;
+let gastoValido = true;
   const concepto = document.querySelector("#conceptoValue").value;
 
   if (concepto.length > 50) {
@@ -30,28 +55,6 @@ function addGastos() {
   return gastoValido;
 }
 
-const formularioGasto = document.querySelector("#addGastos");
-
-const errorConcepto = document.querySelector("#nombreErrorConcepto");
-const errorCuantias = document.querySelector("#nombreErrorCuantias");
-
-const abrirFormularioGastos = document.querySelector("#addGasto");
-const dialogGastos = document.querySelector("#addGastoDialog");
-
-const addGasto = document.querySelector("#boton-aceptar-gastos");
-const cancelarGastos = document.querySelector("#cancelGastoForm");
-const cancelarXGastos = document.querySelector("#cancelarGastoX");
-
-const precioTotal = document.querySelector(".cuantia");
-
-const aPagar = document.querySelectorAll(".paga");
-const importeProporcional = document.querySelectorAll('.importeProporcional');
-const importeLabelProporcional = document.querySelectorAll('.labelImporteProporcional');
-const proporcionesForm = document.querySelectorAll('.gastosFormColProp');
-const divididoEntre = aPagar.length;
-const opcionDePago = document.querySelector("#opcionDePago");
-let opcionSeleccionada;
-let validacionCuantiaAvanzado;
 function limpiarMensaje(){
   const div = document.getElementsByClassName('mensaje-dinamico-avanzado')[0];
   if(div){
@@ -99,8 +102,8 @@ cancelarXGastos.addEventListener("click", function (e) {
 
 
 const controladorGastos = () => {
+  limpiarMensaje();
   opcionSeleccionada = opcionDePago.value;
-
   if (opcionSeleccionada == 1) {
     opcionGeneral();
   } else if (opcionSeleccionada == 2) {
@@ -135,7 +138,7 @@ const opcionGeneral = () => {
 
   for (let i = 0; i < aPagar.length; i++) {
     aPagar[i].value =
-      Math.round((precioTotal.value / divididoEntre) * 100) / 100;
+      Math.round((precioTotal.value / numeroParticipantes) * 100) / 100;
   }
 }
 
@@ -160,15 +163,14 @@ const opcionProporcion = () => {
     mostrarImporteProporcion.style.display = 'flex';
   });
 
-  let sumadorProporcions = 0;
-  let proporcion = [];
+
 
   importeProporcional.forEach((valor, index) => {
     sumadorProporcions += parseInt(valor.value);
     proporcion[index] = parseInt(valor.value);
   });
 
-  let numeroParticipantes = aPagar.length;
+
 
   aPagar.forEach((valor, index) => {
     valor.value = proporcion[index] / numeroParticipantes * precioTotal.value;
