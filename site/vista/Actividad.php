@@ -77,24 +77,27 @@ if (isset($_POST['DatosEnviosCorrectos'])) {
     $usuarioPagador = $_POST['usuarioPagador'];
     $cuantiaGastoSencillo = $_POST['cuantiaGastoSencillo'];
 
-    try {
+    if (strlen($concepto > 1) && $cuantiaGastoSencillo >= 0) {
 
-        $sql = "INSERT INTO Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) 
+        try {
+
+            $sql = "INSERT INTO Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) 
                     SELECT (SELECT u_id from Usuarios where u_username = :g_username), :g_idAct, :g_precio, :g_concepto, sysdate();";
-        $stmt = $pdo->prepare($sql);
+            $stmt = $pdo->prepare($sql);
 
-        $stmt->bindParam(':g_username', $usuarioPagador);
-        $stmt->bindParam(':g_idAct', $codigoActividad);
-        $stmt->bindParam(':g_precio', $cuantiaGastoSencillo);
-        $stmt->bindParam(':g_concepto', $concepto);
+            $stmt->bindParam(':g_username', $usuarioPagador);
+            $stmt->bindParam(':g_idAct', $codigoActividad);
+            $stmt->bindParam(':g_precio', $cuantiaGastoSencillo);
+            $stmt->bindParam(':g_concepto', $concepto);
 
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->beginTransaction();
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->beginTransaction();
 
-        $stmt->execute();
-        $pdo->commit();
-    } catch (PDOException $ex) {
-        $pdo->rollBack();
+            $stmt->execute();
+            $pdo->commit();
+        } catch (PDOException $ex) {
+            $pdo->rollBack();
+        }
     }
 
     unset($_POST['conceptoGastoSencillo']);
@@ -263,6 +266,7 @@ try {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/LOGO_VENTANA.ico" />
 </head>
 
 <?php include_once './Header.php' ?>
@@ -276,7 +280,7 @@ try {
                 <h5>Invitar Usuarios a la Actividad</h5>
                 <span id='cancelarX'>x</span>
             </div>
-            <form method="post" action="" id="addActivity" class="formAddParticipantes">
+            <form method="post" autocomplete="off" action="" id="addActivity" class="formAddParticipantes">
 
                 <label for="nombre">Correo Electrónico:</label>
                 <div id="addParticipante">
@@ -309,74 +313,73 @@ try {
             ?>
         </dialog>
 
-    <dialog id='addGastoDialog' class="dialogForm centered" close>
-        <div id="dialog-gastoForm" class="dialog-header">
-            <h5>Añadir gasto a la actividad</h5>
-            <span id='cancelarGastoX'>x</span>
-        </div>
-        <form method="post" action="" id="addGastos" class="formAddParticipantes">
+        <dialog id='addGastoDialog' class="dialogForm centered" close>
+            <div id="dialog-gastoForm" class="dialog-header">
+                <h5>Añadir gasto a la actividad</h5>
+                <span id='cancelarGastoX'>x</span>
+            </div>
+            <form method="post" autocomplete="off" action="" id="addGastos" class="formAddParticipantes">
 
                 <label for="nombre">Concepto del gasto:</label>
                 <div id="addParticipante">
                     <input type="text" id="conceptoValue" name="conceptoGastoSencillo">
                 </div>
 
-            <p id='nombreErrorConcepto' class='error-messageForm'>El concepto debe tener entre 1 y 50 carácteres</p>
-            <div class="pagadorGasto">
+                <p id='nombreErrorConcepto' class='error-messageForm'>El concepto debe tener entre 1 y 50 carácteres</p>
+                <div class="pagadorGasto">
 
-                <div class="container-gasto">
-                    <label class="labelGasto" for="usuarioPagador">Pagador:</label>
-                    <select name="usuarioPagador" id="usuarioPagador">
-                        <?php
-                        foreach ($participantes as $participante) {
-                        ?>
-                            <option value="<?php echo $participante['u_username'] ?>"><?php echo $participante['u_username'] ?></option>
-                        <?php
-                        }
-                        ?>
-                    </select>
+                    <div class="container-gasto">
+                        <label class="labelGasto" for="usuarioPagador">Pagador:</label>
+                        <select name="usuarioPagador" id="usuarioPagador">
+                            <?php
+                            foreach ($participantes as $participante) {
+                            ?>
+                                <option value="<?php echo $participante['u_username'] ?>"><?php echo $participante['u_username'] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="container-opcion-pago">
+                        <label for="opcionDePago" class="labelGasto">Repartición:</label>
+                        <select name="opcionDePago" id="opcionDePago">
+                            <option value="1">General</option>
+                            <option value="2">Avanzado</option>
+                            <option value="3">Proporcion</option>
+                        </select>
+                    </div>
+                    <div class="container-tipo-gasto">
+                        <label for="cuantia" class="labelGasto">Cuantía:</label>
+                        <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0">
+                    </div>
                 </div>
-                <div class="container-opcion-pago">
-                <label for="opcionDePago" class="labelGasto">Repartición:</label>
-                <select name="opcionDePago" id="opcionDePago">
-                    <option value="1">General</option>
-                    <option value="2">Avanzado</option>
-                    <option value="3">Proporcion</option>
-                </select>
-            </div>
-                <div class="container-tipo-gasto">
-                    <label for="cuantia" class="labelGasto">Cuantía:</label>
-                    <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0">
-                </div>
-            </div>
 
-            <label for="cuantia" class="labelGasto">Participantes:</label>
+                <label for="cuantia" class="labelGasto">Participantes:</label>
 
                 <div class="cuantiaPorUsuario">
                     <?php
                     foreach ($participantes as $participante) {
-
                         $usuarioParticipante = $participante['u_username'];
                     ?>
 
-                    <div class="cuantiaUsuario">
-                        <div class="gastosFormCol">
-                            <span class="usuarioPaga" for=""><?php echo $usuarioParticipante ?></span>
+                        <div class="cuantiaUsuario">
+                            <div class="gastosFormCol">
+                                <span class="usuarioPaga" for=""><?php echo $usuarioParticipante ?></span>
+                            </div>
+                            <div class="gastosFormCol">
+                                <label class="proporcion" style="display: block;">Pagará:</label>
+                                <input type="number" class="paga" id="echo $usuarioParticipante" value="0" readonly="readonly"></input>
+                            </div>
+                            <div class="gastosFormColProp" style="display: none;">
+                                <label class="labelImporteProporcional" for="importeProporcional">Proporcion:</label>
+                                <input class="importeProporcional" value="1"></input>
+                            </div>
                         </div>
-                        <div class="gastosFormCol">
-                            <label class="proporcion" style="display: block;">Pagará:</label>
-                            <input type="number" class="paga" id="echo $usuarioParticipante" value="0" readonly="readonly"></input>
-                        </div>
-                        <div class="gastosFormColProp" style="display: none;">
-                            <label class="labelImporteProporcional" for="importeProporcional">Proporcion:</label>
-                            <input class="importeProporcional" value="1"></input>
-                        </div>
-                    </div>
 
                     <?php
                     }
                     ?>
-                    <p id='nombreErrorCuantias' class='error-messageForm'>La suma de cuantías debe dar el total.</p>
+                    <p id='nombreErrorCuantias' class='error-messageForm'>La suma de cuantías debe dar el total y el número debe ser mayor a 0.</p>
 
                 </div>
 
@@ -521,4 +524,3 @@ try {
 
 
 </html>
-
