@@ -212,3 +212,14 @@ addGasto.addEventListener("click", (e) => {;
   }
 });
 
+// Girar fechas
+const fecha = document.querySelectorAll(".fecha");
+const fechaTitulo = document.querySelector(".fecha-titulo");
+
+fechaTitulo.innerHTML = (fechaTitulo.innerText).split('-').reverse().join('-');
+
+fecha.forEach(fechaValor => {
+  let fechaGirada = (fechaValor.innerText).split('-').reverse().join('-');
+  fechaValor.innerHTML = fechaGirada;
+});
+

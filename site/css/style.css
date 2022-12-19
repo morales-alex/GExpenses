@@ -197,6 +197,12 @@ div.ok-message {
     display: flex;
     justify-content: space-between;
     margin: 25px 0;
+    align-items: end;
+}
+
+.ordenar form {
+    display: flex;
+    flex-direction: column;
 }
 
 #main {
@@ -209,7 +215,7 @@ div.ok-message {
 
 .ordenar {
     display: flex;
-    align-items: center;
+    align-items: end;
 }
 
 #orden-actividad {
@@ -592,7 +598,7 @@ div.cuantiaUsuario {
     justify-content: space-between;
     margin-top: 5px;
     border-bottom: 1px solid #4e729a;
-  }
+}
 
 #addActivity input.paga, #addGastos input.paga,
 #addGastoForm input.paga {
@@ -829,7 +835,7 @@ div#correoInvWrapper {
     max-width: 100px;
     margin: 0px 10px !important;
     text-align: right;
-  }
+}
 
 .gastosFormCol, .gastosFormColProp {
     flex-direction: row;
@@ -839,7 +845,7 @@ div#correoInvWrapper {
 
 .gastosFormCol .usuarioPaga {
     width: 50px;
-  }
+}
 
 input#deleteCorreo {
     width: auto;
@@ -935,13 +941,13 @@ div#campoTotal {
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Firefox */
 input[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
 
 #boton-aceptar-gastos, #cancelGastoForm {
@@ -953,3 +959,16 @@ input[type=number] {
     border-radius: 25px !important;
 }
 
+.ordenar select {
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-right: 15px;
+    background-color: #4E729A;
+    text-decoration: none;
+    color: #FFF;
+    font-weight: 600;
+    border: none;
+    font-family: 'Montserrat';
+    font-size: 16px;
+}

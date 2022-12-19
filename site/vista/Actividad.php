@@ -426,7 +426,7 @@ try {
                             <div id="gasto">
                                 <div class="campoGastoIzq"><?php echo $gasto['g_concepto'] ?></div>
                                 <div class="campoGastoCent"><?php echo $gasto['u_username'] ?></div>
-                                <div class="campoGastoCent"><?php echo $gasto['g_fecCrea'] ?></div>
+                                <div class="campoGastoCent fecha"><?php echo $gasto['g_fecCrea'] ?></div>
                                 <div class="campoGastoDer"><?php echo $gasto['g_precio'] . $gasto['a_moneda'] ?></div>
                             </div>
 
