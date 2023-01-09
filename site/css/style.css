@@ -871,6 +871,7 @@ input#deleteCorreo:hover {
 
 span#cancelarX:hover, #cancelarGastoX:hover {
     opacity: 0.4;
+    cursor: pointer;
 }
 
 #cancelarX, #cancelarGastoX {

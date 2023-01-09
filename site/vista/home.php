@@ -144,5 +144,6 @@ $pdo = null;
 <?php include_once './Footer.php' ?>
 
 <script src="../script/crearActividad.js"></script>
+<script src="../script/crearFormulario.js"></script>
 
 </html>

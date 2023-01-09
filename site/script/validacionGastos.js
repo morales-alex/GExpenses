@@ -17,18 +17,12 @@ export class ValidacionCuantiaAvanzado{
     }
 
     logicaRetroaccionUsuario(submit){
-        if (this.totalSuma < this.cuantiaTotal) {
-            console.log(submit);
-            submit.disabled = true;
+        if (this.totalSuma < this.cuantiaTotal){
             return `Te quedan por asignar ${Number(Number.parseFloat(this.cuantiaTotal - this.totalSuma).toFixed(2))}`;
-            
         } else if (this.totalSuma > this.cuantiaTotal) {
-            submit.disabled = true;
+
             return `Te has pasado, sobran ${Number(Number.parseFloat(this.totalSuma - this.cuantiaTotal).toFixed(2))}`;
-            
         } else if(this.totalSuma === this.cuantiaTotal){
-            submit.disabled = false;
-            console.log(submit);
             return true;
             
 
