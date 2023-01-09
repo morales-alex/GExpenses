@@ -199,14 +199,14 @@ importeProporcional.forEach(valorProporcion => {
   });
 });
 
-addGasto.addEventListener("click", (e) => {;
+addGasto.addEventListener("sumbit", (e) => {;
 // PONERLO TIPO SUBMIT@@@@!!!
   e.preventDefault;
 
 
   if (addGastos()) {
 
-    const DatosEnviosCorrectos = document.querySelector("#DatosEnviosCorrectos");
+    const DatosEnviosCorrectos = document.querySelector("#boton-aceptar-gastos");
 
     DatosEnviosCorrectos.name = "DatosEnviosCorrectos";
 
