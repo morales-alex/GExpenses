@@ -985,3 +985,65 @@ input[type=number] {
     font-family: 'Montserrat';
     font-size: 16px;
 }
+
+.usuario-balance {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    border-bottom: 1px solid #4e729a;
+    align-items: center;
+}
+
+.positivo {
+    color: #006128;
+    background-color: #c3ffb4;
+    width: fit-content;
+    padding: 6px;
+    border-radius: 10px;
+}
+
+.negativo {
+    color: #c40000;
+    background-color: #ffd3d3;
+    width: fit-content;
+    padding: 6px;
+    border-radius: 10px;
+}
+
+.cero {
+    color: #606060;
+    background-color: #d9d9d9;
+    width: fit-content;
+    padding: 6px;
+    border-radius: 10px;
+}
+
+
+#balanceDialog h5 {
+    font-size: 20px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+.listado-deudas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #4e729a;
+}
+
+.boton-pagar {
+    font-weight: 600;
+    margin-right: 15px;
+    background-color: #4E729A;
+    color: #fff !important;
+    border: none !important;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 0px 10px 0px rgba(0, 0, 0, 0.38);
+    padding: 6px;
+    border-radius: 5px;
+  }
+
+ #balanceDialog h3 {
+    margin: 0;
+ }
