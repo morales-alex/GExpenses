@@ -98,6 +98,12 @@ label {
     opacity: 0.9;
 }
 
+.usernameExists, .mailExists {
+    color: red;
+    margin-top: -10px;
+    margin-bottom: 5px;
+}
+
 .btn-registro {
     font-family: 'Montserrat';
     width: 100%;

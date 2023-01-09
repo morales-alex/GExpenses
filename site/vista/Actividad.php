@@ -402,7 +402,7 @@ try {
         <dialog id='balanceDialog' class="dialogForm centered" close>
             <div id="dialog-activityForm" class="dialog-header">
                 <h3>Balance</h3>
-                <span id='cancelarX'>x</span>
+                <span id='xBalance'>x</span>
             </div>
             <div class="resumen-balance">
                 <h5>Resumen balance</h5>
