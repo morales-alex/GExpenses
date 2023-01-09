@@ -49,7 +49,7 @@ h4 {
     width: 100%;
     padding: 7px;
     box-sizing: border-box;
-    margin-bottom: 25px;
+    margin-bottom: 5px;
     border-radius: 5px;
     border: 1px solid black;
     margin-top: 8px;
@@ -235,8 +235,9 @@ div.ok-message {
 }
 
 .actividad {
-    width: 25%;
+    width: 33%;
     box-sizing: border-box;
+    padding: 10px;
 }
 
 /*#caja-actividades > div:nth-child(even) {
@@ -276,15 +277,24 @@ div.ok-message {
     line-height: 1;
 }
 
+.fecha {
+    font-size: 13px;
+    margin: 0;
+}
+
+.fecha p {
+    padding: 0;
+}
+
 .caja-titulo-actividad {
     min-height: 110px;
     background-color: #d3d3ff;
     display: flex;
-    align-items: center;
     justify-content: center;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     flex-direction: column;
+    padding: 15px;
 }
 
 .caja-boton-actividad a:link {
@@ -537,8 +547,7 @@ input#cancelDialogForm, input#cancelGastoForm {
     display: none;
     color: #c40000;
     background-color: #ffd3d3;
-    width: fit-content;
-    border-radius: 25px;
+    border-radius: 5px;
     padding: 10px;
 }
 
