@@ -446,9 +446,25 @@ try {
             </div>
             <div class="resumen-balance">
                 <h5>Resumen balance</h5>
+                <div class="usuario-balance">
+                    <div class="nombre-usuario-balance">mfreixa</div>
+                    <div class="importe-balance positivo">+50,00</div>
+                </div>
+                <div class="usuario-balance">
+                    <div class="nombre-usuario-balance">admin</div>
+                    <div class="importe-balance negativo">-50,00</div>
+                </div>
+                <div class="usuario-balance">
+                    <div class="nombre-usuario-balance">amorales</div>
+                    <div class="importe-balance cero">0,00</div>
+                </div>
             </div>
             <div class="calculo-deudas">
                 <h5>Calculo de deudas</h5>
+                <div class="listado-deudas">
+                    <p class="deuda"><strong>admin</strong> debe 50,00 a <strong>mfreixa</strong></p>
+                    <a href="#" class="boton-pagar">PAGAR DEUDA</a>
+                </div>
             </div>
         </dialog>
 
