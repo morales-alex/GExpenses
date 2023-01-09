@@ -70,14 +70,27 @@ if (isset($_GET['invitacion'])) {
     unset($_GET["invitacion"]);
 }
 
+// CONSULTA PARTICIPANTES ACTIVIDAD
+try {
+    $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON Usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':ua_idAct', $codigoActividad);
+
+    $stmt->execute();
+    $participantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $ex) {
+    echo 'Error: ' . $ex->getMessage();
+}
+
 // SI HAS ENVIADO EL FORMULARIO DE AÑADIR GASTO CREA EL REGISTRO EN LA BBDD
-if (isset($_POST['DatosEnviosCorrectos'])) {
+if (isset($_POST['conceptoGastoSencillo']) && isset($_POST['usuarioPagador']) && isset($_POST['cuantiaGastoSencillo'])) {
 
     $concepto = $_POST['conceptoGastoSencillo'];
     $usuarioPagador = $_POST['usuarioPagador'];
     $cuantiaGastoSencillo = $_POST['cuantiaGastoSencillo'];
+    $lineaGastos = $_POST['lineaPagos'];
 
-    if (strlen($concepto > 1) && $cuantiaGastoSencillo >= 0) {
+    if (strlen($concepto > 1) && $cuantiaGastoSencillo >= 0 || true) {
 
         try {
 
@@ -94,9 +107,46 @@ if (isset($_POST['DatosEnviosCorrectos'])) {
             $pdo->beginTransaction();
 
             $stmt->execute();
+            $last_id = $pdo->lastInsertId();
             $pdo->commit();
         } catch (PDOException $ex) {
             $pdo->rollBack();
+        }
+
+        for ($i = 0; $i < count($participantes); $i++) {
+
+            if ($participantes[$i]['u_username'] === $usuarioPagador && $lineaGastos[$i] > 0) {
+
+                try {
+                    $sql = "SELECT u_id FROM Usuarios WHERE u_username = :u_username";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindParam(':u_username', $participantes[$i]['u_username']);
+
+                    $stmt->execute();
+                    $idUsuario = $stmt->fetch(PDO::FETCH_ASSOC);
+                } catch (PDOException $ex) {
+                    echo 'Error: ' . $ex->getMessage();
+                }
+
+                try {
+
+                    $sql = "INSERT INTO LineasGastos (l_idUsu, l_idGasto, l_importe) 
+                    SELECT :l_idUsu, :l_idGasto, :l_importe;";
+                    $stmt = $pdo->prepare($sql);
+
+                    $stmt->bindParam(':l_idUsu', $idUsuario['u_id']);
+                    $stmt->bindParam(':l_idGasto', $last_id);
+                    $stmt->bindParam(':l_importe', $lineaGastos[$i]);
+
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $pdo->beginTransaction();
+
+                    $stmt->execute();
+                    $pdo->commit();
+                } catch (PDOException $ex) {
+                    $pdo->rollBack();
+                }
+            }
         }
     }
 
@@ -118,17 +168,7 @@ try {
     echo 'Error: ' . $ex->getMessage();
 }
 
-// CONSULTA PARTICIPANTES ACTIVIDAD
-try {
-    $sql = "SELECT u_username FROM UsuariosActividades INNER JOIN Usuarios ON Usuarios.u_id = UsuariosActividades.ua_idUsu WHERE ua_idAct = :ua_idAct";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':ua_idAct', $codigoActividad);
 
-    $stmt->execute();
-    $participantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $ex) {
-    echo 'Error: ' . $ex->getMessage();
-}
 
 // CONSULTA SUMA TOTAL GASTOS
 try {
@@ -364,11 +404,11 @@ try {
 
                         <div class="cuantiaUsuario">
                             <div class="gastosFormCol">
-                                <span class="usuarioPaga" for=""><?php echo $usuarioParticipante ?></span>
+                                <span class="usuarioPaga" for=""><input type="hidden" name="lineaUsuarios[]"><?php echo $usuarioParticipante ?></span>
                             </div>
                             <div class="gastosFormCol">
                                 <label class="proporcion" style="display: block;">Pagará:</label>
-                                <input type="number" class="paga" id="echo $usuarioParticipante" value="0" readonly="readonly"></input>
+                                <input type="number" name="lineaPagos[]" class="paga" id="echo $usuarioParticipante" value="0" readonly="readonly"></input>
                             </div>
                             <div class="gastosFormColProp" style="display: none;">
                                 <label class="labelImporteProporcional" for="importeProporcional">Proporción:</label>
