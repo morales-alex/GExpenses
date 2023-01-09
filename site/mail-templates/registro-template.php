@@ -66,6 +66,7 @@ try {
     </body>
     </html>';
     $mail->Body = $mailContent;
+    $mail->msgHTML($mailContent);
     
     if($mail->send()){
         $mailEnviat = true;
