@@ -1,4 +1,4 @@
-DROP DATABASE GExpenses_3P1 IF EXISTS
+DROP DATABASE IF EXISTS GExpenses_3P1 ;
 CREATE DATABASE GExpenses_3P1;
 
 -- drop table gastos;drop table UsuariosActividades;drop table Usuarios;drop table Actividades;

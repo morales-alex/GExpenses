@@ -199,18 +199,14 @@ importeProporcional.forEach(valorProporcion => {
   });
 });
 
-addGasto.addEventListener("sumbit", (e) => {;
+addGasto.addEventListener("click", (e) => {;
 // PONERLO TIPO SUBMIT@@@@!!!
-  e.preventDefault;
+ e.preventDefault;
 
 
   if (addGastos()) {
 
-    const DatosEnviosCorrectos = document.querySelector("#boton-aceptar-gastos");
-
-    DatosEnviosCorrectos.name = "DatosEnviosCorrectos";
-
-
+    addGasto.name = "DatosEnviosCorrectos";
     errorConcepto.style.display = "none";
     errorCuantias.style.display = "none";
 
@@ -228,4 +224,3 @@ fecha.forEach(fechaValor => {
   let fechaGirada = (fechaValor.innerText).split('-').reverse().join('-');
   fechaValor.innerHTML = fechaGirada;
 });
-
