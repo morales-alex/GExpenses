@@ -385,7 +385,6 @@ try {
 
                 <div id="dialogFooterParticipante">
                     <input type="button" class="boton-aceptar" value="Cerrar" id="cancelGastoForm"></input>
-                    <input type="hidden" id="DatosEnviosCorrectos">
                     <input type="button" name="enviar" id="boton-aceptar-gastos" value="Añadir" class="boton-aceptar">
                 </div>
 
