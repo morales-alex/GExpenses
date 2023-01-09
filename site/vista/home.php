@@ -121,16 +121,17 @@ $pdo = null;
             foreach ($consultaOrdenada as $actividad) {
             ?>
                 <div class="actividad" id="<?php echo $actividad['a_id'] ?>">
-                    <div class="caja-interior-actividad">
+                    <a class="caja-interior-actividad" href="./Actividad.php?a_id=<?php echo $actividad['a_id'] ?>">
                         <div class="caja-titulo-actividad">
                             <h3><?php echo $actividad['a_nombre'] ?></h3>
-                            <p>F. crea: <span class="fechaCreacion"><?php echo $actividad['a_fecCreacion'] ?></span></p>
-                            <p>F. modif: <span class="fechaModificacion"><?php echo $actividad['a_fecUltMod'] ?></span></p>
+                            <p><?php echo $actividad['a_descripcion'] ?></p>
+                            <p class="fecha">Fecha de creación: <span class="fechaCreacion"><?php echo $actividad['a_fecCreacion'] ?></span></p>
+                            <p class="fecha">Fecha de modificación: <span class="fechaModificacion"><?php echo $actividad['a_fecUltMod'] ?></span></p>
                         </div>
                         <div class="caja-boton-actividad">
-                            <a href="./Actividad.php?a_id=<?php echo $actividad['a_id'] ?>">VER ACTIVIDAD</a>
+                            <div>VER ACTIVIDAD</div>
                         </div>
-                    </div>
+            </a>
                 </div>
             <?php
             }

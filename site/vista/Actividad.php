@@ -345,7 +345,7 @@ try {
                         <select name="opcionDePago" id="opcionDePago">
                             <option value="1">General</option>
                             <option value="2">Avanzado</option>
-                            <option value="3">Proporcion</option>
+                            <option value="3">Proporción</option>
                         </select>
                     </div>
                     <div class="container-tipo-gasto">
@@ -371,7 +371,7 @@ try {
                                 <input type="number" class="paga" id="echo $usuarioParticipante" value="0" readonly="readonly"></input>
                             </div>
                             <div class="gastosFormColProp" style="display: none;">
-                                <label class="labelImporteProporcional" for="importeProporcional">Proporcion:</label>
+                                <label class="labelImporteProporcional" for="importeProporcional">Proporción:</label>
                                 <input class="importeProporcional" value="1"></input>
                             </div>
                         </div>
@@ -385,7 +385,6 @@ try {
 
                 <div id="dialogFooterParticipante">
                     <input type="button" class="boton-aceptar" value="Cerrar" id="cancelGastoForm"></input>
-                    <input type="hidden" id="DatosEnviosCorrectos">
                     <input type="button" name="enviar" id="boton-aceptar-gastos" value="Añadir" class="boton-aceptar">
                 </div>
 
@@ -398,6 +397,19 @@ try {
                 unset($_SESSION["mensajeError"]);
             }
             ?>
+        </dialog>
+
+        <dialog id='balanceDialog' class="dialogForm centered" close>
+            <div id="dialog-activityForm" class="dialog-header">
+                <h3>Balance</h3>
+                <span id='xBalance'>x</span>
+            </div>
+            <div class="resumen-balance">
+                <h5>Resumen balance</h5>
+            </div>
+            <div class="calculo-deudas">
+                <h5>Calculo de deudas</h5>
+            </div>
         </dialog>
 
         <h1 id="tituloActividad">
@@ -515,6 +527,7 @@ try {
 <script type="module" src="../script/crearGastos.js"></script>
 <script src="../script/crearParticipantes.js"></script>
 <script type="module" src="../script/validacionGastos.js"></script>
+<script type="module" src="../script/balance.js"></script>
 <script>
     // CONDICIONAL PARA EVITAR QUE AL REFRESCAR LA PÁGINA SE VUELVA A ENVIAR UN FORMULARIO
     if (window.history.replaceState) {

@@ -1,3 +1,4 @@
+DROP DATABASE GExpenses_3P1 IF EXISTS
 CREATE DATABASE GExpenses_3P1;
 
 -- drop table gastos;drop table UsuariosActividades;drop table Usuarios;drop table Actividades;
@@ -53,6 +54,15 @@ CREATE TABLE IF NOT EXISTS Gastos (
     g_fecCrea	date,
 	PRIMARY KEY (g_id),
 	FOREIGN KEY (g_idUsu, g_idAct) REFERENCES UsuariosActividades (ua_idUsu, ua_idAct)
+) ENGINE=INNODB;
+
+CREATE TABLE IF NOT EXISTS LineasGastos (
+l_id int AUTO_INCREMENT,
+l_idUsu int, -- LO QUE DEBE LA PERSONA X
+l_idGasto int, -- GASTO
+l_importe double NOT NULL,
+PRIMARY KEY (l_id, l_idGasto),
+FOREIGN KEY (l_idGasto) REFERENCES Gastos (g_id)
 ) ENGINE=INNODB;
 
 INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('admin', 'Pere', 'Pou G', 'Pou.Pere.G@alumnat.copernic.cat', '$2y$10$o7.Xhj4uByDtF2gX0JRbouQcFSMV4TdghkS1QzmVcE/8KFliifFKK');

@@ -72,7 +72,8 @@ function opcionAvanzadaLogica(){
   const mensaje = validacionCuantiaAvanzado.logicaRetroaccionUsuario(addGasto);
   const div = document.createElement('div');
   if(typeof mensaje === 'string'){
-div.setAttribute('class','error-message mensaje-dinamico-avanzado');
+div.setAttribute('class','error-messageForm mensaje-dinamico-avanzado');
+div.style.display = "block"; 
   document.getElementsByClassName('cuantiaPorUsuario')[0].insertAdjacentElement('afterend',div)
   div.innerText = mensaje;
   } 
@@ -198,14 +199,14 @@ importeProporcional.forEach(valorProporcion => {
   });
 });
 
-addGasto.addEventListener("click", (e) => {;
+addGasto.addEventListener("sumbit", (e) => {;
 // PONERLO TIPO SUBMIT@@@@!!!
   e.preventDefault;
 
 
   if (addGastos()) {
 
-    const DatosEnviosCorrectos = document.querySelector("#DatosEnviosCorrectos");
+    const DatosEnviosCorrectos = document.querySelector("#boton-aceptar-gastos");
 
     DatosEnviosCorrectos.name = "DatosEnviosCorrectos";
 

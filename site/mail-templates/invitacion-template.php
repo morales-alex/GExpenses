@@ -64,25 +64,8 @@ try {
     </body>
     
     </html>';
-    $mail->AltBody = '¡Hola!\n
-    ¡Te han invitado a unirte a una Actividad!\n
-    
-    Haz click al siguiente enlace para unirte a esta actividad y empezar a repartir gastos con tus amigos.\n
-    http://localhost:3000/site/vista/index.php?a_id='.$codigoActividad.'&invitacion='.$nuevoToken.'\n
-    Esta comunicación va dirigida de manera exclusiva a su destinatario y puede contener información confidencial y/o sujeta a secreto profesional,\n
-    cuya divulgación no está permitida por la Ley. Si ha recibido este mensaje por error, le rogamos que a la menor brevedad posible,\n
-     se comunique mediante correo electrónico remitido a nuestra atención y proceda a su eliminación, así como cualquier documento adjunto al mismo.\n
-    
-    En cumplimiento del RGPD en materia de protección de datos personales, le informamos de que recibe este email por estar suscrito a GExpenses.\n
-    
-    El responsable del tratamiento de sus datos es GExpenses, con NIF B67550046 y domicilio fiscal Carrer Sant Joan 13.\n
-    
-    La finalidad para la que se recogen sus datos es enviarle notificaciones de los cambios en su cuenta.\n
-    
-    Su información permanecerá en nuestra base de datos hasta que no diga lo contrario y no será cedida a terceros.\n
-    
-    Puede ejercer sus derechos de acceso, rectificación, cancelación, oposición o limitación del tratamiento poniéndose en contacto con nosotros a través de info@gexpenses.com';
     $mail->Body = $mailContent;
+    $mail->msgHTML($mailContent);
 
     if($mail->send()){
         $mailEnviat = true;
