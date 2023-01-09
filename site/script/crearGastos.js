@@ -72,7 +72,8 @@ function opcionAvanzadaLogica(){
   const mensaje = validacionCuantiaAvanzado.logicaRetroaccionUsuario(addGasto);
   const div = document.createElement('div');
   if(typeof mensaje === 'string'){
-div.setAttribute('class','error-message mensaje-dinamico-avanzado');
+div.setAttribute('class','error-messageForm mensaje-dinamico-avanzado');
+div.style.display = "block"; 
   document.getElementsByClassName('cuantiaPorUsuario')[0].insertAdjacentElement('afterend',div)
   div.innerText = mensaje;
   } 

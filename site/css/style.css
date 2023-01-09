@@ -269,8 +269,6 @@ div.ok-message {
 
 .caja-titulo-actividad h3 {
     margin: 0;
-    padding: 20px;
-    text-align: center;
     border-radius: 10px;
     font-size: 25px;
     font-weight: 600;
@@ -556,6 +554,10 @@ p#nombreError.error-messageForm {
     padding: 6px;
 }
 
+#nombreErrorCuantias {
+    margin-bottom: 0;
+}
+
 .mostrar {
     display: block;
     padding: 6px;
@@ -598,8 +600,8 @@ div.cuantiaPorUsuario {
     display: flex;
     max-width: 100%;
     margin-top: 18px;
+    margin-bottom: 18px;
     flex-direction: column;
-    padding-bottom: 48px;
     width: 100%;
 }
 
@@ -804,7 +806,7 @@ p#participante {
 
 /*----- DIALOG -----*/
 
-dialog#addParticipanteDialog, dialog#addGastoDialog {
+dialog#addParticipanteDialog, dialog#addGastoDialog, dialog#balanceDialog {
     border: 0px;
     min-width: 650px;
     min-height: 500px;
