@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS Gastos (
 
 CREATE TABLE IF NOT EXISTS LineasGastos (
 l_id int AUTO_INCREMENT,
-l_idUsu int, -- LO QUE DEBE LA PERSONA X
+l_idUsu int, -- EL enduadado
 l_idGasto int, -- GASTO
 l_importe double NOT NULL,
 PRIMARY KEY (l_id, l_idGasto),
@@ -84,8 +84,15 @@ INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (1, 3);
 
 insert into Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 55.90, 'Bocadillos de jamón con tomate', sysdate());
 insert into Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 300.56, 'Buceo con tiburones', sysdate());
+
+INSERT INTO LineasGastos (l_idUsu, l_idGasto, l_importe) values (1, 1, )
 /*
 select * from gastos;
 select * from usuariosActividades;
 select * from actividades;
-select * from usuarios;*/
+select * from usuarios;*//*
+POSIBLE SELECT PARA LO QUE LE DEBE A CADA PERSONA
+SELECT SUM(lg.l_importe) FROM LineasGastos lg
+INNER JOIN Gastos g on g.g_id = lg.l_idGasto
+group by lg.l_IdUsu, g.g_idUsu;
+*/
