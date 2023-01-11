@@ -90,7 +90,7 @@ if (isset($_POST['conceptoGastoSencillo']) && isset($_POST['usuarioPagador']) &&
     $cuantiaGastoSencillo = $_POST['cuantiaGastoSencillo'];
     $lineaGastos = $_POST['lineaPagos'];
 
-    if (strlen($concepto > 1) && $cuantiaGastoSencillo >= 0 || true) {
+    if (strlen($concepto > 1) && $cuantiaGastoSencillo >= 0 /*|| true*/) {
 
         try {
 
