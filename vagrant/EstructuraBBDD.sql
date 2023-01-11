@@ -124,7 +124,7 @@ CREATE PROCEDURE ComparadorDeudas(IN Usuario1 varchar(30), IN Usuario2 varchar(3
 //
 DELIMITER ;
 -- CALL ComparadorDeudas("aalgarra", "fdsfdsa", @quantia,  @debedor, @cobrador);
--- SELECT coalesce(@quantia,0) AS QUANTIA, @debedor AS Paga, @cobrador AS Cobra;
+-- SELECT @quantia AS QUANTIA, @debedor AS Paga, @cobrador AS Cobra;
 /*
 select * from gastos;
 select * from usuariosActividades;
