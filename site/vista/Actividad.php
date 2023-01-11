@@ -216,7 +216,7 @@ try {
     echo 'Error: ' . $ex->getMessage();
 }
 
-// $deudasFiltradas = filtrarDeudas($deudas, $pdo);
+// $deudasFiltradas = filtrarDeudas($deudas, $pdo, $_GET['a_id']);
 
 // Invitacion de registro o actividad
 $correosNoValidos = [];
@@ -500,7 +500,7 @@ try {
                 <div class="listado-deudas">
 
                     <?php
-                    foreach ($deudasFiltradas as $deuda) {
+                    foreach ($deudas as $deuda) {
                     ?>
                         <div class="deudaBox">
                             <p class="deuda"> <strong> <?php echo $deuda['USUARIO_DEBE'] ?> </strong> debe <?php echo $deuda['IMPORTE_TOTAL'] ?> a
@@ -651,42 +651,59 @@ try {
 
 <?php
 
-function filtrarDeudas($deudas, $pdo) {
+function filtrarDeudas($deudas, $actividad, $pdo) {
 
-    $deudasFiltradas = [];
-    $isEqual = false;
 
-    for ($i=0; $i < count($deudas) - 1; $i++) { 
+    try {
+        $sql = "SELECT u.u_username
+        FROM Actividades a
+        INNER JOIN UsuariosActividades ua ON ua.ua_idAct = a.a_id
+        INNER JOIN Usuarios u ON u.u_id = ua.ua_idUsu
+        WHERE a.a_id = :a.a_id;";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':a.a_id', $actividad);
+    
+        $stmt->execute();
+        $usuariosActividad = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $ex) {
+        echo 'Error: ' . $ex->getMessage();
+    }
 
-        for ($j=$i+1; $j < count($deudas); $j++) { 
+
+    for ($i=0; $i < count($usuariosActividad) - 1; $i++) { 
+
+        for ($j=$i+1; $j < count($usuariosActividad); $j++) { 
 
             try {
-                $sql = "CALL ComparadorDeudas(:usuario1, :usuario2, @quantia,  @debedor, @cobrador);";
+                $sql = "CALL ComparadorDeudas(:usuarioUno, :usuarioDos, @quantia,  @debedor, @cobrador);";
                 $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':usuario1', $deudas[$i]['USUARIO_PAGA']);
-                $stmt->bindParam(':usuario2', $deudas[$j]['USUARIO_DEBE']);
+                $stmt->bindParam(':usuarioUno', $actividad);
+                $stmt->bindParam(':usuarioDos', $actividad);
             
                 $stmt->execute();
-                $datosCuantia = $stmt->fetch(PDO::FETCH_ASSOC);
             } catch (PDOException $ex) {
                 echo 'Error: ' . $ex->getMessage();
             }
+
+            
+
 
             try {
                 $sql = "SELECT @quantia AS QUANTIA, @debedor AS Paga, @cobrador AS Cobra;";
                 $stmt = $pdo->prepare($sql);
             
                 $stmt->execute();
-                $datosCuantia = $stmt->fetch(PDO::FETCH_ASSOC);
+                $datosUsuarios = $stmt->fetch(PDO::FETCH_ASSOC);
             } catch (PDOException $ex) {
                 echo 'Error: ' . $ex->getMessage();
             }
 
 
+
         }
     }
 
-    return $deudasFiltradas;
+    return $deudas;
 }
 
 // function filtrarDeudas($deudas, $pdo) {
