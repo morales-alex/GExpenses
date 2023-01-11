@@ -115,7 +115,7 @@ if (isset($_POST['conceptoGastoSencillo']) && isset($_POST['usuarioPagador']) &&
 
         for ($i = 0; $i < count($participantes); $i++) {
 
-            if ($participantes[$i]['u_username'] == $usuarioPagador && $lineaGastos[$i] > 0) {
+            if ($participantes[$i]['u_username'] != $usuarioPagador && $lineaGastos[$i] > 0) {
 
                 try {
                     $sql = "SELECT u_id FROM Usuarios WHERE u_username = :u_username";
@@ -178,6 +178,55 @@ try {
 
     $stmt->execute();
     $gastoTotal = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $ex) {
+    echo 'Error: ' . $ex->getMessage();
+}
+
+// COBRA DEUDAS
+if (isset($_POST['submit-boton-pagar'])) {
+
+    $usuariosCuenta = explode('-', $_POST['pago']);
+
+    try {
+        $sql = "UPDATE LineasGastos 
+        SET l_pagado = 1
+        WHERE l_id IN (
+            select l_id
+                FROM LineasGastos lg
+                    INNER JOIN Gastos g ON g.g_id = lg.l_idGasto
+                    INNER JOIN Usuarios uCobra ON uCobra.u_id = g.g_idUsu
+                    INNER JOIN Usuarios uDebe ON uDebe.u_id = lg.l_idUsu
+            WHERE g_idAct = :g_idAct AND lg.l_pagado = 0 AND uCobra.u_username = :uCobra AND uDebe.u_username = :uDebe);";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':g_idAct', $_GET["a_id"]);
+        $stmt->bindParam(':uCobra', $usuariosCuenta[1]);
+        $stmt->bindParam(':uDebe', $usuariosCuenta[0]);
+    
+        $stmt->execute();
+    } catch (PDOException $ex) {
+        echo 'Error: ' . $ex->getMessage();
+    }
+
+    unset($_POST['submit-boton-pagar']);
+    unset($_POST['pago']);
+
+}
+
+// CONSULTA DEUDAS
+try {
+    $sql = "SELECT uDebe.u_username USUARIO_DEBE,uPaga.u_username USUARIO_PAGA, SUM(l_importe) IMPORTE_TOTAL
+    FROM LineasGastos lg
+    INNER JOIN Gastos g ON g.g_id = lg.l_idGasto
+    INNER JOIN Actividades a ON a.a_id = g.g_idAct
+    INNER JOIN Usuarios uPaga ON uPaga.u_id = g.g_idUsu
+    INNER JOIN Usuarios uDebe ON uDebe.u_id = lg.l_idUsu
+    WHERE a_id = :a_id AND l_pagado = 0
+    GROUP BY uPaga.u_username, uDebe.u_username";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':a_id', $_GET["a_id"]);
+
+    $stmt->execute();
+    $deudas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $ex) {
     echo 'Error: ' . $ex->getMessage();
 }
@@ -462,8 +511,26 @@ try {
             <div class="calculo-deudas">
                 <h5>Calculo de deudas</h5>
                 <div class="listado-deudas">
-                    <p class="deuda"><strong>admin</strong> debe 50,00 a <strong>mfreixa</strong></p>
-                    <a href="#" class="boton-pagar">PAGAR DEUDA</a>
+
+                    <?php
+                    foreach ($deudas as $deuda) {
+                    ?>
+                        <div class="deudaBox">
+                            <p class="deuda"> <strong> <?php echo $deuda['USUARIO_DEBE'] ?> </strong> debe <?php echo $deuda['IMPORTE_TOTAL'] ?> a
+                                <strong> <?php echo $deuda['USUARIO_PAGA'] ?> </strong>
+                            </p>
+
+                            <form action="" method="post" class="form-boton-pagar">
+                                <input type="hidden" name="pago" value="<?php echo $deuda['USUARIO_DEBE'] . '-' . $deuda['USUARIO_PAGA'] ?>">
+                                <input class="boton-pagar" type="submit" name="submit-boton-pagar" value="PAGAR DEUDA"/>
+                            </form>
+
+                        </div>
+
+                    <?php
+                    }
+                    ?>
+
                 </div>
             </div>
         </dialog>
