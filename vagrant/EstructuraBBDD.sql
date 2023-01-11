@@ -86,6 +86,45 @@ insert into Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1
 insert into Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 300.56, 'Buceo con tiburones', sysdate());
 
 INSERT INTO LineasGastos (l_idUsu, l_idGasto, l_importe) values (1, 1, )
+-- PROCEDURE BUSCADOR DE DEUDAS
+DELIMITER //
+DROP PROCEDURE IF EXISTS BuscadorDeuda;
+CREATE PROCEDURE BuscadorDeuda(IN Usuario1 varchar(30), IN Usuario2 varchar(30), OUT quantitat INT)
+	BEGIN 
+		SET quantitat = (Select SUM(l_importe)
+			from LineasGastos lg
+			inner join Gastos g on g.g_id = lg.l_idGasto
+			inner join Actividades a on a.a_id = g.g_idAct
+			inner join Usuarios uPaga on uPaga.u_id = g.g_idUsu
+			inner join Usuarios uDebe on uDebe.u_id = lg.l_idUsu
+			where a_id = 1 and uDebe.u_username=Usuario1 and uPaga.u_username=Usuario2
+			group by uPaga.u_username); -- , uDebe.u_username;
+	END //
+DELIMITER ;
+
+-- PROCEDURE COMPARADOR DE DEUDAS 
+DROP PROCEDURE IF EXISTS ComparadorDeudas;
+DELIMITER //
+CREATE PROCEDURE ComparadorDeudas(IN Usuario1 varchar(30), IN Usuario2 varchar(30), OUT quantitat DOUBLE, OUT debedor varchar(30), OUT cobrador varchar(30))
+	BEGIN
+		SET @deudaUsuario1 = 0;
+        CALL BuscadorDeuda(Usuario1, Usuario2, @deudaUsuario1);
+        SET @deudaUsuario2 = 0;
+        CALL BuscadorDeuda(Usuario2, Usuario1, @deudaUsuario2);
+		SET quantitat = ABS(@deudaUsuario1 - @deudaUsuario2);
+        
+        IF (@deudaUsuario1 > @deudaUsuario2) THEN
+			SET cobrador = Usuario1;
+            SET debedor = Usuario2;
+		ELSE 
+			SET debedor = Usuario2;
+            SET cobrador = Usuario1;
+		END IF;
+	END;
+//
+DELIMITER ;
+-- CALL ComparadorDeudas("aalgarra", "fdsfdsa", @quantia,  @debedor, @cobrador);
+-- SELECT coalesce(@quantia,0) AS QUANTIA, @debedor AS Paga, @cobrador AS Cobra;
 /*
 select * from gastos;
 select * from usuariosActividades;
