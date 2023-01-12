@@ -1,4 +1,4 @@
-import {ValidacionCuantiaAvanzado} from '../script/validacionGastos.js'; //importacion de la classe
+import { ValidacionCuantiaAvanzado } from '../script/validacionGastos.js'; //importacion de la classe
 
 const formularioGasto = document.querySelector("#addGastos");
 
@@ -13,6 +13,8 @@ const cancelarGastos = document.querySelector("#cancelGastoForm");
 const cancelarXGastos = document.querySelector("#cancelarGastoX");
 
 const precioTotal = document.querySelector(".cuantia");
+const errorDecimales = document.querySelector(".error-decimales");
+const errorVacio = document.querySelector(".error-vacio");
 
 const aPagar = document.querySelectorAll(".paga");
 const importeProporcional = document.querySelectorAll('.importeProporcional');
@@ -25,7 +27,7 @@ let validacionCuantiaAvanzado;
 let proporcion = [];
 
 function addGastos() {
-let gastoValido = true;
+  let gastoValido = true;
   const concepto = document.querySelector("#conceptoValue").value;
 
   if (concepto.length > 50) {
@@ -48,7 +50,7 @@ let gastoValido = true;
   if (suma + 0.02 < total || suma > total + 0.02) {
     gastoValido = false;
     errorCuantias.style.display = "block";
-  } else if(total < 0) {
+  } else if (total < 0) {
     gastoValido = false;
     errorCuantias.style.display = "block";
   } else {
@@ -58,25 +60,25 @@ let gastoValido = true;
   return gastoValido;
 }
 
-function limpiarMensaje(){
+function limpiarMensaje() {
   const div = document.getElementsByClassName('mensaje-dinamico-avanzado')[0];
-  if(div){
+  if (div) {
     div.remove();
   }
 }
-function opcionAvanzadaLogica(){
+function opcionAvanzadaLogica() {
   limpiarMensaje();
   const inputs = Array.from(aPagar);
   validacionCuantiaAvanzado = new ValidacionCuantiaAvanzado(precioTotal.value);
   validacionCuantiaAvanzado.calcTotalSuma(inputs);
   const mensaje = validacionCuantiaAvanzado.logicaRetroaccionUsuario(addGasto);
   const div = document.createElement('div');
-  if(typeof mensaje === 'string'){
-div.setAttribute('class','error-messageForm mensaje-dinamico-avanzado');
-div.style.display = "block"; 
-  document.getElementsByClassName('cuantiaPorUsuario')[0].insertAdjacentElement('afterend',div)
-  div.innerText = mensaje;
-  } 
+  if (typeof mensaje === 'string') {
+    div.setAttribute('class', 'error-messageForm mensaje-dinamico-avanzado');
+    div.style.display = "block";
+    document.getElementsByClassName('cuantiaPorUsuario')[0].insertAdjacentElement('afterend', div)
+    div.innerText = mensaje;
+  }
 }
 
 abrirFormularioGastos.addEventListener("click", function (e) {
@@ -126,9 +128,34 @@ opcionDePago.addEventListener("change", (e) => {
 precioTotal.addEventListener("keyup", (e) => {
   e.preventDefault();
   controladorGastos();
+  validarDecimales();
 });
 
 
+/// VALIDAR ENTRADA DE 2 DECIMALES MAXIMO
+const validarDecimales = () => {
+  var regexDecimales = new RegExp(
+    "^\-?[0-9]+(?:\.[0-9]{1,2})?$"
+  );
+  var comprovacionDecimales = regexDecimales.test(precioTotal.value);
+  let vacio = document.querySelector('.cuantia').value;
+
+  if (vacio == "") {
+    precioTotal.setAttribute("style", "border-color:red;");
+    errorVacio.setAttribute("style", "display: block;");
+  } else {
+    precioTotal.setAttribute("style", "border-color:black;");
+    errorVacio.setAttribute("style", "display: none;");
+    if (comprovacionDecimales) {
+      precioTotal.setAttribute("style", "border-color:black;");
+      errorDecimales.setAttribute("style", "display: none");
+      return true;
+    } else {
+      precioTotal.setAttribute("style", "border-color:red;");
+      errorDecimales.setAttribute("style", "display: block");
+    }
+  }
+};
 
 //  Divide entre partes iguales el importe del gasto
 const opcionGeneral = () => {
@@ -149,10 +176,10 @@ const opcionGeneral = () => {
 // Divide el importe del gasto a gusto del usuario
 const opcionAvanzada = () => {
   // Deshabilita todos los readonly del elemento "aPagar"
-  aPagar.forEach(inputs =>{
+  aPagar.forEach(inputs => {
     inputs.removeAttribute('readonly');
   });
-  proporcionesForm.forEach(mostrarImporteProporcion =>{
+  proporcionesForm.forEach(mostrarImporteProporcion => {
     mostrarImporteProporcion.style.display = 'none';
   });
 }
@@ -167,7 +194,8 @@ const opcionProporcion = () => {
     mostrarImporteProporcion.style.display = 'flex';
   });
 
-
+  let sumadorProporcions = 0;
+  let proporcion = [];
 
   importeProporcional.forEach((valor, index) => {
     sumadorProporcions += parseInt(valor.value);
@@ -177,7 +205,7 @@ const opcionProporcion = () => {
 
 
   aPagar.forEach((valor, index) => {
-    valor.value = proporcion[index] / numeroParticipantes * precioTotal.value;
+    valor.value = Number(Number.parseFloat((proporcion[index] / numeroParticipantes * precioTotal.value)).toFixed(2));
   });
 
 }
@@ -186,7 +214,7 @@ const opcionProporcion = () => {
 aPagar.forEach(inputProporcion => {
   inputProporcion.addEventListener('keyup', (e) => {
     controladorGastos();
-    
+
     opcionAvanzadaLogica();
   });
 });
@@ -199,9 +227,10 @@ importeProporcional.forEach(valorProporcion => {
   });
 });
 
-addGasto.addEventListener("click", (e) => {;
-// PONERLO TIPO SUBMIT@@@@!!!
- e.preventDefault;
+addGasto.addEventListener("click", (e) => {
+  ;
+  // PONERLO TIPO SUBMIT@@@@!!!
+  e.preventDefault;
 
 
   if (addGastos()) {
@@ -224,3 +253,5 @@ fecha.forEach(fechaValor => {
   let fechaGirada = (fechaValor.innerText).split('-').reverse().join('-');
   fechaValor.innerHTML = fechaGirada;
 });
+
+//

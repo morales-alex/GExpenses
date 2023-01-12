@@ -3,13 +3,13 @@ const validarPassword = () => {
   var regexPassword = new RegExp(
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!#.$%&'@*+/=?])"
   );
-  var comprovacionPassword = regexPassword.test(passwordInput.value);
+  var comprovacionPassword = regexPassword.test(precioTotal.value);
 
   if (comprovacionPassword) {
-    passwordInput.setAttribute("style", "border-color:black;");
+    precioTotal.setAttribute("style", "border-color:black;");
     return true;
   } else {
-    passwordInput.setAttribute("style", "border-color:red;");
+    precioTotal.setAttribute("style", "border-color:red;");
   }
 };
 
@@ -21,7 +21,7 @@ const confirmarPassword = () => {
   var comprovacionPassword = regexPassword.test(confirmarPasswordInput.value);
 
   if (
-    passwordInput.value == confirmarPasswordInput.value &&
+    precioTotal.value == confirmarPasswordInput.value &&
     comprovacionPassword
   ) {
     confirmarPasswordInput.setAttribute("style", "border-color:black;");
@@ -94,7 +94,7 @@ function validarRegistro() {
   }
 }
 
-const passwordInput = document.querySelector("#password");
+const precioTotal = document.querySelector("#password");
 const confirmarPasswordInput = document.querySelector("#password-confirm");
 const emailInput = document.querySelector("#email");
 
@@ -108,7 +108,7 @@ const usernameExists = document.querySelector(".usernameExists");
 
 const formulario = document.querySelector("#formulario");
 
-passwordInput.addEventListener("focusout", validarPassword);
+precioTotal.addEventListener("focusout", validarPassword);
 confirmarPasswordInput.addEventListener("focusout", confirmarPassword);
 emailInput.addEventListener("focusout", validarEmail);
 apellidosInput.addEventListener("focusout", validarApellidos);

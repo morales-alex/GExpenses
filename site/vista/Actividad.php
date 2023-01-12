@@ -115,7 +115,7 @@ if (isset($_POST['conceptoGastoSencillo']) && isset($_POST['usuarioPagador']) &&
 
         for ($i = 0; $i < count($participantes); $i++) {
 
-            if ($participantes[$i]['u_username'] === $usuarioPagador && $lineaGastos[$i] > 0) {
+            if ($participantes[$i]['u_username'] != $usuarioPagador && $lineaGastos[$i] > 0) {
 
                 try {
                     $sql = "SELECT u_id FROM Usuarios WHERE u_username = :u_username";
@@ -164,6 +164,19 @@ try {
 
     $stmt->execute();
     $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $ex) {
+    echo 'Error: ' . $ex->getMessage();
+}
+
+
+// CONSULTA DEUDAS ENTRE USUARIOS
+try {
+    $sql = "SELECT * FROM LineasGastos";
+    $stmt = $pdo->prepare($sql);
+    /*$stmt->bindParam(':g_idAct', $codigoActividad);*/
+
+    $stmt->execute();
+    $deudasEntreUsuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $ex) {
     echo 'Error: ' . $ex->getMessage();
 }
@@ -390,9 +403,12 @@ try {
                     </div>
                     <div class="container-tipo-gasto">
                         <label for="cuantia" class="labelGasto">Cuantía:</label>
-                        <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0">
+                        <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0" min="0">
                     </div>
                 </div>
+
+                <div class="error-decimales error-messageForm">La cuantía no puede contener más de dos decimales.</div>
+                <div class="error-vacio error-messageForm">El campo de cuantía no puede estar vacía.</div>
 
                 <label for="cuantia" class="labelGasto">Participantes:</label>
 
@@ -446,18 +462,17 @@ try {
             </div>
             <div class="resumen-balance">
                 <h5>Resumen balance</h5>
-                <div class="usuario-balance">
-                    <div class="nombre-usuario-balance">mfreixa</div>
-                    <div class="importe-balance positivo">+50,00</div>
-                </div>
-                <div class="usuario-balance">
-                    <div class="nombre-usuario-balance">admin</div>
-                    <div class="importe-balance negativo">-50,00</div>
-                </div>
-                <div class="usuario-balance">
-                    <div class="nombre-usuario-balance">amorales</div>
-                    <div class="importe-balance cero">0,00</div>
-                </div>
+                <?php
+                foreach ($participantes as $participante) {
+                    $usuarioParticipante = $participante['u_username'];
+                ?>
+                    <div class="usuario-balance">
+                        <div class="nombre-usuario-balance"><?php echo $usuarioParticipante ?></div>
+                        <div class="importe-balance">0,00€</div>
+                    </div>
+                <?php
+                }
+                ?>
             </div>
             <div class="calculo-deudas">
                 <h5>Calculo de deudas</h5>
