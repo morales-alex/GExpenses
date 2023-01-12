@@ -1,0 +1,13 @@
+{
+    "name": "3p1/gexpenses",
+    "description": "Proyecto GExpenses del grupo 3p1 de DAW 2",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Grupo 3p1"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.6"
+    }
+}
