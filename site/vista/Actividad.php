@@ -18,11 +18,9 @@ if (isset($_GET["a_id"])) {
 
         $codigoActividad = $_GET["a_id"];
         $_SESSION['actividad_id'] = $codigoActividad;
-
     } else {
 
         header('location: ./home.php');
-
     }
 } else {
     header('location: ./home.php');
@@ -678,6 +676,7 @@ try {
 
 <?php
 
+// COBRA LA DEUDA ENTRE DOS USUARIOS
 function cobrarDeuda($actividad, $pagador, $cobrador, $pdo)
 {
 
@@ -702,7 +701,9 @@ function cobrarDeuda($actividad, $pagador, $cobrador, $pdo)
     }
 }
 
-function comprobarUsuario ($pdo) {
+// COMPRUEBA SI UN USUARIO PARTICIPA EN LA ACTIVIDAD QUE SE QUIERE ACCEDER
+function comprobarUsuario($pdo)
+{
 
     $idUsuarioActivo = $_SESSION["usuario"]->getU_id();
 
@@ -715,7 +716,7 @@ function comprobarUsuario ($pdo) {
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':a_id', $_GET["a_id"]);
         $stmt->bindParam(':u_id', $idUsuarioActivo);
-        
+
 
         $stmt->execute();
         $usuarioActividad = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -728,16 +729,9 @@ function comprobarUsuario ($pdo) {
     } else {
         return false;
     }
-
 }
 
 
-
-
-
-
-
-/* NO FUNCIONAL TODAVIA */
 
 function filtrarDeudas($deudas, $pdo, $actividad)
 {
@@ -788,7 +782,7 @@ function filtrarDeudas($deudas, $pdo, $actividad)
             }
 
             if ($datosUsuarios["QUANTIA"] != null) {
-                
+
 
                 $usuariosFiltrados[$counter]['Paga'] = $datosUsuarios["Paga"];
                 $usuariosFiltrados[$counter]['Cobra'] = $datosUsuarios["Cobra"];
@@ -796,7 +790,6 @@ function filtrarDeudas($deudas, $pdo, $actividad)
 
                 $counter++;
             }
-
         }
     }
 
