@@ -1034,21 +1034,27 @@ input[type=number] {
 }
 
 .listado-deudas {
+    
+}
+
+.deudaBox {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #4e729a;
 }
 
+.form-boton-pagar {
+    margin: 0 40% 0 auto;
+}
+
 .boton-pagar {
-    font-weight: 600;
-    margin-right: 15px;
     background-color: #4E729A;
     color: #fff !important;
     border: none !important;
-    box-shadow: 0 0 #0000, 0 0 #0000, 0 0px 10px 0px rgba(0, 0, 0, 0.38);
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 0px 10px 0px rgb(0 0 0 / 38%);
     padding: 6px;
     border-radius: 5px;
+    font-weight: 600;
   }
 
  #balanceDialog h3 {
