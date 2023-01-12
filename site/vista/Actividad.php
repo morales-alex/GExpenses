@@ -1,14 +1,7 @@
 <?php
 
-
 require '../modelo/tablesMap.php';
 require '../controlador/BbddConfig.php';
-
-if (isset($_GET["a_id"])) {
-    $codigoActividad = $_GET["a_id"];
-    $_SESSION['actividad_id'] = $codigoActividad;
-}
-
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -18,6 +11,25 @@ if (!isset($_SESSION['usuario'])) {
     SESSION_DESTROY();
     header('location: ./index.php');
 }
+
+if (isset($_GET["a_id"])) {
+
+    if (comprobarUsuario($pdo)) {
+
+        $codigoActividad = $_GET["a_id"];
+        $_SESSION['actividad_id'] = $codigoActividad;
+
+    } else {
+
+        header('location: ./home.php');
+
+    }
+} else {
+    header('location: ./home.php');
+}
+
+
+
 
 if (isset($_GET['invitacion'])) {
 
@@ -194,7 +206,6 @@ if (isset($_POST['submit-boton-pagar'])) {
 
     unset($_POST['submit-boton-pagar']);
     unset($_POST['pago']);
-
 }
 
 // CONSULTA DEUDAS
@@ -509,7 +520,7 @@ try {
 
                             <form action="" method="post" class="form-boton-pagar">
                                 <input type="hidden" name="pago" value="<?php echo $deuda['USUARIO_DEBE'] . '-' . $deuda['USUARIO_PAGA'] ?>">
-                                <input class="boton-pagar" type="submit" name="submit-boton-pagar" value="PAGAR DEUDA"/>
+                                <input class="boton-pagar" type="submit" name="submit-boton-pagar" value="PAGAR DEUDA" />
                             </form>
 
                         </div>
@@ -651,7 +662,69 @@ try {
 
 <?php
 
-function filtrarDeudas($deudas, $actividad, $pdo) {
+function cobrarDeuda($actividad, $pagador, $cobrador, $pdo)
+{
+
+    try {
+        $sql = "UPDATE LineasGastos 
+        SET l_pagado = 1
+        WHERE l_id IN (
+            select l_id
+                FROM LineasGastos lg
+                    INNER JOIN Gastos g ON g.g_id = lg.l_idGasto
+                    INNER JOIN Usuarios uCobra ON uCobra.u_id = g.g_idUsu
+                    INNER JOIN Usuarios uDebe ON uDebe.u_id = lg.l_idUsu
+            WHERE g_idAct = :g_idAct AND lg.l_pagado = 0 AND uCobra.u_username = :uCobra AND uDebe.u_username = :uDebe);";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':g_idAct', $actividad);
+        $stmt->bindParam(':uCobra', $cobrador);
+        $stmt->bindParam(':uDebe', $pagador);
+
+        $stmt->execute();
+    } catch (PDOException $ex) {
+        echo 'Error: ' . $ex->getMessage();
+    }
+}
+
+function comprobarUsuario ($pdo) {
+
+    $idUsuarioActivo = $_SESSION["usuario"]->getU_id();
+
+    try {
+        $sql = "SELECT u_username 
+        FROM Usuarios u
+        INNER JOIN UsuariosActividades ua ON ua.ua_idUsu = u.u_id
+        INNER JOIN Actividades a ON a.a_id = ua.ua_idAct
+        WHERE a.a_id = :a_id AND u_id = :u_id;";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':a_id', $_GET["a_id"]);
+        $stmt->bindParam(':u_id', $idUsuarioActivo);
+        
+
+        $stmt->execute();
+        $usuarioActividad = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $ex) {
+        echo 'Error: ' . $ex->getMessage();
+    }
+
+    if ($usuarioActividad != null) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+
+
+
+
+
+
+/* NO FUNCIONAL TODAVIA */
+
+function filtrarDeudas($deudas, $actividad, $pdo)
+{
 
 
     try {
@@ -662,7 +735,7 @@ function filtrarDeudas($deudas, $actividad, $pdo) {
         WHERE a.a_id = :a.a_id;";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':a.a_id', $actividad);
-    
+
         $stmt->execute();
         $usuariosActividad = $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $ex) {
@@ -670,36 +743,33 @@ function filtrarDeudas($deudas, $actividad, $pdo) {
     }
 
 
-    for ($i=0; $i < count($usuariosActividad) - 1; $i++) { 
+    for ($i = 0; $i < count($usuariosActividad) - 1; $i++) {
 
-        for ($j=$i+1; $j < count($usuariosActividad); $j++) { 
+        for ($j = $i + 1; $j < count($usuariosActividad); $j++) {
 
             try {
                 $sql = "CALL ComparadorDeudas(:usuarioUno, :usuarioDos, @quantia,  @debedor, @cobrador);";
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':usuarioUno', $actividad);
                 $stmt->bindParam(':usuarioDos', $actividad);
-            
+
                 $stmt->execute();
             } catch (PDOException $ex) {
                 echo 'Error: ' . $ex->getMessage();
             }
 
-            
+
 
 
             try {
                 $sql = "SELECT @quantia AS QUANTIA, @debedor AS Paga, @cobrador AS Cobra;";
                 $stmt = $pdo->prepare($sql);
-            
+
                 $stmt->execute();
                 $datosUsuarios = $stmt->fetch(PDO::FETCH_ASSOC);
             } catch (PDOException $ex) {
                 echo 'Error: ' . $ex->getMessage();
             }
-
-
-
         }
     }
 
@@ -716,9 +786,9 @@ function filtrarDeudas($deudas, $actividad, $pdo) {
 //         for ($j=$i+1; $j < count($deudas) - 1; $j++) { 
 
 //             $isEqual = false;
-            
+
 //             if ($deudas[$i]['USUARIO_DEBE'] == $deudas[$j]['USUARIO_PAGA'] AND $deudas[$i]['USUARIO_PAGA'] == $deudas[$j]['USUARIO_DEBE']) {
-            
+
 //                 if ($deudas[$i]['IMPORTE_TOTAL'] == $deudas[$j]['IMPORTE_TOTAL']) {
 //                     cobrarDeuda($_GET["a_id"], $deudas[$i]['USUARIO_DEBE'], $deudas[$i]['USUARIO_PAGA'], $pdo);
 //                     cobrarDeuda($_GET["a_id"], $deudas[$j]['USUARIO_DEBE'], $deudas[$j]['USUARIO_PAGA'], $pdo);
@@ -727,7 +797,7 @@ function filtrarDeudas($deudas, $actividad, $pdo) {
 //                     $i++;
 //                     $j = count($deudas);
 //                 }
-            
+
 //             }
 
 //         }
@@ -740,28 +810,3 @@ function filtrarDeudas($deudas, $actividad, $pdo) {
 
 //     return $deudasFiltradas;
 // }
-
-
-function cobrarDeuda($actividad, $pagador, $cobrador, $pdo) {
-
-    try {
-        $sql = "UPDATE LineasGastos 
-        SET l_pagado = 1
-        WHERE l_id IN (
-            select l_id
-                FROM LineasGastos lg
-                    INNER JOIN Gastos g ON g.g_id = lg.l_idGasto
-                    INNER JOIN Usuarios uCobra ON uCobra.u_id = g.g_idUsu
-                    INNER JOIN Usuarios uDebe ON uDebe.u_id = lg.l_idUsu
-            WHERE g_idAct = :g_idAct AND lg.l_pagado = 0 AND uCobra.u_username = :uCobra AND uDebe.u_username = :uDebe);";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':g_idAct', $actividad);
-        $stmt->bindParam(':uCobra', $cobrador);
-        $stmt->bindParam(':uDebe', $pagador);
-    
-        $stmt->execute();
-    } catch (PDOException $ex) {
-        echo 'Error: ' . $ex->getMessage();
-    }
-
-}
