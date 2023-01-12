@@ -199,8 +199,9 @@ if (isset($_POST['submit-boton-pagar'])) {
 
     $usuariosCuenta = explode('-', $_POST['pago']);
 
-    // $usuariosCuenta[0] USUARIO QUE PAGA
-    // $usuariosCuenta[1] USUARIO QUE COBRA
+    // SE VAN A CERRAR LA DEUDA QUE RELACIONA A LOS DOS USUARIOS EN UNA ACTIVIDAD
+    // $usuariosCuenta[0] 
+    // $usuariosCuenta[1] 
 
     cobrarDeuda($_GET["a_id"], $usuariosCuenta[0], $usuariosCuenta[1], $pdo);
 
@@ -227,7 +228,7 @@ try {
     echo 'Error: ' . $ex->getMessage();
 }
 
-// $deudasFiltradas = filtrarDeudas($deudas, $pdo, $_GET['a_id']);
+$deudasFiltradas = filtrarDeudas($deudas, $pdo, $_GET['a_id']);
 
 // Invitacion de registro o actividad
 $correosNoValidos = [];
@@ -511,15 +512,15 @@ try {
                 <div class="listado-deudas">
 
                     <?php
-                    foreach ($deudas as $deuda) {
+                    foreach ($deudasFiltradas as $deuda) {
                     ?>
                         <div class="deudaBox">
-                            <p class="deuda"> <strong> <?php echo $deuda['USUARIO_DEBE'] ?> </strong> debe <?php echo $deuda['IMPORTE_TOTAL'] ?> a
-                                <strong> <?php echo $deuda['USUARIO_PAGA'] ?> </strong>
+                            <p class="deuda"> <strong> <?php echo $deuda['Paga'] ?> </strong> debe <?php echo $deuda['QUANTIA'] ?> a
+                                <strong> <?php echo $deuda['Cobra'] ?> </strong>
                             </p>
 
                             <form action="" method="post" class="form-boton-pagar">
-                                <input type="hidden" name="pago" value="<?php echo $deuda['USUARIO_DEBE'] . '-' . $deuda['USUARIO_PAGA'] ?>">
+                                <input type="hidden" name="pago" value="<?php echo $deuda['Paga'] . '-' . $deuda['Cobra'] ?>">
                                 <input class="boton-pagar" type="submit" name="submit-boton-pagar" value="PAGAR DEUDA" />
                             </form>
 
@@ -723,7 +724,7 @@ function comprobarUsuario ($pdo) {
 
 /* NO FUNCIONAL TODAVIA */
 
-function filtrarDeudas($deudas, $actividad, $pdo)
+function filtrarDeudas($deudas, $pdo, $actividad)
 {
 
 
@@ -732,16 +733,18 @@ function filtrarDeudas($deudas, $actividad, $pdo)
         FROM Actividades a
         INNER JOIN UsuariosActividades ua ON ua.ua_idAct = a.a_id
         INNER JOIN Usuarios u ON u.u_id = ua.ua_idUsu
-        WHERE a.a_id = :a.a_id;";
+        WHERE a.a_id = :a_id;";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':a.a_id', $actividad);
+        $stmt->bindParam(':a_id', $actividad);
 
         $stmt->execute();
-        $usuariosActividad = $stmt->fetch(PDO::FETCH_ASSOC);
+        $usuariosActividad = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $ex) {
         echo 'Error: ' . $ex->getMessage();
     }
 
+    $usuariosFiltrados = [];
+    $counter = 0;
 
     for ($i = 0; $i < count($usuariosActividad) - 1; $i++) {
 
@@ -750,15 +753,13 @@ function filtrarDeudas($deudas, $actividad, $pdo)
             try {
                 $sql = "CALL ComparadorDeudas(:usuarioUno, :usuarioDos, @quantia,  @debedor, @cobrador);";
                 $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':usuarioUno', $actividad);
-                $stmt->bindParam(':usuarioDos', $actividad);
+                $stmt->bindParam(':usuarioUno', $usuariosActividad[$i]['u_username']);
+                $stmt->bindParam(':usuarioDos', $usuariosActividad[$j]['u_username']);
 
                 $stmt->execute();
             } catch (PDOException $ex) {
                 echo 'Error: ' . $ex->getMessage();
             }
-
-
 
 
             try {
@@ -770,43 +771,19 @@ function filtrarDeudas($deudas, $actividad, $pdo)
             } catch (PDOException $ex) {
                 echo 'Error: ' . $ex->getMessage();
             }
+
+            if ($datosUsuarios["QUANTIA"] != null) {
+                
+
+                $usuariosFiltrados[$counter]['Paga'] = $datosUsuarios["Paga"];
+                $usuariosFiltrados[$counter]['Cobra'] = $datosUsuarios["Cobra"];
+                $usuariosFiltrados[$counter]['QUANTIA'] = $datosUsuarios["QUANTIA"];
+
+                $counter++;
+            }
+
         }
     }
 
-    return $deudas;
+    return $usuariosFiltrados;
 }
-
-// function filtrarDeudas($deudas, $pdo) {
-
-//     $deudasFiltradas = [];
-//     $isEqual = false;
-
-//     for ($i=0; $i < count($deudas); $i++) { 
-
-//         for ($j=$i+1; $j < count($deudas) - 1; $j++) { 
-
-//             $isEqual = false;
-
-//             if ($deudas[$i]['USUARIO_DEBE'] == $deudas[$j]['USUARIO_PAGA'] AND $deudas[$i]['USUARIO_PAGA'] == $deudas[$j]['USUARIO_DEBE']) {
-
-//                 if ($deudas[$i]['IMPORTE_TOTAL'] == $deudas[$j]['IMPORTE_TOTAL']) {
-//                     cobrarDeuda($_GET["a_id"], $deudas[$i]['USUARIO_DEBE'], $deudas[$i]['USUARIO_PAGA'], $pdo);
-//                     cobrarDeuda($_GET["a_id"], $deudas[$j]['USUARIO_DEBE'], $deudas[$j]['USUARIO_PAGA'], $pdo);
-
-//                     $isEqual = true;
-//                     $i++;
-//                     $j = count($deudas);
-//                 }
-
-//             }
-
-//         }
-//         if(!$isEqual) {
-//             array_push($deudasFiltradas, $deudas[$i]);
-//         }
-//     }
-
-
-
-//     return $deudasFiltradas;
-// }
