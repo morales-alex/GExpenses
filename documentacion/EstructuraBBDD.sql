@@ -66,7 +66,7 @@ FOREIGN KEY (l_idGasto) REFERENCES Gastos (g_id)
 
 -- PROCEDURE 1. CALCULA CUÁNTO LE DEBE UN USUARIO A OTRO EN UNA ACTIVIDAD EN CONCRETO
 DELIMITER //
-CREATE PROCEDURE BuscadorDeuda(IN Usuario1 varchar(30), IN Usuario2 varchar(30), OUT quantitat INT)
+CREATE PROCEDURE BuscadorDeuda(IN Usuario1 varchar(30), IN Usuario2 varchar(30), OUT quantitat INT, IN Actividad INT)
 BEGIN
 SET quantitat = (Select SUM(l_importe)
 from LineasGastos lg
@@ -74,27 +74,28 @@ inner join Gastos g on g.g_id = lg.l_idGasto
 inner join Actividades a on a.a_id = g.g_idAct
 inner join Usuarios uPaga on uPaga.u_id = g.g_idUsu
 inner join Usuarios uDebe on uDebe.u_id = lg.l_idUsu
-where a_id = 1 and l_pagado = 0 and uPaga.u_username = Usuario2 and uDebe.u_username = Usuario1 
+where a_id = Actividad and l_pagado = 0 and uPaga.u_username = Usuario2 and uDebe.u_username = Usuario1 
 group by uPaga.u_username, uDebe.u_username);
 END //
 DELIMITER ;
 
+
 -- PROCEDURE 2. CALCULA CUÁNTO SE DEBEN LOS USUARIOS ENTRE SÍ Y TE DEVUELVE UN VALOR DEPENDIENDO DE QUIÉN DEBE A QUIÉN
 DELIMITER //
-CREATE PROCEDURE ComparadorDeudas(IN Usuario1 varchar(30), IN Usuario2 varchar(30), OUT quantitat DOUBLE, OUT debedor varchar(30), OUT cobrador varchar(30))
+CREATE PROCEDURE ComparadorDeudas(IN Usuario1 varchar(30), IN Usuario2 varchar(30), OUT quantitat DOUBLE, OUT debedor varchar(30), OUT cobrador varchar(30), IN Actividad INT)
 BEGIN
 
 SET @deudaUsuario1 = 0;
 SET @deudaUsuario2 = 0;
 
-CALL BuscadorDeuda(Usuario1, Usuario2, @deudaUsuario1);
-CALL BuscadorDeuda(Usuario2, Usuario1, @deudaUsuario2);
+CALL BuscadorDeuda(Usuario1, Usuario2, @deudaUsuario1, Actividad);
+CALL BuscadorDeuda(Usuario2, Usuario1, @deudaUsuario2, Actividad);
 
 IF (@deudaUsuario1 NOT REGEXP '^[0-9]+$' || @deudaUsuario1 IS NULL) then
 	SET @deudaUsuario1 = 0;
 END IF;
 
-IF (@deudaUsuario2 NOT REGEXP '^[0-9]+$' || @deudaUsuario1 IS NULL) then
+IF (@deudaUsuario2 NOT REGEXP '^[0-9]+$' || @deudaUsuario2 IS NULL) then
 	SET @deudaUsuario2 = 0;
 END IF;
 
@@ -177,6 +178,6 @@ select Usuarios.u_id , i_id
 	where DATE_ADD(i_fecinv, INTERVAL + 2 minute) > sysdate();
 
 -- EJEMPLO DE LLAMADA DE LOS PROCEDURES
-CALL ComparadorDeudas("mfreixa", "admin", @quantia,  @debedor, @cobrador);
+CALL ComparadorDeudas("mfreixa", "admin", @quantia,  @debedor, @cobrador, 1);
 SELECT @quantia AS QUANTIA, @debedor AS Paga, @cobrador AS Cobra;
 SELECT @quantia;

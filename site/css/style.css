@@ -803,12 +803,22 @@ div#tituloParticipantes h2 {
     padding: 5px;
 }
 
-p#participante {
-    padding: 5px 15px;
+.participante {
+    display: flex;
+    justify-content: space-between;
     border-bottom: 1px solid #e8e8e8;
-    margin: 0 15px;
+    padding: 5px;
+    align-items: center;
+}
+
+div#participante {
+    margin: 0px 15px;
     color: #4e729a;
     font-weight: 600;
+}
+
+div.valorBalance {
+    margin: auto 10px;
 }
 
 /*----- DIALOG -----*/

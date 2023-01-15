@@ -178,21 +178,6 @@ try {
     echo 'Error: ' . $ex->getMessage();
 }
 
-
-// CONSULTA DEUDAS ENTRE USUARIOS
-try {
-    $sql = "SELECT * FROM LineasGastos";
-    $stmt = $pdo->prepare($sql);
-    /*$stmt->bindParam(':g_idAct', $codigoActividad);*/
-
-    $stmt->execute();
-    $deudasEntreUsuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $ex) {
-    echo 'Error: ' . $ex->getMessage();
-}
-
-
-
 // CONSULTA SUMA TOTAL GASTOS
 try {
     $sql = "SELECT sum(g_precio) as total FROM Gastos INNER JOIN Actividades ON Actividades.a_id = Gastos.g_idAct  WHERE g_idAct = :ua_idAct";
@@ -221,25 +206,7 @@ if (isset($_POST['submit-boton-pagar'])) {
 }
 
 // CONSULTA DEUDAS
-try {
-    $sql = "SELECT uDebe.u_username USUARIO_DEBE,uPaga.u_username USUARIO_PAGA, SUM(l_importe) IMPORTE_TOTAL
-    FROM LineasGastos lg
-    INNER JOIN Gastos g ON g.g_id = lg.l_idGasto
-    INNER JOIN Actividades a ON a.a_id = g.g_idAct
-    INNER JOIN Usuarios uPaga ON uPaga.u_id = g.g_idUsu
-    INNER JOIN Usuarios uDebe ON uDebe.u_id = lg.l_idUsu
-    WHERE a_id = :a_id AND l_pagado = 0
-    GROUP BY uPaga.u_username, uDebe.u_username";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':a_id', $_GET["a_id"]);
-
-    $stmt->execute();
-    $deudas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $ex) {
-    echo 'Error: ' . $ex->getMessage();
-}
-
-$deudasFiltradas = filtrarDeudas($deudas, $pdo, $_GET['a_id']);
+$deudasFiltradas = filtrarDeudas($pdo, $_GET['a_id']);
 
 // Invitacion de registro o actividad
 $correosNoValidos = [];
@@ -509,12 +476,11 @@ try {
             <div class="resumen-balance">
                 <h5>Resumen balance</h5>
                 <?php
-                foreach ($participantes as $participante) {
-                    $usuarioParticipante = $participante['u_username'];
+                foreach ($deudasFiltradas["Balance"] as $usuarioBalance => $dineroBalance) {
                 ?>
                     <div class="usuario-balance">
-                        <div class="nombre-usuario-balance"><?php echo $usuarioParticipante ?></div>
-                        <div class="importe-balance">0,00€</div>
+                        <div class="nombre-usuario-balance"><?php echo $usuarioBalance ?></div>
+                        <div class="importe-balance"><?php echo $dineroBalance ?>€</div>
                     </div>
                 <?php
                 }
@@ -525,11 +491,11 @@ try {
                 <div class="listado-deudas">
 
                     <?php
-                    foreach ($deudasFiltradas as $deuda) {
+                    foreach ($deudasFiltradas["Deudas"] as $deuda) {
                     ?>
                         <div class="deudaBox">
-                            <p class="deuda"> <strong> <?php echo $deuda['Paga'] ?> </strong> debe <?php echo $deuda['QUANTIA'] ?> a
-                                <strong> <?php echo $deuda['Cobra'] ?> </strong>
+                            <p class="deuda"> <strong> <?php echo $deuda['Cobra'] ?> </strong> debe <?php echo $deuda['QUANTIA'] ?> a
+                                <strong> <?php echo $deuda['Paga'] ?> </strong>
                             </p>
 
                             <form action="" method="post" class="form-boton-pagar">
@@ -628,13 +594,18 @@ try {
                     </div>
 
                     <?php
-
-                    foreach ($participantes as $participante) {
+                    foreach ($deudasFiltradas["Balance"] as $usuarioBalance => $dineroBalance) {
                     ?>
-                        <p id="participante"><?php echo $participante['u_username'] ?></p>
+                        <div class="participante">
+                            <div id="participante"><?php echo $usuarioBalance ?> </div>
+                            <div class="valorBalance">
+                            <div class="importe-balance"><?php echo $dineroBalance ?>€</div>
+                            </div>
+                        </div>
 
                     <?php
                     }
+
                     $pdo = null;
                     ?>
 
@@ -689,7 +660,8 @@ function cobrarDeuda($actividad, $pagador, $cobrador, $pdo)
                     INNER JOIN Gastos g ON g.g_id = lg.l_idGasto
                     INNER JOIN Usuarios uCobra ON uCobra.u_id = g.g_idUsu
                     INNER JOIN Usuarios uDebe ON uDebe.u_id = lg.l_idUsu
-            WHERE g_idAct = :g_idAct AND lg.l_pagado = 0 AND uCobra.u_username = :uCobra AND uDebe.u_username = :uDebe);";
+            WHERE g_idAct = :g_idAct AND lg.l_pagado = 0 AND 
+            (uCobra.u_username = :uCobra AND uDebe.u_username = :uDebe OR uCobra.u_username = :uDebe AND uDebe.u_username = :uCobra));";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':g_idAct', $actividad);
         $stmt->bindParam(':uCobra', $cobrador);
@@ -733,7 +705,7 @@ function comprobarUsuario($pdo)
 
 
 
-function filtrarDeudas($deudas, $pdo, $actividad)
+function filtrarDeudas($pdo, $actividad)
 {
 
 
@@ -753,17 +725,26 @@ function filtrarDeudas($deudas, $pdo, $actividad)
     }
 
     $usuariosFiltrados = [];
-    $counter = 0;
+
+    $usuariosFiltrados['Balance'] =  [];
+    $usuariosFiltrados['Deudas'] =  [];
+
+    $counterDeuda = 0;
+
+    foreach ($usuariosActividad as $usuario) {
+        $usuariosFiltrados['Balance'][$usuario['u_username']] = 0;
+    }
 
     for ($i = 0; $i < count($usuariosActividad) - 1; $i++) {
 
         for ($j = $i + 1; $j < count($usuariosActividad); $j++) {
 
             try {
-                $sql = "CALL ComparadorDeudas(:usuarioUno, :usuarioDos, @quantia,  @debedor, @cobrador);";
+                $sql = "CALL ComparadorDeudas(:usuarioUno, :usuarioDos, @quantia,  @debedor, @cobrador, :Actividad);";
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':usuarioUno', $usuariosActividad[$i]['u_username']);
                 $stmt->bindParam(':usuarioDos', $usuariosActividad[$j]['u_username']);
+                $stmt->bindParam(':Actividad', $actividad);
 
                 $stmt->execute();
             } catch (PDOException $ex) {
@@ -784,11 +765,17 @@ function filtrarDeudas($deudas, $pdo, $actividad)
             if ($datosUsuarios["QUANTIA"] != null) {
 
 
-                $usuariosFiltrados[$counter]['Paga'] = $datosUsuarios["Paga"];
-                $usuariosFiltrados[$counter]['Cobra'] = $datosUsuarios["Cobra"];
-                $usuariosFiltrados[$counter]['QUANTIA'] = $datosUsuarios["QUANTIA"];
+                $usuariosFiltrados['Deudas'][$counterDeuda]['Paga'] = $datosUsuarios["Paga"];
+                $usuariosFiltrados['Deudas'][$counterDeuda]['Cobra'] = $datosUsuarios["Cobra"];
+                $usuariosFiltrados['Deudas'][$counterDeuda]['QUANTIA'] = $datosUsuarios["QUANTIA"];
 
-                $counter++;
+                $usuariosFiltrados['Balance'][$datosUsuarios["Paga"]] += $datosUsuarios["QUANTIA"];
+                $usuariosFiltrados['Balance'][$datosUsuarios["Cobra"]] -= $datosUsuarios["QUANTIA"];
+
+                $counterDeuda++;
+            } else if ($datosUsuarios["QUANTIA"] == 0) {
+                // En caso de que la diferencia de que lo que se deben sea 0 se salda la deuda
+                cobrarDeuda($actividad, $datosUsuarios["Paga"], $datosUsuarios["Cobra"], $pdo);
             }
         }
     }
