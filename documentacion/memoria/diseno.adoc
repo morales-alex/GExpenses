@@ -1,10 +1,9 @@
 //Disseny: disseny de base de dades, mockup d’interfícies, etcètera.
 === Diseño
 
-*[.underline]#Estructura Base de Datos# _[10/11/2022]_*
+*[.underline]#Estructura Base de Datos#*
 
-La primera aproximación a la base de datos factible y que hemos
-implementado en la solución actual es la siguiente:
+La estructura de la base de datos de la aplicación es la siguiente:
 
 image::documentacion/BBDD_ER_GExpenses.png[Estructura BBDD]
 
@@ -19,15 +18,13 @@ También hemos creado una tabla *gastos* que serán las líneas de actividades, 
 Por otro lado hemos creado una tabla para las *invitaciones.* Donde se almacenará toda la información necesaria para la inserción de un nuevos usuario por correo. Como por ejemplo la fecha de envío de la invitación, para a posteriori ver si ha caducado y no valga ese enlace para unirse a la actividad.
 
 Como *nomenclatura* de las columnas de la base de datos hemos decidido
-usar minúsculas y la primera inicial del nombre de la tabla para que
+usar minúsculas y la primera inicial del nombre de la tabla para
 identificar de manera más fácil a qué columna nos estamos refiriendo.
 
 === Mockup
-Después de hablar i hacer una lluvia de ideas de como podia ser la idea inicial de la web, siguendo con la _guia de estilos_ hemos creado el siguiente mockup: Para poder acceder al mockup haz clic https://marvelapp.com/start-user-test/aPaRQ6Hj7pl1JAHYoIt3[aquí]
+Siempre que teníamos que realizar cualquier cambio en el frontend de la página lo comentábamos brevemente los tres integrantes del grupo para tener una idea general de lo que se va a realizar. Siempre siguiente la _guia de estilos_. Todos los mockup que hemos realizado para las ventanas de la página web estsán en el siguiente link -> https://marvelapp.com/start-user-test/aPaRQ6Hj7pl1JAHYoIt3[aquí]
 
 === Implementación html/css
 Siguiendo la guia de estilos y el Mockup, hemos desarrolado las páginas con flex.
- Con las propiedades "flex" hemos situado en el centro de la pantalla el formulario de inicio de sesión.
- De esta forma conseguimos que la pantalla de login no se vea vacia y el usuario centre su atencion
- directamente en el formulario.
-Y por consiguiente en las siguientes pantallas hemos seguido usando flex para que la adhición de nuevos elementos se realice de una manera más sencilla.
+ Hemos utilizado las propiedades "flex" para situar todos los elementos de las diferentes páginas de la página web.
+ De esta forma hemos conseguido que la página se adapte a un amplio abanico de resoluciones de pantalla.

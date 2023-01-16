@@ -8,7 +8,7 @@ La creación de està aplicación web *GExpenses* ha sido creada por:
 * *Álex* Morales Luna.
 
 
-Te vas de viaje con tus amigos y después de todo el viaje, teneis que _dividir gastos_. Puede ser un processo fatigante. _GExpenses soluciona el problema_.
+Te vas de viaje con tus amigos y durante todo el viaje teneis que _dividir gastos_. Puede ser un proceso fatigante. _GExpenses soluciona el problema_.
 ====
-*GExpenses* nace con el objetivo de facilitar la division de gastos de una actividad entre los participantes de la misma.
+*GExpenses* nace con el objetivo de facilitar la division de gastos entre amigos de una manera sencilla
 ====

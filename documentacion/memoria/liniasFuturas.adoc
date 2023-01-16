@@ -1,1 +1,5 @@
 == Lineas Futuras
+
+En una futura versión de la aplicación tenemos en mente crear un apartado para la modificación de un usuario, donde una vez al mes podrás cambiarte el nombre de usuario si quieres, o subir una foto de perfil dónde se te pueda identificar de forma más clara.
+
+También hemos planteado implementar opciones como de modificar el nombre de una actividad y borrar usuarios de una actividad los cuáles ya no participen en dicha actividad.
