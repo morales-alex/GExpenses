@@ -181,3 +181,4 @@ select Usuarios.u_id , i_id
 CALL ComparadorDeudas("mfreixa", "admin", @quantia,  @debedor, @cobrador, 1);
 SELECT @quantia AS QUANTIA, @debedor AS Paga, @cobrador AS Cobra;
 SELECT @quantia;
+*/
