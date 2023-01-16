@@ -142,7 +142,7 @@ INSERT INTO gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1
 
 
 /* QUERIES DE AYUDA */
-
+/*
 -- LISTA DE PARTICIPANTES DE UNA ACTIVIDAD
 SELECT u.u_username
 	FROM Actividades a
@@ -181,3 +181,4 @@ select Usuarios.u_id , i_id
 CALL ComparadorDeudas("mfreixa", "admin", @quantia,  @debedor, @cobrador, 1);
 SELECT @quantia AS QUANTIA, @debedor AS Paga, @cobrador AS Cobra;
 SELECT @quantia;
+*/
