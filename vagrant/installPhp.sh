@@ -8,10 +8,5 @@ sudo apt-get -y install php-mysql
 sudo apt-get install php8.0-mysql
 sudo rm -r /var/www/html/*
 sudo cp -a /vagrant/site/. /var/www/html/
-sudo cp /vagrant/ /etc/php/8.0/apache2/
+sudo cp /vagrant/php.ini /etc/php/8.0/apache2/
 sudo systemctl restart apache2.service
-#sudo cat >> /var/www/html/info.php <<  'END'
-#<?php phpinfo(); ?>
-#END
-#sudo nano /etc/php/8.0/apache2/php.ini
-#sudo xdotool key ctrl+x
