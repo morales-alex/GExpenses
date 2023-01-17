@@ -5,7 +5,7 @@
 
 La estructura de la base de datos de la aplicación es la siguiente:
 
-image::documentacion/BBDD_ER_GExpenses.png[Estructura BBDD]
+image::../BBDD_ER_GExpenses.png[Estructura BBDD]
 
 Hemos pensado en esta solución ya que Usuarios y Actividades son una
 relación *'n, n'* por lo que se debía crear una tabla intermedia, puedes
@@ -22,7 +22,7 @@ usar minúsculas y la primera inicial del nombre de la tabla para
 identificar de manera más fácil a qué columna nos estamos refiriendo.
 
 === Mockup
-Siempre que teníamos que realizar cualquier cambio en el frontend de la página lo comentábamos brevemente los tres integrantes del grupo para tener una idea general de lo que se va a realizar. Siempre siguiente la _guia de estilos_. Todos los mockup que hemos realizado para las ventanas de la página web estsán en el siguiente link -> https://marvelapp.com/start-user-test/aPaRQ6Hj7pl1JAHYoIt3[aquí]
+Siempre que teníamos que realizar cualquier cambio en el frontend de la página lo comentábamos brevemente los tres integrantes del grupo para tener una idea general de lo que se va a realizar. Siempre siguiente la _guia de estilos_. Todos los mockup que hemos realizado para las ventanas de la página web estsán en el siguiente link, -> https://marvelapp.com/start-user-test/aPaRQ6Hj7pl1JAHYoIt3[aquí]
 
 === Implementación html/css
 Siguiendo la guia de estilos y el Mockup, hemos desarrolado las páginas con flex.
