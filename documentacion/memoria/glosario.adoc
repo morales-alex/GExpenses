@@ -1,1 +1,3 @@
 == Glosario
+https://developer.mozilla.org/es/docs/Web/JavaScript-[JavaScripT] - https://developer.mozilla.org/es/docs/Web/HTML[HTML] - https://developer.mozilla.org/es/docs/Learn/CSS[CSS] - https://developer.hashicorp.com/vagrant/tutorials/getting-started[Vagrant] - https://css-tricks.com/snippets/css/a-guide-to-flexbox/[Guia FlexBox] - https://www.php.net/manual/es/[PHP] -  https://www.w3schools.com/sql/[SQL]
+
