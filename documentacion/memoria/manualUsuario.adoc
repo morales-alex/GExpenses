@@ -1,1 +1,3 @@
 == Manual Usuario
+
+- Para hacer pruebas de la aplicación sin registrarse se puede utilizar el siguiente usuario: Usuario: *admin* -  Contraseña: *123*
