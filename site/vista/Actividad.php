@@ -158,6 +158,24 @@ if (isset($_POST['conceptoGastoSencillo']) && isset($_POST['usuarioPagador']) &&
                 }
             }
         }
+
+        try {
+
+            $sql = "UPDATE Actividades SET a_fecUltMod = sysdate()
+            WHERE a_id = :a_id;";
+            $stmt = $pdo->prepare($sql);
+
+            $stmt->bindParam(':a_id', $codigoActividad);
+
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->beginTransaction();
+
+            $stmt->execute();
+            $pdo->commit();
+        } catch (PDOException $ex) {
+            $pdo->rollBack();
+        }
+
     }
 
     unset($_POST['conceptoGastoSencillo']);

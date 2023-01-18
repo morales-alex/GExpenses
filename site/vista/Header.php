@@ -16,16 +16,16 @@ if (!isset($_SESSION['usuario'])) {
         <div id="opcionesBox">
             <a href="./home.php"><img id="logo" src="../img/LOGO_ESTIRADO.png" alt="Logo cabecera"></a>
             
-            <div class="opcion"><a href="./home.php">Actividades</a></div>
-            <div class="opcion">Invitaciones</div>
-            <div class="opcion">Social</div>
-            <div class="opcion">Glosario</div>
+            <a href="./home.php">
+            <div class="opcion">Actividades</div>
+            </a>
         </div>
 
-        <a id="usuario"> <?php echo  $_SESSION["usuario"]->getU_username() ?> </a>
-        
+    
+        <div class="opcionesUsuario">
+        <a id="usuario"> <?php echo $_SESSION["usuario"]->getU_username(); ?> </a>
         <a href="./logout.php"><img class="logout" src="../img/logout.png" alt="Icono Logout"></a>
-        
+        </div>
 
     </nav>
 </header>
