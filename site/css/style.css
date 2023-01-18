@@ -281,6 +281,10 @@ div.ok-message {
     line-height: 1;
 }
 
+.link-actividad {
+    margin: 0px;
+}
+
 .fecha {
     font-size: 13px;
     margin: 0;
@@ -309,12 +313,10 @@ div.ok-message {
 
 .boton-nueva-actividad {
     padding: 8px 12px;
-    border-radius: 10px;
+    border-radius: 3px;
     font-weight: 600;
     margin-right: 15px;
     background-color: #4E729A;
-
-
     text-decoration: none;
     color: #FFF;
     font-weight: 600;
@@ -331,8 +333,13 @@ div.ok-message {
     box-shadow: 0 0 #0000, 0 0 #0000, 0 0px 10px 0px rgba(0, 0, 0, 0.38);
 }
 
-.boton-nueva-actividad:hover, input#addParticipantes:hover, input:hover {
+.boton-nueva-actividad:hover, input#addParticipantes:hover, input:hover, .ordenSeleccion:hover {
     opacity: 0.9;
+    cursor: pointer;
+}
+
+.estilo-icono-opcion:hover {
+    cursor: pointer;
 }
 
 .boton-nueva-actividad a, .boton-nueva-actividad input {
@@ -381,7 +388,7 @@ header {
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    margin-right: 5px;
+    margin-right: 25px;
 }
 
 
@@ -389,13 +396,12 @@ a#usuario {
     color: white;
     display: flex;
     align-items: center;
-    justify-content: center;
     border-radius: 10px;
     font-weight: 600;
-    margin-left: 200px;
-    background-color: cornflowerblue;
+    background-color: #4E729A;
     width: auto;
     padding: 0px 24px;
+    margin-right: 60px;
 }
 
 .opcion {
@@ -414,8 +420,17 @@ a#usuario {
     color: white;
 }
 
+div.opcionesUsuario {
+    display: flex;
+}
+
 img.logout {
     width: 39px;
+}
+
+img.logout:hover {
+    width: 39px;
+    opacity: 0.9;
 }
 
 
@@ -646,7 +661,7 @@ div#contenidoActividad {
 div#actividadMain {
     height: 100%;
     width: 65%;
-    margin: 0 25px;
+    margin: 0 25px 20px 25px;
 }
 
 h1#tituloActividad {
@@ -888,12 +903,12 @@ input#deleteCorreo:hover {
     opacity: 0.75;
 }
 
-span#cancelarX:hover, #cancelarGastoX:hover {
+span#cancelarX:hover, #cancelarGastoX:hover, span#xBalance:hover {
     opacity: 0.4;
     cursor: pointer;
 }
 
-#cancelarX, #cancelarGastoX {
+#cancelarX, #cancelarGastoX, span#xBalance {
     height: fit-content;
 }
 
@@ -991,16 +1006,17 @@ input[type=number] {
 
 .ordenar select {
     padding: 8px 12px;
-    border-radius: 10px;
+    border-radius: 3px;
     font-weight: 600;
-    margin-right: 15px;
+    margin: 5px 15px 0px 0px;
     background-color: #4E729A;
     text-decoration: none;
     color: #FFF;
     font-weight: 600;
-    border: none;
     font-family: 'Montserrat';
     font-size: 16px;
+    border:0px;
+    outline:0px;
 }
 
 .usuario-balance {
@@ -1029,7 +1045,7 @@ input[type=number] {
 
 .cero {
     color: #606060;
-    background-color: #d9d9d9;
+    background-color: #eaeaea;
     width: fit-content;
     padding: 6px;
     border-radius: 10px;
@@ -1051,10 +1067,11 @@ input[type=number] {
     display: flex;
     align-items: center;
     border-bottom: 1px solid #4e729a;
+    justify-content: space-between;
 }
 
 .form-boton-pagar {
-    margin: 0 40% 0 auto;
+    /*margin: 0 40% 0 auto;*/
 }
 
 .boton-pagar {

@@ -158,6 +158,24 @@ if (isset($_POST['conceptoGastoSencillo']) && isset($_POST['usuarioPagador']) &&
                 }
             }
         }
+
+        try {
+
+            $sql = "UPDATE Actividades SET a_fecUltMod = sysdate()
+            WHERE a_id = :a_id;";
+            $stmt = $pdo->prepare($sql);
+
+            $stmt->bindParam(':a_id', $codigoActividad);
+
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->beginTransaction();
+
+            $stmt->execute();
+            $pdo->commit();
+        } catch (PDOException $ex) {
+            $pdo->rollBack();
+        }
+
     }
 
     unset($_POST['conceptoGastoSencillo']);
@@ -583,10 +601,11 @@ try {
                         <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/add-user-icon.png">
                         <a href="#" class="titulo-opcion">Invitar usuarios</a>
                     </div>
-                    <div class="lista-opciones editUser">
+                    <!-- BOTÓN GESTIONAR USUARIOS DE UNA ACTIVIDAD DESACTIVADO -->
+                    <!-- <div class="lista-opciones editUser">
                         <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/editar-usuari.png">
                         <a href="#" class="titulo-opcion">Gestionar usuarios</a>
-                    </div>
+                    </div> -->
                 </div>
                 <div id="participantes">
                     <div id="tituloParticipantes">

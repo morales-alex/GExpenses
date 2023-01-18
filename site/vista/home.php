@@ -95,7 +95,7 @@ $pdo = null;
             <div class="ordenar">
                 <div class="boton-nueva-actividad" id='addActivityButton'>Añadir actividad +</div>
                 <form method="post" action="home.php" name="orden">Ordenar por:   
-                    <select name="ordenActividad" onchange="orden.submit();">
+                    <select class="ordenSeleccion" name="ordenActividad" onchange="orden.submit();">
                         <?php
                         if ($seleccion === 'fechaCreacion') {
                         ?>
@@ -121,17 +121,21 @@ $pdo = null;
             foreach ($consultaOrdenada as $actividad) {
             ?>
                 <div class="actividad" id="<?php echo $actividad['a_id'] ?>">
-                    <a class="caja-interior-actividad" href="./Actividad.php?a_id=<?php echo $actividad['a_id'] ?>">
+                    
                         <div class="caja-titulo-actividad">
                             <h3><?php echo $actividad['a_nombre'] ?></h3>
                             <p><?php echo $actividad['a_descripcion'] ?></p>
                             <p class="fecha">Fecha de creación: <span class="fechaCreacion"><?php echo $actividad['a_fecCreacion'] ?></span></p>
                             <p class="fecha">Fecha de modificación: <span class="fechaModificacion"><?php echo $actividad['a_fecUltMod'] ?></span></p>
                         </div>
+
+                        <a style="margin:0px;"  class="link-actividad" href="./Actividad.php?a_id=<?php echo $actividad['a_id'] ?>">
                         <div class="caja-boton-actividad">
+                            
                             <div>VER ACTIVIDAD</div>
+                            
                         </div>
-            </a>
+                        </a>
                 </div>
             <?php
             }
