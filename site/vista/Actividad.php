@@ -416,12 +416,12 @@ try {
                     </div>
                     <div class="container-tipo-gasto">
                         <label for="cuantia" class="labelGasto">Cuantía:</label>
-                        <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0" min="0">
+                        <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0" step='0.01' >
                     </div>
                 </div>
 
                 <div class="error-decimales error-messageForm">La cuantía no puede contener más de dos decimales.</div>
-                <div class="error-vacio error-messageForm">El campo de cuantía no puede estar vacía.</div>
+                <div class="error-vacio error-messageForm">El campo de cuantía debe ser superior a 0.</div>
 
                 <label for="cuantia" class="labelGasto">Participantes:</label>
 
@@ -437,7 +437,7 @@ try {
                             </div>
                             <div class="gastosFormCol">
                                 <label class="proporcion" style="display: block;">Pagará:</label>
-                                <input type="number" name="lineaPagos[]" class="paga" id="echo $usuarioParticipante" value="0" readonly="readonly"></input>
+                                <input type="number" name="lineaPagos[]" class="paga" id="echo $usuarioParticipante" value="0" step='0.01' readonly="readonly"></input>
                             </div>
                             <div class="gastosFormColProp" style="display: none;">
                                 <label class="labelImporteProporcional" for="importeProporcional">Proporción:</label>
@@ -454,7 +454,7 @@ try {
 
                 <div id="dialogFooterParticipante">
                     <input type="button" class="boton-aceptar" value="Cerrar" id="cancelGastoForm"></input>
-                    <input type="button" name="enviar" id="boton-aceptar-gastos" value="Añadir" class="boton-aceptar">
+                    <input type="submit" name="enviar" id="boton-aceptar-gastos" value="Añadir" class="boton-aceptar">
                 </div>
 
             </form>
