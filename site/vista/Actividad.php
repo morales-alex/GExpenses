@@ -601,10 +601,11 @@ try {
                         <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/add-user-icon.png">
                         <a href="#" class="titulo-opcion">Invitar usuarios</a>
                     </div>
-                    <div class="lista-opciones editUser">
+                    <!-- BOTÓN GESTIONAR USUARIOS DE UNA ACTIVIDAD DESACTIVADO -->
+                    <!-- <div class="lista-opciones editUser">
                         <img id="addParticipantes" class="estilo-icono-opcion" type="image" alt="Icono Add user" src="../img/editar-usuari.png">
                         <a href="#" class="titulo-opcion">Gestionar usuarios</a>
-                    </div>
+                    </div> -->
                 </div>
                 <div id="participantes">
                     <div id="tituloParticipantes">

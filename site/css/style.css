@@ -661,7 +661,7 @@ div#contenidoActividad {
 div#actividadMain {
     height: 100%;
     width: 65%;
-    margin: 0 25px;
+    margin: 0 25px 20px 25px;
 }
 
 h1#tituloActividad {

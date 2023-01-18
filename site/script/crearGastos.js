@@ -202,10 +202,10 @@ const opcionProporcion = () => {
     proporcion[index] = parseInt(valor.value);
   });
 
-
+  const valorCadaUnidad = precioTotal.value / sumadorProporcions
 
   aPagar.forEach((valor, index) => {
-    valor.value = Number(Number.parseFloat((proporcion[index] / numeroParticipantes * precioTotal.value)).toFixed(2));
+    valor.value = parseFloat((proporcion[index] * valorCadaUnidad)).toFixed(2);
   });
 
 }
