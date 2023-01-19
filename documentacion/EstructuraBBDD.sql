@@ -1,7 +1,6 @@
 CREATE DATABASE GExpenses_3P1;
 
 -- drop table gastos;drop table UsuariosActividades;drop table Usuarios;drop table Actividades;
-
 USE GExpenses_3P1;
 
 CREATE TABLE IF NOT EXISTS Usuarios (
@@ -19,8 +18,8 @@ a_id int AUTO_INCREMENT,
 a_nombre varchar(30) NOT NULL,
 a_moneda varchar(3) NOT NULL,
 a_descripcion varchar(130),
-    a_fecCreacion date,
-    a_fecUltMod date,
+    a_fecCreacion datetime,
+    a_fecUltMod datetime,
 PRIMARY KEY(a_id)
 ) ENGINE=INNODB;
 
@@ -49,7 +48,7 @@ g_idUsu int, -- PERSONA QUE PAGA
 g_idAct int, -- ACTIVIDAD RELACIONADA
 g_precio double NOT NULL,
 g_concepto varchar(50),
-    g_fecCrea date,
+    g_fecCrea datetime,
 PRIMARY KEY (g_id),
 FOREIGN KEY (g_idUsu, g_idAct) REFERENCES UsuariosActividades (ua_idUsu, ua_idAct)
 ) ENGINE=INNODB;
@@ -127,6 +126,7 @@ INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) v
 INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('Viaje a las bahamas', 'EUR', 'Esto es una prueba de la descripcion de la actividad', '2022/11/01', '2022/11/18');
 INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('Visita al palau de la música', 'EUR', 'Test Test TEst', '2022/11/05', '2022/11/13');
 INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('Gincana por el monte', 'USD', 'Test Test TEst', '2022/11/08', '2022/11/15');
+INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('TestActiv', 'USD', 'Test Test TEst', '2022/11/08 16:34:25', '2022/11/15 12:34:25');
 
 INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (1, 1);
 INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (2, 1);
@@ -136,9 +136,8 @@ INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (4, 1);
 INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (1, 2);
 INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (1, 3);
 
-INSERT INTO Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 55.90, 'Bocadillos de jamón con tomate', sysdate());
-INSERT INTO Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 300.56, 'Buceo con tiburones', sysdate());
-
+INSERT INTO Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 55.90, 'Bocadillos de jamón con tomate',  sysdate());
+INSERT INTO Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 300.56, 'Buceo con tiburones',  sysdate());
 
 
 /* QUERIES DE AYUDA */
