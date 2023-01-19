@@ -434,7 +434,7 @@ try {
                     </div>
                     <div class="container-tipo-gasto">
                         <label for="cuantia" class="labelGasto">Cuantía:</label>
-                        <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0" step='0.01' >
+                        <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0" step='0.01'>
                     </div>
                 </div>
 
@@ -486,7 +486,7 @@ try {
             ?>
         </dialog>
 
-        <dialog id='balanceDialog' class="dialogForm centered" close>
+        <dialog id='balanceDialog' class="dialogForm centered">
             <div id="dialog-activityForm" class="dialog-header">
                 <h3>Balance</h3>
                 <span id='xBalance'>x</span>
@@ -518,6 +518,7 @@ try {
 
                             <form action="" method="post" class="form-boton-pagar">
                                 <input type="hidden" name="pago" value="<?php echo $deuda['Paga'] . '-' . $deuda['Cobra'] ?>">
+                                <input type="hidden" name="reset_balance" value="1">
                                 <input class="boton-pagar" type="submit" name="submit-boton-pagar" value="PAGAR DEUDA" />
                             </form>
 
@@ -530,7 +531,15 @@ try {
                 </div>
             </div>
         </dialog>
-
+        <?php if (isset($_POST['reset_balance'])) {
+            /*echo 'open=""';
+            unset($_POST['reset_balance']);*/
+            echo '<script type="text/javascript">';
+            echo 'document.querySelector("#balanceDialog").showModal();';
+            echo '</script>';
+            unset($_POST['reset_balance']);
+        }
+        ?>
         <h1 id="tituloActividad">
 
             <?php
@@ -618,7 +627,7 @@ try {
                         <div class="participante">
                             <div id="participante"><?php echo $usuarioBalance ?> </div>
                             <div class="valorBalance">
-                            <div class="importe-balance"><?php echo $dineroBalance ?>€</div>
+                                <div class="importe-balance"><?php echo $dineroBalance ?>€</div>
                             </div>
                         </div>
 
