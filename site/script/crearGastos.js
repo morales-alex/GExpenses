@@ -250,10 +250,10 @@ formularioGasto.addEventListener("submit", (e) => {
 const fecha = document.querySelectorAll(".fecha");
 const fechaTitulo = document.querySelector(".fecha-titulo");
 
-fechaTitulo.innerHTML = (fechaTitulo.innerText).split('-').reverse().join('-');
+fechaTitulo.innerHTML = ((fechaTitulo.innerText).slice(0,10)).split('-').reverse().join('-');
 
 fecha.forEach(fechaValor => {
-  let fechaGirada = (fechaValor.innerText).split('-').reverse().join('-');
+  let fechaGirada = ((fechaValor.innerText).slice(0,10)).split('-').reverse().join('-');
   fechaValor.innerHTML = fechaGirada;
 });
 

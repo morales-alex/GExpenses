@@ -100,7 +100,7 @@ const fechaCreacion = document.querySelectorAll(".fechaCreacion");
 const fechaModificacion = document.querySelectorAll(".fechaModificacion");
 
 const girarFecha = (fechaValor) => {
-  return (fechaValor.innerText).split('-').reverse().join('-');
+  return ((fechaValor.innerText).slice(0,10)).split('-').reverse().join('-');
 }
 
 fechaCreacion.forEach(fechaValor => {
@@ -108,7 +108,7 @@ fechaCreacion.forEach(fechaValor => {
 });
 
 fechaModificacion.forEach(fechaValor => {
-  fechaValor.innerHTML = girarFecha(fechaValor);
+  fechaValor.innerText = girarFecha(fechaValor);
 });
 
 
