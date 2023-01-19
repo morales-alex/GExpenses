@@ -2,7 +2,7 @@
 Finalizando, estamos orgullosos de el trabajo realizado en estos meses. 
 Durante el camino del desarrollo de la aplicación, hemos aprendido los siguientes aspectos que queremos remarcar:
 
-Trabajar con con *tecnologias vanilla*, lo qual es una arma de doble filo; Tienes total flexibilidad con el lenguaje utilizado. pero tienes que conocer bien cuales són los fuertes del lenguaje y debilidades.
-Asimiso tener que ordenar los archivos y decidir como distribuir las funcionalidades entre los mismos.
+Trabajar con con *tecnologias vanilla*, lo qual es una arma de doble filo; Tienes total flexibilidad con el lenguaje utilizado. pero tienes que conocer bien cuales son los fuertes del lenguaje y debilidades.
+Asimismo tener que ordenar los archivos y decidir como distribuir las funcionalidades entre los mismos.
 
-Por otro lado: *organización*, *delegación de trabajo*, *saber escuchar, valorar y dar ideas*. Són las palabras que describirian nuestro trabajo colaborativo. Teniendo los 3 un objetivo cómun. *Aprender*.
+Por otro lado: *organización*, *delegación de trabajo*, *saber escuchar*, *valorar* y *dar ideas*. Són las palabras que describirian nuestro trabajo colaborativo. Teniendo los 3 un objetivo cómun. *Aprender*.

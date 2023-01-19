@@ -149,7 +149,6 @@ const controladorGastos = () => {
 opcionDePago.addEventListener("change", (e) => {
   e.preventDefault();
   controladorGastos();
-  validadorGasto();
 });
 
 precioTotal.addEventListener("keyup", (e) => {
