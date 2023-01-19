@@ -1,7 +1,8 @@
 import { ValidacionCuantiaAvanzado } from '../script/validacionGastos.js'; //importacion de la classe
 
 const formularioGasto = document.querySelector("#addGastos");
-
+//Concepto
+const concepto = document.querySelector("#conceptoValue")
 const errorConcepto = document.querySelector("#nombreErrorConcepto");
 const errorCuantias = document.querySelector("#nombreErrorCuantias");
 
@@ -26,38 +27,66 @@ let opcionSeleccionada;
 let validacionCuantiaAvanzado;
 let proporcion = [];
 
-function addGastos() {
-  let gastoValido = true;
-  const concepto = document.querySelector("#conceptoValue").value;
 
-  if (concepto.length > 50) {
-    gastoValido = false;
-    errorConcepto.style.display = "block";
-  } else if (concepto.length <= 0) {
-    gastoValido = false;
-    errorConcepto.style.display = "block";
+/// VALIDAR ENTRADA DE 2 DECIMALES MAXIMO
+const validarDecimales = () => {
+  var regexDecimales = new RegExp(
+    "^\-?[0-9]+(?:\.[0-9]{1,2})?$"
+  );
+  var comprovacionDecimales = regexDecimales.test(precioTotal.value);
+
+  if (precioTotal.value == "" || precioTotal.value == "0") {
+    precioTotal.setAttribute("style", "border-color:red;");
+    errorVacio.setAttribute("style", "display: block;");
+    return false;
   } else {
-    errorConcepto.style.display = "none";
+    precioTotal.setAttribute("style", "border-color:black;");
+    errorVacio.setAttribute("style", "display: none;");
+  }if (comprovacionDecimales) {
+      precioTotal.setAttribute("style", "border-color:black;");
+      errorDecimales.setAttribute("style", "display: none");
+      return true;
+    } else {
+      precioTotal.setAttribute("style", "border-color:red;");
+      errorDecimales.setAttribute("style", "display: block");
+      return false;
+    }
+  
+};
+function validarErrorConcepto(){
+  let length = concepto.value.length;
+
+  if (length > 50 || length <= 0) {
+    errorConcepto.style.display = "block";
+    return false;
   }
 
+  errorConcepto.style.display = "none";
+  return true;
+  
+}
+function sumatorioAPagar(){
   let suma = 0;
-  const total = parseFloat(precioTotal.value);
-
   aPagar.forEach((pago) => {
     suma += parseFloat(pago.value);
   });
+  return suma;
+}
+function validarErrorCuantias(){
+  const total = parseFloat(precioTotal.value);
+  let suma = sumatorioAPagar();
 
-  if (suma + 0.02 < total || suma > total + 0.02) {
-    gastoValido = false;
+  if (suma + 0.02 < total || suma > total + 0.02 || total <= 0) {
     errorCuantias.style.display = "block";
-  } else if (total < 0) {
-    gastoValido = false;
-    errorCuantias.style.display = "block";
-  } else {
-    errorCuantias.style.display = "none";
+    return false;
   }
+  errorCuantias.style.display = "none";
+  return true;
+}
+function validadorGasto() {
+if(validarErrorConcepto() && validarErrorCuantias() && validarDecimales()) return true ; 
 
-  return gastoValido;
+  return false;
 }
 
 function limpiarMensaje() {
@@ -83,7 +112,6 @@ function opcionAvanzadaLogica() {
 
 abrirFormularioGastos.addEventListener("click", function (e) {
   e.preventDefault();
-
   dialogGastos.showModal();
 });
 
@@ -105,8 +133,6 @@ cancelarXGastos.addEventListener("click", function (e) {
   dialogGastos.close("Dialogo cerrado");
 });
 
-
-
 const controladorGastos = () => {
   limpiarMensaje();
   opcionSeleccionada = opcionDePago.value;
@@ -123,39 +149,17 @@ const controladorGastos = () => {
 opcionDePago.addEventListener("change", (e) => {
   e.preventDefault();
   controladorGastos();
+  validadorGasto();
 });
 
 precioTotal.addEventListener("keyup", (e) => {
   e.preventDefault();
   controladorGastos();
   validarDecimales();
+  validadorGasto();
 });
 
 
-/// VALIDAR ENTRADA DE 2 DECIMALES MAXIMO
-const validarDecimales = () => {
-  var regexDecimales = new RegExp(
-    "^\-?[0-9]+(?:\.[0-9]{1,2})?$"
-  );
-  var comprovacionDecimales = regexDecimales.test(precioTotal.value);
-  let vacio = document.querySelector('.cuantia').value;
-
-  if (vacio == "") {
-    precioTotal.setAttribute("style", "border-color:red;");
-    errorVacio.setAttribute("style", "display: block;");
-  } else {
-    precioTotal.setAttribute("style", "border-color:black;");
-    errorVacio.setAttribute("style", "display: none;");
-    if (comprovacionDecimales) {
-      precioTotal.setAttribute("style", "border-color:black;");
-      errorDecimales.setAttribute("style", "display: none");
-      return true;
-    } else {
-      precioTotal.setAttribute("style", "border-color:red;");
-      errorDecimales.setAttribute("style", "display: block");
-    }
-  }
-};
 
 //  Divide entre partes iguales el importe del gasto
 const opcionGeneral = () => {
@@ -209,13 +213,16 @@ const opcionProporcion = () => {
   });
 
 }
-
+concepto.addEventListener('keyup', e =>{
+  //e.preventDefault();
+  validarErrorConcepto();
+})
 
 aPagar.forEach(inputProporcion => {
   inputProporcion.addEventListener('keyup', (e) => {
     controladorGastos();
-
     opcionAvanzadaLogica();
+    validadorGasto();
   });
 });
 
@@ -223,17 +230,14 @@ aPagar.forEach(inputProporcion => {
 importeProporcional.forEach(valorProporcion => {
   valorProporcion.addEventListener('keyup', (e) => {
     controladorGastos();
-
+    validadorGasto();
   });
 });
 
-addGasto.addEventListener("click", (e) => {
-  ;
-  // PONERLO TIPO SUBMIT@@@@!!!
-  e.preventDefault;
-
-
-  if (addGastos()) {
+formularioGasto.addEventListener("submit", (e) => {
+  e.preventDefault();
+  console.log(validadorGasto());
+  if (validadorGasto()) {
 
     addGasto.name = "DatosEnviosCorrectos";
     errorConcepto.style.display = "none";
