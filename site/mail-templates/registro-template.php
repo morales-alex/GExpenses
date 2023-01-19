@@ -21,6 +21,7 @@ try {
 
     $mail->Subject = '¡Te han invitacdo a GExpenses!';
     $mail->isHTML(true);
+    $mail->AddEmbeddedImage('../img/LOGO_ESTIRADO.png', 'logoEmpresa');
     $mailContent = '<!DOCTYPE html>
     <html lang="en">
     
@@ -39,7 +40,7 @@ try {
         <div id="container">
             <div id="caja-mail">
                 <div id="logo">
-                    <img src="../img/LOGO_ESTIRADO.png" alt="Logo GExpenses">
+                    <img src="cid:logoEmpresa" alt="Logo GExpenses">
                 </div>
                 <div id="mensaje">
     
@@ -73,5 +74,4 @@ try {
         $mailEnviat = false;
     }
 } catch (Exception $ex) {
-    echo $ex->message;
 }
