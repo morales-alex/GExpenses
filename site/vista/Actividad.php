@@ -175,7 +175,6 @@ if (isset($_POST['conceptoGastoSencillo']) && isset($_POST['usuarioPagador']) &&
         } catch (PDOException $ex) {
             $pdo->rollBack();
         }
-
     }
 
     unset($_POST['conceptoGastoSencillo']);
@@ -434,7 +433,7 @@ try {
                     </div>
                     <div class="container-tipo-gasto">
                         <label for="cuantia" class="labelGasto">Cuantía:</label>
-                        <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0" step='0.01' >
+                        <input type="number" name="cuantiaGastoSencillo" class="cuantia" value="0" step='0.01'>
                     </div>
                 </div>
 
@@ -510,20 +509,22 @@ try {
 
                     <?php
                     foreach ($deudasFiltradas["Deudas"] as $deuda) {
+                        if ($deuda['QUANTIA'] > 0) {
                     ?>
-                        <div class="deudaBox">
-                            <p class="deuda"> <strong> <?php echo $deuda['Cobra'] ?> </strong> debe <?php echo $deuda['QUANTIA'] ?> a
-                                <strong> <?php echo $deuda['Paga'] ?> </strong>
-                            </p>
+                            <div class="deudaBox">
+                                <p class="deuda"> <strong> <?php echo $deuda['Cobra'] ?> </strong> debe <?php echo $deuda['QUANTIA'] ?> a
+                                    <strong> <?php echo $deuda['Paga'] ?> </strong>
+                                </p>
 
-                            <form action="" method="post" class="form-boton-pagar">
-                                <input type="hidden" name="pago" value="<?php echo $deuda['Paga'] . '-' . $deuda['Cobra'] ?>">
-                                <input class="boton-pagar" type="submit" name="submit-boton-pagar" value="PAGAR DEUDA" />
-                            </form>
+                                <form action="" method="post" class="form-boton-pagar">
+                                    <input type="hidden" name="pago" value="<?php echo $deuda['Paga'] . '-' . $deuda['Cobra'] ?>">
+                                    <input class="boton-pagar" type="submit" name="submit-boton-pagar" value="PAGAR DEUDA" />
+                                </form>
 
-                        </div>
+                            </div>
 
                     <?php
+                        }
                     }
                     ?>
 
@@ -618,7 +619,7 @@ try {
                         <div class="participante">
                             <div id="participante"><?php echo $usuarioBalance ?> </div>
                             <div class="valorBalance">
-                            <div class="importe-balance"><?php echo $dineroBalance ?>€</div>
+                                <div class="importe-balance"><?php echo $dineroBalance ?>€</div>
                             </div>
                         </div>
 
