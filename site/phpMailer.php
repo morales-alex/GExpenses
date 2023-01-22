@@ -30,7 +30,7 @@ try {
 
     $mail->send();
 } catch (Exception $ex) {
-    echo $ex->message;
+    echo $ex;
 }
 
 if ($mail->send()) {
