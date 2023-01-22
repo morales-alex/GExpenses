@@ -16,7 +16,7 @@ usuarios a tu actividad*
 Lo primero que deberías hacer al entrar a la aplicación sería
 *registrarse.*
 
-image::documentacion/ManualUsuario/EjRegistro.png[EjRegistro]
+image::EjRegistro.png[EjRegistro]
 
 Los requisitos mínimos de seguridad se pueden ver si pasas el ratón por
 encima de la interrogación.
@@ -26,12 +26,12 @@ el 'home' deberemos pulsar el botón de 'Añadir actividad', una vez ahí
 rellenaremos los datos de la actividad (Nombre, moneda [€ o $] y
 descripción)
 
-image::documentacion/ManualUsuario/EjAñadirActividad.png[EjAñadirActividad]
+image::EjAñadirActividad.png[EjAñadirActividad]
 
 Con los datos de la actividad rellenados le daremos a '*enviar'* para
 crear la nueva actividad.
 
-image::documentacion/ManualUsuario/EjHomeLayout.png[EjHomeLayout]
+image::EjHomeLayout.png[EjHomeLayout]
 
 En esta foto se puede ver la ventana 'home' con la actividad ya creada,
 dónde como se puede observar se pueden añadir más actividades, *filtrar
@@ -42,7 +42,7 @@ la derecha.
 Para *añadir a tus amigos a la actividad* desde dentro de la actividad
 se debe pulsar el botón que dice 'Invitar Usuarios'
 
-image::documentacion/ManualUsuario/EjInvitarUsuario.png[EjInvitarUsuario]
+image::EjInvitarUsuario.png[EjInvitarUsuario]
 
 Debes escribir el correo de cada amigo y darle al botón 'Añadir', cuando
 ya hayas añadido todos los correos le debes dar al botón 'Enviar'. Una
@@ -51,7 +51,7 @@ unan a la actividad.
 
 Layout de invitación a una actividad.
 
-image::documentacion/ManualUsuario/EjInvitacion.png[EjInvitacion]
+image::EjInvitacion.png[EjInvitacion]
 
 *Añadir gastos y repartición entre tus amigos*
 
@@ -62,22 +62,22 @@ gastos de tres maneras diferentes:
 *1. General:* Donde se repartirán los gastos con la misma cuantía para
 todos.
 
-image::documentacion/ManualUsuario/EjGastoGeneral.png[EjGastoGeneral]
+image::EjGastoGeneral.png[EjGastoGeneral]
 
 *2. Avanzado:* Donde personalizar cuánto paga cada uno por dinero.
 
-image::documentacion/ManualUsuario/EjGastoAvanzado.png[EjGastoAvanzado]
+image::EjGastoAvanzado.png[EjGastoAvanzado]
 
 *3. Proporcional:* Donde personalizar cuánto paga cada uno por
 proporciones.
 
-image::documentacion/ManualUsuario/EjGastoProporcional.png[EjGastoProporcional]
+image::EjGastoProporcional.png[EjGastoProporcional]
 
 Esto sería un ejemplo de una actividad con deudas
 
-image::documentacion/ManualUsuario/EjActividadDeudas.png[EjActividadDeudas]
+image::EjActividadDeudas.png[EjActividadDeudas]
 
 Para cobrar una deuda simplemente debes clicar 'Pagar Deuda' en la deuda
 que tengas pendiente
 
-image::documentacion/ManualUsuario/EjPagarDeuda.png[EjPagarDeuda]
+image::EjPagarDeuda.png[EjPagarDeuda]

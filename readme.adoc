@@ -1,5 +1,7 @@
 [justify]
 
+:imagesdir: documentacion/ManualUsuario
+
 = MEMORIA
 :toc:
 
