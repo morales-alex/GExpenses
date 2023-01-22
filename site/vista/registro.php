@@ -8,19 +8,21 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (isset($_SESSION['usuario'])) {
+if (isset($_GET['a_id']) && isset($_GET['invitacion'])) {
+    $a_id = $_GET['a_id'];
+    $invitacion = $_GET['invitacion'];
+    $registroConInvitacion = true;
+    unset($_SESSION['usuario']);
+} else if (isset($_SESSION['usuario'])) {
 
-    if (isset($_GET['a_id']) && isset($_GET['invitacion'])) {
-        procesarInvitacion();
-    }
+    // if (isset($_GET['a_id']) && isset($_GET['invitacion'])) {
+    //     procesarInvitacion();
+    // }
     header('Location: ./home.php');
-} else {
+}
 
-    if (isset($_GET['a_id']) && isset($_GET['invitacion'])) {
-        $a_id = $_GET['a_id'];
-        $invitacion = $_GET['invitacion'];
-        $registroConInvitacion = true;
-    }
+
+
 
 ?>
     <!DOCTYPE html>
@@ -158,7 +160,3 @@ if (isset($_SESSION['usuario'])) {
 
     </html>
 
-
-<?php
-
-}
