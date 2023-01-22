@@ -125,9 +125,9 @@ INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) v
 INSERT INTO Usuarios (u_username, u_nombre, u_apellidos, u_correo, u_password) values('mfreixa', 'Max', 'Freixa Abcd', 'freixa.abcd.max@alumnat.copernic.cat', '$2y$10$o7.Xhj4uByDtF2gX0JRbouQcFSMV4TdghkS1QzmVcE/8KFliifFKK');
 
 INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('Viaje a las bahamas', 'EUR', 'Esto es una prueba de la descripcion de la actividad', '2022/11/01', '2022/11/18');
-INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('Visita al palau de la música', 'EUR', 'Test Test TEst', '2022/11/05', '2022/11/13');
-INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('Gincana por el monte', 'USD', 'Test Test TEst', '2022/11/08', '2022/11/15');
-INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('TestActiv', 'USD', 'Test Test TEst', '2022/11/08 16:34:25', '2022/11/15 12:34:25');
+INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('Visita al palau de la música', 'EUR', 'Diseñado en estilo modernista Catalan por el arquitecto Lluís Domènech i Montaner.', '2022/11/05', '2022/11/13');
+INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('Gincana por el monte', 'USD', 'Gincana de prueba para rellenar la descrición de una actividad·', '2022/11/08', '2022/11/15');
+-- INSERT INTO Actividades (a_nombre, a_moneda, a_descripcion, a_fecCreacion, a_fecUltMod) values('TestActiv', 'USD', 'Test Test TEst', '2022/11/08 16:34:25', '2022/11/15 12:34:25');
 
 INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (1, 1);
 INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (2, 1);
@@ -139,6 +139,14 @@ INSERT INTO UsuariosActividades (ua_idUsu, ua_idAct) values (1, 3);
 
 INSERT INTO Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 55.90, 'Bocadillos de jamón con tomate',  sysdate());
 INSERT INTO Gastos (g_idUsu, g_idAct, g_precio, g_concepto, g_fecCrea) values (1, 1, 300.56, 'Buceo con tiburones',  sysdate());
+
+INSERT INTO LineasGastos (l_idUsu, l_idGasto, l_importe) SELECT 2, 1, 13.98;
+INSERT INTO LineasGastos (l_idUsu, l_idGasto, l_importe) SELECT 3, 1, 13.98;
+INSERT INTO LineasGastos (l_idUsu, l_idGasto, l_importe) SELECT 4, 1, 13.98;
+
+INSERT INTO LineasGastos (l_idUsu, l_idGasto, l_importe) SELECT 2, 2, 75.14;
+INSERT INTO LineasGastos (l_idUsu, l_idGasto, l_importe) SELECT 3, 2, 75.14;
+INSERT INTO LineasGastos (l_idUsu, l_idGasto, l_importe) SELECT 4, 2, 75.14;
 
 
 /* QUERIES DE AYUDA */

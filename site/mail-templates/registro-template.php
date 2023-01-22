@@ -30,7 +30,67 @@ try {
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title></title>
-        <link rel="stylesheet" href="../css/style-mails.css">
+        <style>
+        
+            html,
+            body {
+                height: 100%;
+                width: 100%;
+                margin: 0;
+                font-family: "Montserrat", serif;
+                background-color: #EEE;
+                color: #171717;
+            }
+
+            #proteccion-de-datos {
+                font-size: 12px;
+                color: rgb(102, 102, 102);
+                line-height: 1;
+            }
+
+            #caja-mail {
+                background-color: #fff;
+                display: flex;
+                flex-direction: column;
+                width: 85%;
+                max-width: 600px;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 24px;
+            }
+
+            #container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+            }
+
+            #logo {
+                justify-content: center;
+                display: flex;
+            }
+
+            a {
+                padding: 8px 12px;
+                border-radius: 10px;
+                font-weight: 600;
+                margin-right: 15px;
+                background-color: #4E729A;
+                color: #FFF;
+                border: none;
+                text-decoration: none;
+            }
+
+            .caja-boton {
+                margin: 10px 0;
+            }
+
+            #logo img {
+                max-width: 400px;
+            }
+
+        </style>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -40,7 +100,7 @@ try {
         <div id="container">
             <div id="caja-mail">
                 <div id="logo">
-                    <img src="cid:logoEmpresa" alt="Logo GExpenses">
+                    <img src="cid:logoEmpresa" style="width:200px;" alt="Logo GExpenses">
                 </div>
                 <div id="mensaje">
     
