@@ -1,5 +1,5 @@
 echo 'Instalando APACHE...'
-sudo apt install apache2
+sudo apt-get -y install apache2
 sudo ufw app list
 sudo ufw allow 'WWW'
 sudo systemctl status apache2
