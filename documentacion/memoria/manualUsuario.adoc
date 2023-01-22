@@ -1,6 +1,6 @@
 == Manual Usuario
 
-LINK A LA APLICACIÓN -> http://192.168.50.237/vista/index.php
+LINK A LA APLICACIÓN -> http://192.168.50.237/
 
 - Para hacer pruebas de la aplicación sin registrarse se puede utilizar el siguiente usuario: 
 
