@@ -1,6 +1,14 @@
 == Manual Usuario
 
-- Para hacer pruebas de la aplicación sin registrarse se puede utilizar el siguiente usuario: Usuario: *admin* -  Contraseña: *123*
+LINK A LA APLICACIÓN -> http://192.168.50.237/vista/index.php
+
+- Para hacer pruebas de la aplicación sin registrarse se puede utilizar el siguiente usuario: 
+
+Usuario: *admin* -  Contraseña: *123*
+
+- Para probar las invitaciones por correo: https://mailtrap.io/
+
+Usuario : *freixa.sureda.max@alumnat.copernic.cat* - Contraseña: *GExpenses_3P1*
 
 *Registro, inicio de sesión y creación de tu primera actividad + invitar
 usuarios a tu actividad*
@@ -40,6 +48,10 @@ Debes escribir el correo de cada amigo y darle al botón 'Añadir', cuando
 ya hayas añadido todos los correos le debes dar al botón 'Enviar'. Una
 vez pulsado les llegará a tus amigos invitaciones al correo para que se
 unan a la actividad.
+
+Layout de invitación a una actividad.
+
+image::documentacion/ManualUsuario/EjInvitacion.png[EjInvitacion]
 
 *Añadir gastos y repartición entre tus amigos*
 

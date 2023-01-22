@@ -6,11 +6,14 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (isset($_SESSION['usuario'])) {
+$entra = true;
 
-    if (isset($_GET['a_id']) && isset($_GET['invitacion'])) {
-        procesarInvitacion();
-    }
+if (isset($_GET['a_id']) && isset($_GET['invitacion'])) {
+    unset($_SESSION['usuario']);
+    $entra = false;
+}
+
+if (isset($_SESSION['usuario']) && $entra) {
     header('Location: ./home.php');
 } else {
 

@@ -81,7 +81,7 @@ function procesarInvitacion() {
             $sql = "SELECT i_correoUsuarioInvitado, u_id
                         FROM Invitaciones
                             INNER JOIN Usuarios ON Usuarios.u_correo = Invitaciones.i_correoUsuarioInvitado 
-                    WHERE i_token = :i_token AND DATE_ADD(i_fecinv, INTERVAL +3 MINUTE) > sysdate()"; // LA INVITACION CADUCA EN 2 MINUTOS
+                    WHERE i_token = :i_token AND DATE_ADD(i_fecinv, INTERVAL +3 MINUTE) > sysdate()"; // LA INVITACION CADUCA EN 3 MINUTOS
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':i_token', $token);
 

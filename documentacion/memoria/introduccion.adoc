@@ -3,10 +3,11 @@
 
 La creación de està aplicación web *GExpenses* ha sido creada por:
 
-* *Alejandro* Algarra Delgado
-* *Max* Freixa Sureda 
-* *Álex* Morales Luna.
+* *Alejandro* Algarra Delgado -> https://ale90s.github.io/
+* *Max* Freixa Sureda -> https://morales-alex.github.io/
+* *Álex* Morales Luna -> https://freixa21.github.io/
 
+VÍDEO INTRODUCTORIO - 
 
 Te vas de viaje con tus amigos y durante todo el viaje teneis que _dividir gastos_. Puede ser un proceso fatigante. _GExpenses soluciona el problema_.
 ====
