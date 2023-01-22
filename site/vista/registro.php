@@ -64,13 +64,13 @@ if (isset($_GET['a_id']) && isset($_GET['invitacion'])) {
                         <div class="row-registro">
                             <div class="col">
                                 <label for="nombre">Nombre<div class="tooltip">?
-                                        <span class="tooltiptext">Debe contener una letra como mínimo</span>
+                                        <span class="tooltiptext">Debe contener una letra como mínimo. Sólo caracteres.</span>
                                     </div></label>
                                 <input type="text" id="nombre" name="nombre" placeholder="Mombre">
                             </div>
                             <div class="col">
                                 <label for="apellidos">Apellidos <div class="tooltip">?
-                                        <span class="tooltiptext">Debes introducir los dos apellidos.</span>
+                                        <span class="tooltiptext">Debes introducir los dos apellidos. Sólo caracteres.</span>
                                     </div></label>
                                 <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos">
                             </div>
@@ -78,7 +78,7 @@ if (isset($_GET['a_id']) && isset($_GET['invitacion'])) {
                         <div class="row-registro">
                             <div class="col">
                                 <label for="usuario">Usuario <div class="tooltip">?
-                                        <span class="tooltiptext">El usuario debe contener 5 caracteres como mínimo</span>
+                                        <span class="tooltiptext">El usuario debe contener entre 5 y 31 caracteres como mínimo</span>
                                     </div></label>
                                 <input type="text" id="usuario" name="usuario" placeholder="Usuario">
 
